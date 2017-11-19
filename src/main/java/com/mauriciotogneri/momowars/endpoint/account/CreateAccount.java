@@ -3,8 +3,10 @@ package com.mauriciotogneri.momowars.endpoint.account;
 import com.mauriciotogneri.jerry.EndPoint;
 import com.mauriciotogneri.jerry.EntityProvider;
 import com.mauriciotogneri.momowars.database.InsertQuery;
-import com.mauriciotogneri.momowars.database.InsertQuery.InsertParameter;
 import com.mauriciotogneri.momowars.database.Queries.Account;
+import com.mauriciotogneri.momowars.database.QueryParameter;
+import com.mauriciotogneri.momowars.endpoint.session.CreateSession;
+import com.mauriciotogneri.momowars.utils.SHA;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -26,17 +28,19 @@ public class CreateAccount extends EndPoint
     @Produces(MediaType.APPLICATION_JSON)
     public Response createAccount(CreateAccountRequest account) throws Exception
     {
-        InsertParameter[] parameters = new InsertParameter[4];
-        parameters[0] = InsertParameter.string(account.email);
-        parameters[1] = InsertParameter.string(account.nickname);
-        parameters[2] = InsertParameter.string(account.password);
-        parameters[3] = InsertParameter.string("xxx");
+        QueryParameter[] parameters = new QueryParameter[4];
+        parameters[0] = QueryParameter.asString(account.email);
+        parameters[1] = QueryParameter.asString(account.nickname);
+        parameters[2] = QueryParameter.asString(SHA.sha512(account.password));
+        parameters[3] = QueryParameter.asString(CreateSession.newSessionId());
 
         InsertQuery query = new InsertQuery(Account.CREATE_ACCOUNT);
 
         try
         {
             query.execute(parameters);
+
+            // TODO: read account
 
             return response(CREATED, account);
         }
@@ -56,10 +60,10 @@ public class CreateAccount extends EndPoint
         }
     }
 
-    public static class CreateAccountRequest
+    private static class CreateAccountRequest
     {
-        public String email;
-        public String nickname;
-        public String password;
+        private String email;
+        private String nickname;
+        private String password;
     }
 }

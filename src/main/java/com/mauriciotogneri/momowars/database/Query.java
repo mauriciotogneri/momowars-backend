@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 
 public class Query
 {
-    protected final String queryFile;
+    private final String queryFile;
 
     public Query(String queryFile)
     {
@@ -24,5 +24,43 @@ public class Query
         Connection connection = Database.connection();
 
         return connection.prepareStatement(query());
+    }
+
+    protected PreparedStatement preparedStatement(QueryParameter<?>... parameters) throws Exception
+    {
+        PreparedStatement statement = preparedStatement();
+
+        for (int i = 0; i < parameters.length; i++)
+        {
+            QueryParameter<?> parameter = parameters[i];
+            int index = i + 1;
+
+            if (parameter.isString())
+            {
+                statement.setString(index, parameter.value());
+            }
+            else if (parameter.isBoolean())
+            {
+                statement.setBoolean(index, parameter.value());
+            }
+            else if (parameter.isInteger())
+            {
+                statement.setInt(index, parameter.value());
+            }
+            else if (parameter.isLong())
+            {
+                statement.setLong(index, parameter.value());
+            }
+            else if (parameter.isFloat())
+            {
+                statement.setFloat(index, parameter.value());
+            }
+            else if (parameter.isDouble())
+            {
+                statement.setDouble(index, parameter.value());
+            }
+        }
+
+        return statement;
     }
 }
