@@ -1,2 +1,1 @@
-# momowars-backend
-Backend of MomoWars
+# MomoWars Backend
