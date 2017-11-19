@@ -4,17 +4,12 @@ public class Profile
 {
     public final Long id;
     public final String email;
-    public final String name;
+    public final String nickname;
 
-    public Profile(Long id, String email, String name)
+    public Profile(Long id, String email, String nickname)
     {
         this.id = id;
         this.email = email;
-        this.name = name;
-    }
-
-    public boolean isValid()
-    {
-        return true;
+        this.nickname = nickname;
     }
 }
