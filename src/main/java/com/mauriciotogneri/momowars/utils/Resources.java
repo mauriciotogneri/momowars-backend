@@ -1,19 +1,25 @@
 package com.mauriciotogneri.momowars.utils;
 
-import java.io.File;
-import java.io.RandomAccessFile;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 public class Resources
 {
     public static String content(String path) throws Exception
     {
         ClassLoader classLoader = Resources.class.getClassLoader();
-        File file = new File(classLoader.getResource(path).getFile());
+        InputStream inputStream = classLoader.getResourceAsStream(path);
 
-        RandomAccessFile accessFile = new RandomAccessFile(file, "r");
-        byte[] buffer = new byte[(int) accessFile.length()];
-        accessFile.readFully(buffer);
+        ByteArrayOutputStream result = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int read;
 
-        return new String(buffer, "UTF-8");
+        while ((read = inputStream.read(buffer)) != -1)
+        {
+            result.write(buffer, 0, read);
+        }
+
+        return result.toString(StandardCharsets.UTF_8.name());
     }
 }
