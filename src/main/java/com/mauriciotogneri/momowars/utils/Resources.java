@@ -1,4 +1,4 @@
-package com.mauriciotogneri.momowars;
+package com.mauriciotogneri.momowars.utils;
 
 import java.io.File;
 import java.io.RandomAccessFile;

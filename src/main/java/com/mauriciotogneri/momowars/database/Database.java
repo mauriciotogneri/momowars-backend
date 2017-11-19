@@ -1,6 +1,6 @@
 package com.mauriciotogneri.momowars.database;
 
-import com.mauriciotogneri.momowars.Resources;
+import com.mauriciotogneri.momowars.utils.Resources;
 
 import java.net.URI;
 import java.sql.Connection;
