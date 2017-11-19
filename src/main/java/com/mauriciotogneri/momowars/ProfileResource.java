@@ -23,9 +23,7 @@ public class ProfileResource extends EndPoint
     {
         Profile profile = new Profile(123L, "email@email.com", "Name");
 
-        throw new TestException();
-
-        //return response(OK, profile);
+        return response(OK, profile);
     }
 
     @PUT

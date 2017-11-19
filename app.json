@@ -1,0 +1,7 @@
+{
+    "name": "MomoWars",
+    "description": "MomoWars backend",
+    "addons": [
+        "heroku-postgresql"
+    ]
+}

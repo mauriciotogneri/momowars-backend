@@ -1,0 +1,1 @@
+web: java -jar target/momowars-backend-0.0.1.jar
