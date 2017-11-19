@@ -21,6 +21,8 @@ public class Main extends Jerry
 {
     public static void main(String[] args) throws Exception
     {
+        System.out.println(Integer.valueOf(System.getenv("PORT")));
+
         Server server = new Server();
 
         HttpConfiguration http_config = new HttpConfiguration();
