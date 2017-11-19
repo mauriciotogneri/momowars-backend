@@ -21,7 +21,7 @@ public class ProfileResource extends EndPoint
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProfile()
     {
-        Profile profile = new Profile(123L, "email@email.com", "Name");
+        Profile profile = new Profile(456L, "email@email.com", "Name");
 
         return response(OK, profile);
     }
