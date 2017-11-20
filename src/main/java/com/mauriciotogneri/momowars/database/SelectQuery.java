@@ -10,7 +10,7 @@ public class SelectQuery extends Query
         super(queryFile);
     }
 
-    public ResultSet execute(QueryParameter<?>... parameters) throws Exception
+    public ResultSet execute(Object... parameters) throws Exception
     {
         PreparedStatement statement = preparedStatement(parameters);
 

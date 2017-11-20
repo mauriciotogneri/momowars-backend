@@ -26,38 +26,38 @@ public class Query
         return connection.prepareStatement(query());
     }
 
-    protected PreparedStatement preparedStatement(QueryParameter<?>... parameters) throws Exception
+    protected PreparedStatement preparedStatement(Object... parameters) throws Exception
     {
         PreparedStatement statement = preparedStatement();
 
         for (int i = 0; i < parameters.length; i++)
         {
-            QueryParameter<?> parameter = parameters[i];
+            Object parameter = parameters[i];
             int index = i + 1;
 
-            if (parameter.isString())
+            if (parameter.getClass().equals(String.class))
             {
-                statement.setString(index, parameter.value());
+                statement.setString(index, (String) parameter);
             }
-            else if (parameter.isBoolean())
+            else if (parameter.getClass().equals(Boolean.class))
             {
-                statement.setBoolean(index, parameter.value());
+                statement.setBoolean(index, (Boolean) parameter);
             }
-            else if (parameter.isInteger())
+            else if (parameter.getClass().equals(Integer.class))
             {
-                statement.setInt(index, parameter.value());
+                statement.setInt(index, (Integer) parameter);
             }
-            else if (parameter.isLong())
+            else if (parameter.getClass().equals(Long.class))
             {
-                statement.setLong(index, parameter.value());
+                statement.setLong(index, (Long) parameter);
             }
-            else if (parameter.isFloat())
+            else if (parameter.getClass().equals(Float.class))
             {
-                statement.setFloat(index, parameter.value());
+                statement.setFloat(index, (Float) parameter);
             }
-            else if (parameter.isDouble())
+            else if (parameter.getClass().equals(Double.class))
             {
-                statement.setDouble(index, parameter.value());
+                statement.setDouble(index, (Double) parameter);
             }
         }
 

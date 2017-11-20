@@ -3,7 +3,6 @@ package com.mauriciotogneri.momowars.endpoint.session;
 import com.mauriciotogneri.jerry.EndPoint;
 import com.mauriciotogneri.jerry.EntityProvider;
 import com.mauriciotogneri.momowars.database.Queries.Account;
-import com.mauriciotogneri.momowars.database.QueryParameter;
 import com.mauriciotogneri.momowars.database.SelectQuery;
 import com.mauriciotogneri.momowars.utils.SHA;
 
@@ -29,13 +28,9 @@ public class CreateSession extends EndPoint
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createSession(CreateSessionRequest account) throws Exception
     {
-        QueryParameter[] parameters = new QueryParameter[2];
-        parameters[0] = QueryParameter.asString(account.email);
-        parameters[1] = QueryParameter.asString(SHA.sha512(account.password));
-
         SelectQuery query = new SelectQuery(Account.SELECT_ACCOUNT);
 
-        ResultSet resultSet = query.execute(parameters);
+        ResultSet resultSet = query.execute(account.email, SHA.sha512(account.password));
 
         if (resultSet.next())
         {

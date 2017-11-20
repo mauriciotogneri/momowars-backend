@@ -9,7 +9,7 @@ public class InsertQuery extends Query
         super(queryFile);
     }
 
-    public int execute(QueryParameter<?>... parameters) throws Exception
+    public int execute(Object... parameters) throws Exception
     {
         PreparedStatement statement = preparedStatement(parameters);
 
