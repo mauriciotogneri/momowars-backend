@@ -2,7 +2,6 @@ package com.mauriciotogneri.momowars.database;
 
 import com.mauriciotogneri.momowars.utils.Resources;
 
-import java.net.URI;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -22,15 +21,7 @@ public class Database
 
     private static Connection createConnection() throws Exception
     {
-        URI dbUri = new URI(System.getenv("DATABASE_URL"));
-
-        System.out.println(System.getenv("JDBC_DATABASE_URL"));
-
-        String username = dbUri.getUserInfo().split(":")[0];
-        String password = dbUri.getUserInfo().split(":")[1];
-        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
-
-        Connection connection = DriverManager.getConnection(dbUrl, username, password);
+        Connection connection = DriverManager.getConnection(System.getenv("JDBC_DATABASE_URL"));
         initialize(connection);
 
         return connection;
