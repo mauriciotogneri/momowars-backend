@@ -5,6 +5,7 @@ import com.mauriciotogneri.momowars.database.rows.AccountRow;
 import com.mauriciotogneri.momowars.database.sql.InsertQuery;
 import com.mauriciotogneri.momowars.database.sql.QueryResult;
 import com.mauriciotogneri.momowars.database.sql.SelectQuery;
+import com.mauriciotogneri.momowars.database.sql.UpdateQuery;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.exceptions.AccountExistsException;
 import com.mauriciotogneri.momowars.model.exceptions.AccountNotFoundException;
@@ -40,6 +41,18 @@ public class AccountDao
         else
         {
             throw new AccountNotFoundException();
+        }
+    }
+
+    public static void updateSessionToken(Long id, String sessionToken) throws Exception
+    {
+        UpdateQuery query = new UpdateQuery(AccountQueries.UPDATE_SESSION_TOKEN);
+
+        int rowsAffected = query.execute(sessionToken, id);
+
+        if (rowsAffected != 1)
+        {
+            throw new RuntimeException();
         }
     }
 

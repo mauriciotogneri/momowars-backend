@@ -12,4 +12,9 @@ public class Account
         this.email = email;
         this.nickname = nickname;
     }
+
+    public Long id()
+    {
+        return id;
+    }
 }

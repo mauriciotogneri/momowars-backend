@@ -4,6 +4,7 @@ import com.mauriciotogneri.jerry.EndPoint;
 import com.mauriciotogneri.jerry.EntityProvider;
 import com.mauriciotogneri.momowars.Api;
 import com.mauriciotogneri.momowars.dao.AccountDao;
+import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.utils.SHA;
 
 import java.util.UUID;
@@ -29,10 +30,14 @@ public class CreateSession extends EndPoint
     {
         try
         {
-            AccountDao.byCredentials(sessionRequest.email, sessionRequest.password);
+            Account account = AccountDao.byCredentials(sessionRequest.email, sessionRequest.password);
+
+            String sessionToken = newSessionToken();
+
+            AccountDao.updateSessionToken(account.id(), sessionToken);
 
             ResponseBuilder builder = Response.status(OK);
-            builder.header(Api.HEADER_SESSION_TOKEN, newSessionToken());
+            builder.header(Api.HEADER_SESSION_TOKEN, sessionToken);
 
             return builder.build();
         }

@@ -1,3 +1,4 @@
-INSERT INTO account
+INSERT
+	INTO account
 	(email, nickname, password, session)
     VALUES (?, ?, ?, ?)
