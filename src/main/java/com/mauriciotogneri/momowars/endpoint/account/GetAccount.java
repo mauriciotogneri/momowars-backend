@@ -2,11 +2,10 @@ package com.mauriciotogneri.momowars.endpoint.account;
 
 import com.mauriciotogneri.jerry.EndPoint;
 import com.mauriciotogneri.momowars.Api;
-import com.mauriciotogneri.momowars.database.SQL;
-import com.mauriciotogneri.momowars.database.queries.SelectQuery;
-import com.mauriciotogneri.momowars.model.Account;
-
-import java.sql.ResultSet;
+import com.mauriciotogneri.momowars.database.SQL.AccountQueries;
+import com.mauriciotogneri.momowars.database.rows.AccountRow;
+import com.mauriciotogneri.momowars.database.sql.QueryResult;
+import com.mauriciotogneri.momowars.database.sql.SelectQuery;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -26,19 +25,13 @@ public class GetAccount extends EndPoint
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAccount(@HeaderParam(Api.HEADER_SESSION_TOKEN) String sessionToken) throws Exception
     {
-        SelectQuery query = new SelectQuery(SQL.Account.SELECT_BY_SESSION_TOKEN);
+        SelectQuery<AccountRow> query = new SelectQuery<>(AccountQueries.SELECT_BY_SESSION_TOKEN, AccountRow.class);
 
-        ResultSet resultSet = query.execute(sessionToken);
+        QueryResult<AccountRow> result = query.execute(sessionToken);
 
-        if (resultSet.next())
+        if (result.hasRows())
         {
-            Account account = new Account(
-                    resultSet.getLong(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3)
-            );
-
-            return response(OK, account);
+            return response(OK, result.row().account());
         }
         else
         {

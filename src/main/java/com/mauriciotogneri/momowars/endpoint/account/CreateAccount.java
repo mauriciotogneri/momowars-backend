@@ -2,8 +2,8 @@ package com.mauriciotogneri.momowars.endpoint.account;
 
 import com.mauriciotogneri.jerry.EndPoint;
 import com.mauriciotogneri.jerry.EntityProvider;
-import com.mauriciotogneri.momowars.database.SQL;
-import com.mauriciotogneri.momowars.database.queries.InsertQuery;
+import com.mauriciotogneri.momowars.database.SQL.AccountQueries;
+import com.mauriciotogneri.momowars.database.sql.InsertQuery;
 import com.mauriciotogneri.momowars.endpoint.session.CreateSession;
 import com.mauriciotogneri.momowars.utils.SHA;
 
@@ -27,7 +27,7 @@ public class CreateAccount extends EndPoint
     @Produces(MediaType.APPLICATION_JSON)
     public Response createAccount(CreateAccountRequest account) throws Exception
     {
-        InsertQuery query = new InsertQuery(SQL.Account.INSERT);
+        InsertQuery query = new InsertQuery(AccountQueries.INSERT);
 
         try
         {

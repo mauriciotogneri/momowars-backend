@@ -3,11 +3,12 @@ package com.mauriciotogneri.momowars.endpoint.session;
 import com.mauriciotogneri.jerry.EndPoint;
 import com.mauriciotogneri.jerry.EntityProvider;
 import com.mauriciotogneri.momowars.Api;
-import com.mauriciotogneri.momowars.database.SQL;
-import com.mauriciotogneri.momowars.database.queries.SelectQuery;
+import com.mauriciotogneri.momowars.database.SQL.AccountQueries;
+import com.mauriciotogneri.momowars.database.rows.AccountRow;
+import com.mauriciotogneri.momowars.database.sql.QueryResult;
+import com.mauriciotogneri.momowars.database.sql.SelectQuery;
 import com.mauriciotogneri.momowars.utils.SHA;
 
-import java.sql.ResultSet;
 import java.util.UUID;
 
 import javax.ws.rs.Consumes;
@@ -29,11 +30,11 @@ public class CreateSession extends EndPoint
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createSession(CreateSessionRequest account) throws Exception
     {
-        SelectQuery query = new SelectQuery(SQL.Account.SELECT_BY_CREDENTIALS);
+        SelectQuery<AccountRow> query = new SelectQuery<>(AccountQueries.SELECT_BY_CREDENTIALS, AccountRow.class);
 
-        ResultSet resultSet = query.execute(account.email, SHA.sha512(account.password));
+        QueryResult<AccountRow> result = query.execute(account.email, SHA.sha512(account.password));
 
-        if (resultSet.next())
+        if (result.hasRows())
         {
             ResponseBuilder builder = Response.status(OK);
             builder.header(Api.HEADER_SESSION_TOKEN, newSessionId());

@@ -1,5 +1,6 @@
 package com.mauriciotogneri.momowars.database;
 
+import com.mauriciotogneri.momowars.database.SQL.TableQueries;
 import com.mauriciotogneri.momowars.utils.Resources;
 
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -38,7 +39,7 @@ public class Database
 
     private static void initialize(Connection connection) throws Exception
     {
-        execute(connection, SQL.Table.ACCOUNT);
+        execute(connection, TableQueries.ACCOUNT);
     }
 
     private static void execute(Connection connection, String sqlFile) throws Exception
