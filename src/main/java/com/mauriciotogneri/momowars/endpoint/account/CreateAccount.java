@@ -6,7 +6,6 @@ import com.mauriciotogneri.momowars.dao.AccountDao;
 import com.mauriciotogneri.momowars.endpoint.session.CreateSession;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.exceptions.AccountExistsException;
-import com.mauriciotogneri.momowars.utils.SHA;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -32,7 +31,7 @@ public class CreateAccount extends EndPoint
         {
             Account account = AccountDao.create(accountRequest.email,
                                                 accountRequest.nickname,
-                                                SHA.sha512(accountRequest.password),
+                                                accountRequest.password,
                                                 CreateSession.newSessionToken());
 
             return response(CREATED, account);

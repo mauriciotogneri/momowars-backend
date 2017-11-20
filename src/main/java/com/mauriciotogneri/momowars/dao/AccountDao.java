@@ -27,6 +27,22 @@ public class AccountDao
         }
     }
 
+    public static Account byCredentials(String email, String password) throws Exception
+    {
+        SelectQuery<AccountRow> query = new SelectQuery<>(AccountQueries.SELECT_BY_CREDENTIALS, AccountRow.class);
+
+        QueryResult<AccountRow> result = query.execute(email, SHA.sha512(password));
+
+        if (result.hasRows())
+        {
+            return result.row().account();
+        }
+        else
+        {
+            throw new AccountNotFoundException();
+        }
+    }
+
     public static Account create(String email, String nickname, String password, String sessionToken) throws Exception
     {
         InsertQuery query = new InsertQuery(AccountQueries.INSERT);

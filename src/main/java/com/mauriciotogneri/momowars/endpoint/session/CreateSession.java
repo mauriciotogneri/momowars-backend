@@ -3,10 +3,7 @@ package com.mauriciotogneri.momowars.endpoint.session;
 import com.mauriciotogneri.jerry.EndPoint;
 import com.mauriciotogneri.jerry.EntityProvider;
 import com.mauriciotogneri.momowars.Api;
-import com.mauriciotogneri.momowars.database.SQL.AccountQueries;
-import com.mauriciotogneri.momowars.database.rows.AccountRow;
-import com.mauriciotogneri.momowars.database.sql.QueryResult;
-import com.mauriciotogneri.momowars.database.sql.SelectQuery;
+import com.mauriciotogneri.momowars.dao.AccountDao;
 import com.mauriciotogneri.momowars.utils.SHA;
 
 import java.util.UUID;
@@ -28,20 +25,18 @@ public class CreateSession extends EndPoint
     @POST
     @Path("/v1/session")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createSession(CreateSessionRequest account) throws Exception
+    public Response createSession(CreateSessionRequest sessionRequest) throws Exception
     {
-        SelectQuery<AccountRow> query = new SelectQuery<>(AccountQueries.SELECT_BY_CREDENTIALS, AccountRow.class);
-
-        QueryResult<AccountRow> result = query.execute(account.email, SHA.sha512(account.password));
-
-        if (result.hasRows())
+        try
         {
+            AccountDao.byCredentials(sessionRequest.email, sessionRequest.password);
+
             ResponseBuilder builder = Response.status(OK);
             builder.header(Api.HEADER_SESSION_TOKEN, newSessionToken());
 
             return builder.build();
         }
-        else
+        catch (Exception e)
         {
             return response(UNAUTHORIZED);
         }

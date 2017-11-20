@@ -7,7 +7,7 @@ public class InsertQuery extends Query
 {
     public InsertQuery(String queryFile)
     {
-        super(queryFile);
+        super(queryFile, true);
     }
 
     public long execute(Object... parameters) throws Exception

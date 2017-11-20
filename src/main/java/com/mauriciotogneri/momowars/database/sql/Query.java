@@ -10,10 +10,17 @@ import java.sql.Statement;
 public class Query
 {
     private final String queryFile;
+    private final boolean returnGeneratedKeys;
+
+    public Query(String queryFile, boolean returnGeneratedKeys)
+    {
+        this.queryFile = queryFile;
+        this.returnGeneratedKeys = returnGeneratedKeys;
+    }
 
     public Query(String queryFile)
     {
-        this.queryFile = queryFile;
+        this(queryFile, false);
     }
 
     protected String query() throws Exception
@@ -25,7 +32,14 @@ public class Query
     {
         Connection connection = Database.connection();
 
-        return connection.prepareStatement(query(), Statement.RETURN_GENERATED_KEYS);
+        if (returnGeneratedKeys)
+        {
+            return connection.prepareStatement(query(), Statement.RETURN_GENERATED_KEYS);
+        }
+        else
+        {
+            return connection.prepareStatement(query());
+        }
     }
 
     protected PreparedStatement preparedStatement(Object... parameters) throws Exception

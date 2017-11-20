@@ -6,7 +6,7 @@ public class SHA
 {
     public static String sha512(String input) throws Exception
     {
-        MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+        MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
         messageDigest.update(input.getBytes());
 
         StringBuilder builder = new StringBuilder();
