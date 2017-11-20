@@ -38,12 +38,12 @@ public class Database
 
     private static void initialize(Connection connection) throws Exception
     {
-        execute(connection, "account.sql");
+        execute(connection, SQL.Table.ACCOUNT);
     }
 
     private static void execute(Connection connection, String sqlFile) throws Exception
     {
-        String query = Resources.content(String.format("sql/tables/%s", sqlFile));
+        String query = Resources.content(sqlFile);
         connection.createStatement().execute(query);
     }
 }

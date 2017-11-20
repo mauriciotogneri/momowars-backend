@@ -1,4 +1,4 @@
-package com.mauriciotogneri.momowars.database;
+package com.mauriciotogneri.momowars.database.queries;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
