@@ -1,6 +1,7 @@
 package com.mauriciotogneri.momowars.database.sql;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class InsertQuery extends Query
 {
@@ -9,10 +10,20 @@ public class InsertQuery extends Query
         super(queryFile);
     }
 
-    public int execute(Object... parameters) throws Exception
+    public long execute(Object... parameters) throws Exception
     {
         PreparedStatement statement = preparedStatement(parameters);
+        statement.executeUpdate();
 
-        return statement.executeUpdate();
+        ResultSet resultSet = statement.getGeneratedKeys();
+
+        if (resultSet.next())
+        {
+            return resultSet.getLong(1);
+        }
+        else
+        {
+            throw new RuntimeException();
+        }
     }
 }

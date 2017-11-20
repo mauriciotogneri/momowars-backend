@@ -2,9 +2,10 @@ package com.mauriciotogneri.momowars.endpoint.account;
 
 import com.mauriciotogneri.jerry.EndPoint;
 import com.mauriciotogneri.jerry.EntityProvider;
-import com.mauriciotogneri.momowars.database.SQL.AccountQueries;
-import com.mauriciotogneri.momowars.database.sql.InsertQuery;
+import com.mauriciotogneri.momowars.dao.AccountDao;
 import com.mauriciotogneri.momowars.endpoint.session.CreateSession;
+import com.mauriciotogneri.momowars.model.Account;
+import com.mauriciotogneri.momowars.model.exceptions.AccountExistsException;
 import com.mauriciotogneri.momowars.utils.SHA;
 
 import javax.ws.rs.Consumes;
@@ -25,24 +26,18 @@ public class CreateAccount extends EndPoint
     @Path("/v1/account")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createAccount(CreateAccountRequest account) throws Exception
+    public Response createAccount(CreateAccountRequest accountRequest) throws Exception
     {
-        InsertQuery query = new InsertQuery(AccountQueries.INSERT);
-
         try
         {
-            query.execute(
-                    account.email,
-                    account.nickname,
-                    SHA.sha512(account.password),
-                    CreateSession.newSessionId()
-            );
-
-            // TODO: read account
+            Account account = AccountDao.create(accountRequest.email,
+                                                accountRequest.nickname,
+                                                SHA.sha512(accountRequest.password),
+                                                CreateSession.newSessionToken());
 
             return response(CREATED, account);
         }
-        catch (Exception e)
+        catch (AccountExistsException e)
         {
             return response(CONFLICT);
         }

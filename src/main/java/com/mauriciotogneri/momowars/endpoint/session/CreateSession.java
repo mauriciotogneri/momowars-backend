@@ -37,7 +37,7 @@ public class CreateSession extends EndPoint
         if (result.hasRows())
         {
             ResponseBuilder builder = Response.status(OK);
-            builder.header(Api.HEADER_SESSION_TOKEN, newSessionId());
+            builder.header(Api.HEADER_SESSION_TOKEN, newSessionToken());
 
             return builder.build();
         }
@@ -47,7 +47,7 @@ public class CreateSession extends EndPoint
         }
     }
 
-    public static String newSessionId() throws Exception
+    public static String newSessionToken() throws Exception
     {
         return SHA.sha512(UUID.randomUUID().toString());
     }

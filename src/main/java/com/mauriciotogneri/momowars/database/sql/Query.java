@@ -5,6 +5,7 @@ import com.mauriciotogneri.momowars.utils.Resources;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 
 public class Query
 {
@@ -24,7 +25,7 @@ public class Query
     {
         Connection connection = Database.connection();
 
-        return connection.prepareStatement(query());
+        return connection.prepareStatement(query(), Statement.RETURN_GENERATED_KEYS);
     }
 
     protected PreparedStatement preparedStatement(Object... parameters) throws Exception
