@@ -24,6 +24,8 @@ public class Database
     {
         URI dbUri = new URI(System.getenv("DATABASE_URL"));
 
+        System.out.println(System.getenv("JDBC_DATABASE_URL"));
+
         String username = dbUri.getUserInfo().split(":")[0];
         String password = dbUri.getUserInfo().split(":")[1];
         String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
