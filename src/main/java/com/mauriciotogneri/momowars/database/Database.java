@@ -2,29 +2,38 @@ package com.mauriciotogneri.momowars.database;
 
 import com.mauriciotogneri.momowars.utils.Resources;
 
+import org.apache.commons.dbcp2.BasicDataSource;
+
 import java.sql.Connection;
-import java.sql.DriverManager;
+
+import javax.sql.DataSource;
 
 public class Database
 {
-    private static Connection connection;
+    private static DataSource connectionPool;
+
+    private static final int CONNECTION_POOL_SIZE = 3;
 
     public static synchronized Connection connection() throws Exception
     {
-        if (connection == null)
+        if (connectionPool == null)
         {
-            connection = createConnection();
+            connectionPool = dataSource();
         }
 
-        return connection;
+        return connectionPool.getConnection();
     }
 
-    private static Connection createConnection() throws Exception
+    public static DataSource dataSource() throws Exception
     {
-        Connection connection = DriverManager.getConnection(System.getenv("JDBC_DATABASE_URL"));
-        initialize(connection);
+        BasicDataSource connectionPool = new BasicDataSource();
+        connectionPool.setDriverClassName("org.postgresql.Driver");
+        connectionPool.setUrl(System.getenv("JDBC_DATABASE_URL"));
+        connectionPool.setInitialSize(CONNECTION_POOL_SIZE);
 
-        return connection;
+        initialize(connectionPool.getConnection());
+
+        return connectionPool;
     }
 
     private static void initialize(Connection connection) throws Exception

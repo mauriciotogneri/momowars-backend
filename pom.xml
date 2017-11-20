@@ -95,9 +95,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.mauriciotogneri</groupId>
-            <artifactId>querylite</artifactId>
-            <version>0.5.0</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-dbcp2</artifactId>
+            <version>2.1.1</version>
         </dependency>
 
     </dependencies>
