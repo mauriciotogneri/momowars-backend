@@ -1,4 +1,4 @@
-package com.mauriciotogneri.momowars;
+package com.mauriciotogneri.momowars.api;
 
 public class Api
 {

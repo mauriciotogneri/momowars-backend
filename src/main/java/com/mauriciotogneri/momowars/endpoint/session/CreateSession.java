@@ -1,8 +1,8 @@
 package com.mauriciotogneri.momowars.endpoint.session;
 
-import com.mauriciotogneri.jerry.EndPoint;
 import com.mauriciotogneri.jerry.EntityProvider;
-import com.mauriciotogneri.momowars.Api;
+import com.mauriciotogneri.momowars.api.Api;
+import com.mauriciotogneri.momowars.api.BaseEndPoint;
 import com.mauriciotogneri.momowars.dao.AccountDao;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.DatabaseException;
@@ -15,7 +15,6 @@ import java.util.UUID;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
@@ -24,15 +23,18 @@ import static javax.ws.rs.core.Response.Status.OK;
 import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
 
 @Path("/api")
-public class CreateSession extends EndPoint
+public class CreateSession extends BaseEndPoint
 {
     @POST
     @Path("/v1/session")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createSession(CreateSessionRequest sessionRequest) throws WebApplicationException
+    public Response createSession(CreateSessionRequest sessionRequest)
     {
-        DatabaseConnection connection = new DatabaseConnection();
+        return process(connection -> createSession(connection, sessionRequest));
+    }
 
+    private Response createSession(DatabaseConnection connection, CreateSessionRequest sessionRequest) throws DatabaseException
+    {
         try
         {
             AccountDao accountDao = new AccountDao(connection);
@@ -42,8 +44,6 @@ public class CreateSession extends EndPoint
 
             accountDao.updateSessionToken(account.id(), sessionToken);
 
-            connection.commit();
-
             return Response
                     .status(OK)
                     .header(Api.HEADER_SESSION_TOKEN, sessionToken)
@@ -52,14 +52,6 @@ public class CreateSession extends EndPoint
         catch (AccountNotFoundException e)
         {
             return response(UNAUTHORIZED);
-        }
-        catch (DatabaseException e)
-        {
-            throw connection.rollback();
-        }
-        finally
-        {
-            connection.close();
         }
     }
 

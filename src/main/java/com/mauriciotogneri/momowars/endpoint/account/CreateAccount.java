@@ -1,10 +1,9 @@
 package com.mauriciotogneri.momowars.endpoint.account;
 
-import com.mauriciotogneri.jerry.EndPoint;
 import com.mauriciotogneri.jerry.EntityProvider;
+import com.mauriciotogneri.momowars.api.BaseEndPoint;
 import com.mauriciotogneri.momowars.dao.AccountDao;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
-import com.mauriciotogneri.momowars.database.DatabaseException;
 import com.mauriciotogneri.momowars.endpoint.session.CreateSession;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.exceptions.AccountAlreadyExistsException;
@@ -21,7 +20,7 @@ import static javax.ws.rs.core.Response.Status.CONFLICT;
 import static javax.ws.rs.core.Response.Status.CREATED;
 
 @Path("/api")
-public class CreateAccount extends EndPoint
+public class CreateAccount extends BaseEndPoint
 {
     @POST
     @Path("/v1/account")
@@ -29,8 +28,11 @@ public class CreateAccount extends EndPoint
     @Produces(MediaType.APPLICATION_JSON)
     public Response createAccount(CreateAccountRequest accountRequest)
     {
-        DatabaseConnection connection = new DatabaseConnection();
+        return process(connection -> createAccount(connection, accountRequest));
+    }
 
+    private Response createAccount(DatabaseConnection connection, CreateAccountRequest accountRequest)
+    {
         try
         {
             AccountDao accountDao = new AccountDao(connection);
@@ -39,21 +41,11 @@ public class CreateAccount extends EndPoint
                                                 accountRequest.password,
                                                 CreateSession.newSessionToken());
 
-            connection.commit();
-
             return response(CREATED, account);
         }
         catch (AccountAlreadyExistsException e)
         {
             return response(CONFLICT);
-        }
-        catch (DatabaseException e)
-        {
-            throw connection.rollback();
-        }
-        finally
-        {
-            connection.close();
         }
     }
 

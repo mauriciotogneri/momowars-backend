@@ -1,7 +1,7 @@
 package com.mauriciotogneri.momowars.endpoint.account;
 
-import com.mauriciotogneri.jerry.EndPoint;
-import com.mauriciotogneri.momowars.Api;
+import com.mauriciotogneri.momowars.api.Api;
+import com.mauriciotogneri.momowars.api.BaseEndPoint;
 import com.mauriciotogneri.momowars.dao.AccountDao;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.DatabaseException;
@@ -19,35 +19,28 @@ import static javax.ws.rs.core.Response.Status.OK;
 import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
 
 @Path("/api")
-public class GetAccount extends EndPoint
+public class GetAccount extends BaseEndPoint
 {
     @GET
     @Path("/v1/account")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAccount(@HeaderParam(Api.HEADER_SESSION_TOKEN) String sessionToken)
     {
-        DatabaseConnection connection = new DatabaseConnection();
+        return process(connection -> getAccount(connection, sessionToken));
+    }
 
+    private Response getAccount(DatabaseConnection connection, String sessionToken) throws DatabaseException
+    {
         try
         {
             AccountDao accountDao = new AccountDao(connection);
             Account account = accountDao.bySessionToken(sessionToken);
-
-            connection.commit();
 
             return response(OK, account);
         }
         catch (AccountNotFoundException e)
         {
             return response(UNAUTHORIZED);
-        }
-        catch (DatabaseException e)
-        {
-            throw connection.rollback();
-        }
-        finally
-        {
-            connection.close();
         }
     }
 }
