@@ -7,6 +7,7 @@ import com.mauriciotogneri.momowars.dao.AccountDao;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.utils.SHA;
 
+import java.io.IOException;
 import java.util.UUID;
 
 import javax.ws.rs.Consumes;
@@ -26,7 +27,7 @@ public class CreateSession extends EndPoint
     @POST
     @Path("/v1/session")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createSession(CreateSessionRequest sessionRequest) throws Exception
+    public Response createSession(CreateSessionRequest sessionRequest)
     {
         try
         {
@@ -47,7 +48,7 @@ public class CreateSession extends EndPoint
         }
     }
 
-    public static String newSessionToken() throws Exception
+    public static String newSessionToken() throws IOException
     {
         return SHA.sha512(UUID.randomUUID().toString());
     }

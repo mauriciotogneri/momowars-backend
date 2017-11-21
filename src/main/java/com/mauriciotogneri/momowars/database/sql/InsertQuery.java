@@ -1,5 +1,7 @@
 package com.mauriciotogneri.momowars.database.sql;
 
+import com.mauriciotogneri.momowars.database.DatabaseException;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -10,20 +12,27 @@ public class InsertQuery extends Query
         super(queryFile, true);
     }
 
-    public long execute(Object... parameters) throws Exception
+    public long execute(Object... parameters) throws DatabaseException
     {
-        PreparedStatement statement = preparedStatement(parameters);
-        statement.executeUpdate();
-
-        ResultSet resultSet = statement.getGeneratedKeys();
-
-        if (resultSet.next())
+        try
         {
-            return resultSet.getLong(1);
+            PreparedStatement statement = preparedStatement(parameters);
+            statement.executeUpdate();
+
+            ResultSet resultSet = statement.getGeneratedKeys();
+
+            if (resultSet.next())
+            {
+                return resultSet.getLong(1);
+            }
+            else
+            {
+                throw new RuntimeException();
+            }
         }
-        else
+        catch (Exception e)
         {
-            throw new RuntimeException();
+            throw new DatabaseException(e);
         }
     }
 }

@@ -1,8 +1,10 @@
 package com.mauriciotogneri.momowars.endpoint.account;
 
 import com.mauriciotogneri.jerry.EndPoint;
+import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
 import com.mauriciotogneri.momowars.Api;
 import com.mauriciotogneri.momowars.dao.AccountDao;
+import com.mauriciotogneri.momowars.database.DatabaseException;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.exceptions.AccountNotFoundException;
 
@@ -22,7 +24,7 @@ public class GetAccount extends EndPoint
     @GET
     @Path("/v1/account")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAccount(@HeaderParam(Api.HEADER_SESSION_TOKEN) String sessionToken) throws Exception
+    public Response getAccount(@HeaderParam(Api.HEADER_SESSION_TOKEN) String sessionToken)
     {
         try
         {
@@ -33,6 +35,11 @@ public class GetAccount extends EndPoint
         catch (AccountNotFoundException e)
         {
             return response(UNAUTHORIZED);
+        }
+        catch (DatabaseException e)
+        {
+            // TODO
+            throw new InternalServerErrorException();
         }
     }
 }

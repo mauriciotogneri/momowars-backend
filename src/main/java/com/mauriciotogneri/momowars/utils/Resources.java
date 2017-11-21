@@ -1,12 +1,13 @@
 package com.mauriciotogneri.momowars.utils;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 public class Resources
 {
-    public static String content(String path) throws Exception
+    public static String content(String path) throws IOException
     {
         ClassLoader classLoader = Resources.class.getClassLoader();
         InputStream inputStream = classLoader.getResourceAsStream(path);

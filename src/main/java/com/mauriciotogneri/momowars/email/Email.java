@@ -1,5 +1,6 @@
 package com.mauriciotogneri.momowars.email;
 
+import java.io.IOException;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -54,14 +55,21 @@ public class Email
         });
     }
 
-    public void send() throws Exception
+    public void send() throws IOException
     {
-        MimeMessage mimeMessage = new MimeMessage(session());
-        mimeMessage.setFrom(new InternetAddress(from));
-        mimeMessage.addRecipient(RecipientType.TO, new InternetAddress(to));
-        mimeMessage.setSubject(subject);
-        mimeMessage.setContent(content, "text/html");
+        try
+        {
+            MimeMessage mimeMessage = new MimeMessage(session());
+            mimeMessage.setFrom(new InternetAddress(from));
+            mimeMessage.addRecipient(RecipientType.TO, new InternetAddress(to));
+            mimeMessage.setSubject(subject);
+            mimeMessage.setContent(content, "text/html");
 
-        Transport.send(mimeMessage);
+            Transport.send(mimeMessage);
+        }
+        catch (Exception e)
+        {
+            throw new IOException(e);
+        }
     }
 }

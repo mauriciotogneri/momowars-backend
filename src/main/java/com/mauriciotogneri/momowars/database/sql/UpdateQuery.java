@@ -1,5 +1,7 @@
 package com.mauriciotogneri.momowars.database.sql;
 
+import com.mauriciotogneri.momowars.database.DatabaseException;
+
 import java.sql.PreparedStatement;
 
 public class UpdateQuery extends Query
@@ -9,10 +11,17 @@ public class UpdateQuery extends Query
         super(queryFile, true);
     }
 
-    public int execute(Object... parameters) throws Exception
+    public int execute(Object... parameters) throws DatabaseException
     {
-        PreparedStatement statement = preparedStatement(parameters);
+        try
+        {
+            PreparedStatement statement = preparedStatement(parameters);
 
-        return statement.executeUpdate();
+            return statement.executeUpdate();
+        }
+        catch (Exception e)
+        {
+            throw new DatabaseException(e);
+        }
     }
 }

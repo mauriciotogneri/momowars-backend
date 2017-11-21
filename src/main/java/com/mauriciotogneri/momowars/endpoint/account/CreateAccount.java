@@ -2,10 +2,14 @@ package com.mauriciotogneri.momowars.endpoint.account;
 
 import com.mauriciotogneri.jerry.EndPoint;
 import com.mauriciotogneri.jerry.EntityProvider;
+import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
 import com.mauriciotogneri.momowars.dao.AccountDao;
+import com.mauriciotogneri.momowars.database.DatabaseException;
 import com.mauriciotogneri.momowars.endpoint.session.CreateSession;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.exceptions.AccountAlreadyExistsException;
+
+import java.io.IOException;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -25,7 +29,7 @@ public class CreateAccount extends EndPoint
     @Path("/v1/account")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createAccount(CreateAccountRequest accountRequest) throws Exception
+    public Response createAccount(CreateAccountRequest accountRequest) throws IOException
     {
         try
         {
@@ -39,6 +43,11 @@ public class CreateAccount extends EndPoint
         catch (AccountAlreadyExistsException e)
         {
             return response(CONFLICT);
+        }
+        catch (DatabaseException e)
+        {
+            // TODO
+            throw new InternalServerErrorException();
         }
     }
 

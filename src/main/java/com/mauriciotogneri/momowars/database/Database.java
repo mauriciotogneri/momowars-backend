@@ -12,17 +12,24 @@ public class Database
 
     private static final int CONNECTION_POOL_SIZE = 3;
 
-    public static synchronized Connection connection() throws Exception
+    public static synchronized Connection newConnection() throws DatabaseException
     {
-        if (connectionPool == null)
+        try
         {
-            connectionPool = dataSource();
-        }
+            if (connectionPool == null)
+            {
+                connectionPool = dataSource();
+            }
 
-        return connectionPool.getConnection();
+            return connectionPool.getConnection();
+        }
+        catch (Exception e)
+        {
+            throw new DatabaseException(e);
+        }
     }
 
-    public static HikariDataSource dataSource() throws Exception
+    private static HikariDataSource dataSource() throws Exception
     {
         connectionPool = new HikariDataSource();
         connectionPool.setJdbcUrl(System.getenv("JDBC_DATABASE_URL"));
