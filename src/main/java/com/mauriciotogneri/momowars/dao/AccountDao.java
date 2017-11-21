@@ -7,7 +7,7 @@ import com.mauriciotogneri.momowars.database.sql.QueryResult;
 import com.mauriciotogneri.momowars.database.sql.SelectQuery;
 import com.mauriciotogneri.momowars.database.sql.UpdateQuery;
 import com.mauriciotogneri.momowars.model.Account;
-import com.mauriciotogneri.momowars.model.exceptions.AccountExistsException;
+import com.mauriciotogneri.momowars.model.exceptions.AccountAlreadyExistsException;
 import com.mauriciotogneri.momowars.model.exceptions.AccountNotFoundException;
 import com.mauriciotogneri.momowars.utils.SHA;
 
@@ -73,7 +73,7 @@ public class AccountDao
         }
         catch (Exception e)
         {
-            throw new AccountExistsException();
+            throw new AccountAlreadyExistsException();
         }
     }
 }

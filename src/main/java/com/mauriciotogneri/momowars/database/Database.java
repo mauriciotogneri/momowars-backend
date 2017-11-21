@@ -2,16 +2,13 @@ package com.mauriciotogneri.momowars.database;
 
 import com.mauriciotogneri.momowars.database.SQL.TableQueries;
 import com.mauriciotogneri.momowars.utils.Resources;
-
-import org.apache.commons.dbcp2.BasicDataSource;
+import com.zaxxer.hikari.HikariDataSource;
 
 import java.sql.Connection;
 
-import javax.sql.DataSource;
-
 public class Database
 {
-    private static DataSource connectionPool;
+    private static HikariDataSource connectionPool;
 
     private static final int CONNECTION_POOL_SIZE = 3;
 
@@ -25,12 +22,12 @@ public class Database
         return connectionPool.getConnection();
     }
 
-    public static DataSource dataSource() throws Exception
+    public static HikariDataSource dataSource() throws Exception
     {
-        BasicDataSource connectionPool = new BasicDataSource();
-        connectionPool.setDriverClassName("org.postgresql.Driver");
-        connectionPool.setUrl(System.getenv("JDBC_DATABASE_URL"));
-        connectionPool.setInitialSize(CONNECTION_POOL_SIZE);
+        connectionPool = new HikariDataSource();
+        connectionPool.setJdbcUrl(System.getenv("JDBC_DATABASE_URL"));
+        connectionPool.setMaximumPoolSize(CONNECTION_POOL_SIZE);
+        connectionPool.setAutoCommit(false);
 
         initialize(connectionPool.getConnection());
 

@@ -7,6 +7,6 @@ public class Main extends Jerry
     public static void main(String[] args) throws Exception
     {
         Main main = new Main();
-        main.start(Integer.valueOf(System.getenv("PORT")), "com.mauriciotogneri.momowars");
+        main.start(Integer.valueOf(System.getenv("PORT")), main.getClass().getPackage().getName());
     }
 }

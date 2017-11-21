@@ -5,7 +5,7 @@ import com.mauriciotogneri.jerry.EntityProvider;
 import com.mauriciotogneri.momowars.dao.AccountDao;
 import com.mauriciotogneri.momowars.endpoint.session.CreateSession;
 import com.mauriciotogneri.momowars.model.Account;
-import com.mauriciotogneri.momowars.model.exceptions.AccountExistsException;
+import com.mauriciotogneri.momowars.model.exceptions.AccountAlreadyExistsException;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -36,7 +36,7 @@ public class CreateAccount extends EndPoint
 
             return response(CREATED, account);
         }
-        catch (AccountExistsException e)
+        catch (AccountAlreadyExistsException e)
         {
             return response(CONFLICT);
         }
