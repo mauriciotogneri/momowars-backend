@@ -1,10 +1,8 @@
 package com.mauriciotogneri.momowars.database.sql;
 
-import com.mauriciotogneri.momowars.database.Database;
 import com.mauriciotogneri.momowars.database.DatabaseException;
 import com.mauriciotogneri.momowars.utils.Resources;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -12,29 +10,29 @@ import java.sql.Statement;
 
 public class Query
 {
+    private final Connection connection;
     private final String queryFile;
     private final boolean returnGeneratedKeys;
 
-    public Query(String queryFile, boolean returnGeneratedKeys)
+    public Query(Connection connection, String queryFile, boolean returnGeneratedKeys)
     {
+        this.connection = connection;
         this.queryFile = queryFile;
         this.returnGeneratedKeys = returnGeneratedKeys;
     }
 
-    public Query(String queryFile)
+    public Query(Connection connection, String queryFile)
     {
-        this(queryFile, false);
+        this(connection, queryFile, false);
     }
 
-    private String query() throws IOException
+    private String query()
     {
         return Resources.content(queryFile);
     }
 
-    private PreparedStatement preparedStatement() throws DatabaseException, IOException, SQLException
+    private PreparedStatement preparedStatement() throws DatabaseException, SQLException
     {
-        Connection connection = Database.newConnection();
-
         if (returnGeneratedKeys)
         {
             return connection.prepareStatement(query(), Statement.RETURN_GENERATED_KEYS);

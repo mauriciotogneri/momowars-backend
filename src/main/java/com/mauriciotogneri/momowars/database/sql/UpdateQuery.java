@@ -2,13 +2,14 @@ package com.mauriciotogneri.momowars.database.sql;
 
 import com.mauriciotogneri.momowars.database.DatabaseException;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 public class UpdateQuery extends Query
 {
-    public UpdateQuery(String queryFile)
+    public UpdateQuery(Connection connection, String queryFile)
     {
-        super(queryFile, true);
+        super(connection, queryFile, true);
     }
 
     public int execute(Object... parameters) throws DatabaseException

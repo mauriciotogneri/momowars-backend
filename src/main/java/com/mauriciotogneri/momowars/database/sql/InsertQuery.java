@@ -2,14 +2,15 @@ package com.mauriciotogneri.momowars.database.sql;
 
 import com.mauriciotogneri.momowars.database.DatabaseException;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class InsertQuery extends Query
 {
-    public InsertQuery(String queryFile)
+    public InsertQuery(Connection connection, String queryFile)
     {
-        super(queryFile, true);
+        super(connection, queryFile, true);
     }
 
     public long execute(Object... parameters) throws DatabaseException
@@ -27,7 +28,7 @@ public class InsertQuery extends Query
             }
             else
             {
-                throw new RuntimeException();
+                throw new DatabaseException();
             }
         }
         catch (Exception e)

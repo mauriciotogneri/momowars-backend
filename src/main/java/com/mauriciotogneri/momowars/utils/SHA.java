@@ -1,11 +1,12 @@
 package com.mauriciotogneri.momowars.utils;
 
-import java.io.IOException;
+import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
+
 import java.security.MessageDigest;
 
 public class SHA
 {
-    public static String sha512(String input) throws IOException
+    public static String sha512(String input)
     {
         try
         {
@@ -23,7 +24,7 @@ public class SHA
         }
         catch (Exception e)
         {
-            throw new IOException(e);
+            throw new InternalServerErrorException(e);
         }
     }
 }

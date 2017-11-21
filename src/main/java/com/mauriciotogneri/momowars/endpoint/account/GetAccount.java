@@ -1,9 +1,9 @@
 package com.mauriciotogneri.momowars.endpoint.account;
 
 import com.mauriciotogneri.jerry.EndPoint;
-import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
 import com.mauriciotogneri.momowars.Api;
 import com.mauriciotogneri.momowars.dao.AccountDao;
+import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.DatabaseException;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.exceptions.AccountNotFoundException;
@@ -26,9 +26,14 @@ public class GetAccount extends EndPoint
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAccount(@HeaderParam(Api.HEADER_SESSION_TOKEN) String sessionToken)
     {
+        DatabaseConnection connection = new DatabaseConnection();
+
         try
         {
-            Account account = AccountDao.bySessionToken(sessionToken);
+            AccountDao accountDao = new AccountDao(connection);
+            Account account = accountDao.bySessionToken(sessionToken);
+
+            connection.commit();
 
             return response(OK, account);
         }
@@ -38,8 +43,11 @@ public class GetAccount extends EndPoint
         }
         catch (DatabaseException e)
         {
-            // TODO
-            throw new InternalServerErrorException();
+            throw connection.rollback();
+        }
+        finally
+        {
+            connection.close();
         }
     }
 }

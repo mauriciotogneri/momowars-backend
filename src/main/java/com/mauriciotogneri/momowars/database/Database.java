@@ -1,5 +1,6 @@
 package com.mauriciotogneri.momowars.database;
 
+import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
 import com.mauriciotogneri.momowars.database.SQL.TableQueries;
 import com.mauriciotogneri.momowars.utils.Resources;
 import com.zaxxer.hikari.HikariDataSource;
@@ -12,7 +13,7 @@ public class Database
 
     private static final int CONNECTION_POOL_SIZE = 3;
 
-    public static synchronized Connection newConnection() throws DatabaseException
+    public static synchronized Connection newConnection()
     {
         try
         {
@@ -25,7 +26,7 @@ public class Database
         }
         catch (Exception e)
         {
-            throw new DatabaseException(e);
+            throw new InternalServerErrorException(e);
         }
     }
 

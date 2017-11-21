@@ -2,15 +2,16 @@ package com.mauriciotogneri.momowars.database.sql;
 
 import com.mauriciotogneri.momowars.database.DatabaseException;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 public class SelectQuery<T> extends Query
 {
     private final Class<T> clazz;
 
-    public SelectQuery(String queryFile, Class<T> clazz)
+    public SelectQuery(Connection connection, String queryFile, Class<T> clazz)
     {
-        super(queryFile);
+        super(connection, queryFile);
 
         this.clazz = clazz;
     }

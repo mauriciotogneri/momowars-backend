@@ -4,18 +4,20 @@ import com.mauriciotogneri.jerry.EndPoint;
 import com.mauriciotogneri.jerry.EntityProvider;
 import com.mauriciotogneri.momowars.Api;
 import com.mauriciotogneri.momowars.dao.AccountDao;
+import com.mauriciotogneri.momowars.database.DatabaseConnection;
+import com.mauriciotogneri.momowars.database.DatabaseException;
 import com.mauriciotogneri.momowars.model.Account;
+import com.mauriciotogneri.momowars.model.exceptions.AccountNotFoundException;
 import com.mauriciotogneri.momowars.utils.SHA;
 
-import java.io.IOException;
 import java.util.UUID;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.ext.Provider;
 
 import static javax.ws.rs.core.Response.Status.OK;
@@ -27,28 +29,41 @@ public class CreateSession extends EndPoint
     @POST
     @Path("/v1/session")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createSession(CreateSessionRequest sessionRequest)
+    public Response createSession(CreateSessionRequest sessionRequest) throws WebApplicationException
     {
+        DatabaseConnection connection = new DatabaseConnection();
+
         try
         {
-            Account account = AccountDao.byCredentials(sessionRequest.email, sessionRequest.password);
+            AccountDao accountDao = new AccountDao(connection);
+            Account account = accountDao.byCredentials(sessionRequest.email, sessionRequest.password);
 
             String sessionToken = newSessionToken();
 
-            AccountDao.updateSessionToken(account.id(), sessionToken);
+            accountDao.updateSessionToken(account.id(), sessionToken);
 
-            ResponseBuilder builder = Response.status(OK);
-            builder.header(Api.HEADER_SESSION_TOKEN, sessionToken);
+            connection.commit();
 
-            return builder.build();
+            return Response
+                    .status(OK)
+                    .header(Api.HEADER_SESSION_TOKEN, sessionToken)
+                    .build();
         }
-        catch (Exception e)
+        catch (AccountNotFoundException e)
         {
             return response(UNAUTHORIZED);
         }
+        catch (DatabaseException e)
+        {
+            throw connection.rollback();
+        }
+        finally
+        {
+            connection.close();
+        }
     }
 
-    public static String newSessionToken() throws IOException
+    public static String newSessionToken()
     {
         return SHA.sha512(UUID.randomUUID().toString());
     }
