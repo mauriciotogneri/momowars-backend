@@ -1,9 +1,12 @@
 package com.mauriciotogneri.momowars.database.sql;
 
 import com.mauriciotogneri.momowars.database.DatabaseException;
+import com.mauriciotogneri.momowars.utils.Resources;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.List;
 
 public class SelectQuery<T> extends Query
 {
@@ -16,13 +19,19 @@ public class SelectQuery<T> extends Query
         this.clazz = clazz;
     }
 
-    public QueryResult<T> execute(Object... parameters) throws DatabaseException
+    public List<T> execute(Object... parameters) throws DatabaseException
     {
         try
         {
             PreparedStatement statement = preparedStatement(parameters);
+            ResultSet rows = statement.executeQuery();
 
-            return new QueryResult<>(statement.executeQuery(), clazz);
+            QueryResult<T> result = new QueryResult<>(rows, clazz);
+
+            Resources.close(rows);
+            Resources.close(statement);
+
+            return result.rows();
         }
         catch (Exception e)
         {

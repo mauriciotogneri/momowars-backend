@@ -18,29 +18,16 @@ public class QueryResult<T>
         this.clazz = clazz;
     }
 
-    public boolean hasRows()
-    {
-        try
-        {
-            return rows.next();
-        }
-        catch (Exception e)
-        {
-            return false;
-        }
-    }
-
     public List<T> rows() throws DatabaseException
     {
-        List<T> result = new ArrayList<>();
+        int numberOfRows = numberOfRows(rows);
+        List<T> result = new ArrayList<>(numberOfRows);
 
         try
         {
-            rows.beforeFirst();
-
             while (rows.next())
             {
-                result.add(row());
+                result.add(row(rows, clazz));
             }
         }
         catch (Exception e)
@@ -51,9 +38,24 @@ public class QueryResult<T>
         return result;
     }
 
-    public T row() throws DatabaseException
+    private int numberOfRows(ResultSet rows)
     {
-        return row(rows, clazz);
+        int numberOfRows = 0;
+
+        try
+        {
+            if (rows.last())
+            {
+                numberOfRows = rows.getRow();
+                rows.beforeFirst();
+            }
+        }
+        catch (Exception e)
+        {
+            // ignore
+        }
+
+        return numberOfRows;
     }
 
     private T row(ResultSet rows, Class<T> clazz) throws DatabaseException
