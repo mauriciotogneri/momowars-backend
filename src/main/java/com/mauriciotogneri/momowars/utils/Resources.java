@@ -31,4 +31,16 @@ public class Resources
             throw new InternalServerErrorException(e);
         }
     }
+
+    public static void close(AutoCloseable closeable)
+    {
+        try
+        {
+            closeable.close();
+        }
+        catch (Exception e)
+        {
+            // ignore
+        }
+    }
 }

@@ -4,31 +4,59 @@ import com.mauriciotogneri.momowars.database.DatabaseException;
 
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class QueryResult<T>
 {
-    private final ResultSet resultSet;
+    private final ResultSet rows;
     private final Class<T> clazz;
 
-    public QueryResult(ResultSet resultSet, Class<T> clazz)
+    public QueryResult(ResultSet rows, Class<T> clazz)
     {
-        this.resultSet = resultSet;
+        this.rows = rows;
         this.clazz = clazz;
     }
 
-    public boolean hasRows() throws DatabaseException
+    public boolean hasRows()
     {
         try
         {
-            return resultSet.next();
+            return rows.next();
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
+    public List<T> rows() throws DatabaseException
+    {
+        List<T> result = new ArrayList<>();
+
+        try
+        {
+            rows.beforeFirst();
+
+            while (rows.next())
+            {
+                result.add(row());
+            }
         }
         catch (Exception e)
         {
             throw new DatabaseException(e);
         }
+
+        return result;
     }
 
     public T row() throws DatabaseException
+    {
+        return row(rows, clazz);
+    }
+
+    private T row(ResultSet rows, Class<T> clazz) throws DatabaseException
     {
         try
         {
@@ -43,27 +71,27 @@ public class QueryResult<T>
 
                 if (field.getType().equals(String.class))
                 {
-                    field.set(object, resultSet.getString(index));
+                    field.set(object, rows.getString(index));
                 }
                 else if (field.getType().equals(Boolean.class))
                 {
-                    field.set(object, resultSet.getBoolean(index));
+                    field.set(object, rows.getBoolean(index));
                 }
                 else if (field.getType().equals(Integer.class))
                 {
-                    field.set(object, resultSet.getInt(index));
+                    field.set(object, rows.getInt(index));
                 }
                 else if (field.getType().equals(Long.class))
                 {
-                    field.set(object, resultSet.getLong(index));
+                    field.set(object, rows.getLong(index));
                 }
                 else if (field.getType().equals(Float.class))
                 {
-                    field.set(object, resultSet.getFloat(index));
+                    field.set(object, rows.getFloat(index));
                 }
                 else if (field.getType().equals(Double.class))
                 {
-                    field.set(object, resultSet.getDouble(index));
+                    field.set(object, rows.getDouble(index));
                 }
             }
 

@@ -1,6 +1,7 @@
 package com.mauriciotogneri.momowars.database.sql;
 
 import com.mauriciotogneri.momowars.database.DatabaseException;
+import com.mauriciotogneri.momowars.utils.Resources;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,11 +22,16 @@ public class InsertQuery extends Query
             PreparedStatement statement = preparedStatement(parameters);
             statement.executeUpdate();
 
-            ResultSet resultSet = statement.getGeneratedKeys();
+            ResultSet rows = statement.getGeneratedKeys();
 
-            if (resultSet.next())
+            if (rows.next())
             {
-                return resultSet.getLong(1);
+                long id = rows.getLong(1);
+
+                Resources.close(rows);
+                Resources.close(statement);
+
+                return id;
             }
             else
             {
