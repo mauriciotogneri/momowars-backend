@@ -25,7 +25,11 @@ public class BaseEndPoint extends EndPoint
         {
             connection.rollback();
 
-            throw  new InternalServerErrorException();
+            throw new InternalServerErrorException();
+        }
+        catch (Exception e)
+        {
+            throw e;
         }
         finally
         {

@@ -25,12 +25,14 @@ public class SelectQuery<T> extends Query
             PreparedStatement statement = preparedStatement(parameters);
             ResultSet rows = statement.executeQuery();
 
-            TypedResultSet<T> result = new TypedResultSet<>(rows, clazz);
+            TypedResultSet<T> typedResultSet = new TypedResultSet<>(rows, clazz);
+
+            QueryResult<T> result = typedResultSet.rows();
 
             Resources.close(rows);
             Resources.close(statement);
 
-            return result.rows();
+            return result;
         }
         catch (Exception e)
         {
