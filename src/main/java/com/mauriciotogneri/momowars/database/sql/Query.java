@@ -6,24 +6,23 @@ import com.mauriciotogneri.momowars.utils.Resources;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class Query
 {
     private final Connection connection;
     private final String queryFile;
-    private final boolean returnGeneratedKeys;
+    private final Integer flag;
 
-    public Query(Connection connection, String queryFile, boolean returnGeneratedKeys)
+    public Query(Connection connection, String queryFile, Integer flag)
     {
         this.connection = connection;
         this.queryFile = queryFile;
-        this.returnGeneratedKeys = returnGeneratedKeys;
+        this.flag = flag;
     }
 
     public Query(Connection connection, String queryFile)
     {
-        this(connection, queryFile, false);
+        this(connection, queryFile, null);
     }
 
     private String query()
@@ -33,9 +32,9 @@ public class Query
 
     private PreparedStatement preparedStatement() throws DatabaseException, SQLException
     {
-        if (returnGeneratedKeys)
+        if (flag != null)
         {
-            return connection.prepareStatement(query(), Statement.RETURN_GENERATED_KEYS);
+            return connection.prepareStatement(query(), flag);
         }
         else
         {

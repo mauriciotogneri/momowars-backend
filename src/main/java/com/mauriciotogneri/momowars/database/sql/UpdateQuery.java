@@ -9,7 +9,7 @@ public class UpdateQuery extends Query
 {
     public UpdateQuery(Connection connection, String queryFile)
     {
-        super(connection, queryFile, true);
+        super(connection, queryFile);
     }
 
     public int execute(Object... parameters) throws DatabaseException
