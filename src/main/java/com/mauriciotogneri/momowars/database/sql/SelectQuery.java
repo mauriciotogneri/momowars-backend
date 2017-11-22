@@ -6,7 +6,6 @@ import com.mauriciotogneri.momowars.utils.Resources;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.List;
 
 public class SelectQuery<T> extends Query
 {
@@ -19,14 +18,14 @@ public class SelectQuery<T> extends Query
         this.clazz = clazz;
     }
 
-    public List<T> execute(Object... parameters) throws DatabaseException
+    public QueryResult<T> execute(Object... parameters) throws DatabaseException
     {
         try
         {
             PreparedStatement statement = preparedStatement(parameters);
             ResultSet rows = statement.executeQuery();
 
-            QueryResult<T> result = new QueryResult<>(rows, clazz);
+            TypedResultSet<T> result = new TypedResultSet<>(rows, clazz);
 
             Resources.close(rows);
             Resources.close(statement);

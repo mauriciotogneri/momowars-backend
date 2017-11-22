@@ -5,6 +5,7 @@ import com.mauriciotogneri.momowars.database.DatabaseException;
 import com.mauriciotogneri.momowars.database.SQL.AccountQueries;
 import com.mauriciotogneri.momowars.database.rows.AccountRow;
 import com.mauriciotogneri.momowars.database.sql.InsertQuery;
+import com.mauriciotogneri.momowars.database.sql.QueryResult;
 import com.mauriciotogneri.momowars.database.sql.SelectQuery;
 import com.mauriciotogneri.momowars.database.sql.UpdateQuery;
 import com.mauriciotogneri.momowars.model.Account;
@@ -13,7 +14,6 @@ import com.mauriciotogneri.momowars.model.exceptions.AccountNotFoundException;
 import com.mauriciotogneri.momowars.utils.SHA;
 
 import java.sql.Connection;
-import java.util.List;
 
 public class AccountDao
 {
@@ -27,11 +27,11 @@ public class AccountDao
     public Account bySessionToken(String sessionToken) throws AccountNotFoundException, DatabaseException
     {
         SelectQuery<AccountRow> query = new SelectQuery<>(connection, AccountQueries.SELECT_BY_SESSION_TOKEN, AccountRow.class);
-        List<AccountRow> result = query.execute(sessionToken);
+        QueryResult<AccountRow> result = query.execute(sessionToken);
 
-        if (!result.isEmpty())
+        if (result.hasElements())
         {
-            return result.get(0).account();
+            return result.first().account();
         }
         else
         {
@@ -43,11 +43,11 @@ public class AccountDao
     {
         SelectQuery<AccountRow> query = new SelectQuery<>(connection, AccountQueries.SELECT_BY_CREDENTIALS, AccountRow.class);
 
-        List<AccountRow> result = query.execute(email, SHA.sha512(password));
+        QueryResult<AccountRow> result = query.execute(email, SHA.sha512(password));
 
-        if (!result.isEmpty())
+        if (result.hasElements())
         {
-            return result.get(0).account();
+            return result.first().account();
         }
         else
         {
