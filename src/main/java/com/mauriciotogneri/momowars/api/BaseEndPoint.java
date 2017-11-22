@@ -11,29 +11,34 @@ public class BaseEndPoint extends EndPoint
 {
     protected Response process(EndPointImplementation endPoint)
     {
-        DatabaseConnection connection = new DatabaseConnection();
-
         try
         {
-            Response response = endPoint.response(connection);
+            DatabaseConnection connection = new DatabaseConnection();
 
-            connection.commit();
+            try
+            {
+                Response response = endPoint.response(connection);
 
-            return response;
-        }
-        catch (DatabaseException e)
-        {
-            connection.rollback();
+                connection.commit();
 
-            throw new InternalServerErrorException();
+                return response;
+            }
+            catch (DatabaseException e)
+            {
+                connection.rollback();
+
+                throw new InternalServerErrorException(e);
+            }
+            finally
+            {
+                connection.close();
+            }
         }
         catch (Exception e)
         {
+            e.printStackTrace();
+
             throw e;
-        }
-        finally
-        {
-            connection.close();
         }
     }
 

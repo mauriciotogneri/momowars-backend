@@ -1,7 +1,9 @@
 package com.mauriciotogneri.momowars.database;
 
 import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
+import com.mauriciotogneri.momowars.database.SQL.RelationshipQueries;
 import com.mauriciotogneri.momowars.database.SQL.TableQueries;
+import com.mauriciotogneri.momowars.database.SQL.TypeQueries;
 import com.mauriciotogneri.momowars.utils.Resources;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -44,7 +46,23 @@ public class Database
 
     private static void initialize(Connection connection) throws Exception
     {
+        execute(connection, TypeQueries.TYPES);
+
+        execute(connection, TableQueries.MAP);
+        execute(connection, TableQueries.CELL);
         execute(connection, TableQueries.ACCOUNT);
+        execute(connection, TableQueries.GAME);
+        execute(connection, TableQueries.PLAYER);
+        execute(connection, TableQueries.UNIT);
+        execute(connection, TableQueries.QUEUE);
+
+        execute(connection, RelationshipQueries.ACCOUNT_GAMES);
+        execute(connection, RelationshipQueries.GAME_PLAYERS);
+        execute(connection, RelationshipQueries.MAP_CELLS);
+        execute(connection, RelationshipQueries.PLAYER_QUEUES);
+        execute(connection, RelationshipQueries.PLAYER_UNITS);
+
+        connection.commit();
     }
 
     private static void execute(Connection connection, String sqlFile) throws Exception
