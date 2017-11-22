@@ -1,6 +1,7 @@
 package com.mauriciotogneri.momowars.api;
 
 import com.mauriciotogneri.jerry.EndPoint;
+import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.DatabaseException;
 
@@ -22,7 +23,9 @@ public class BaseEndPoint extends EndPoint
         }
         catch (DatabaseException e)
         {
-            throw connection.rollback();
+            connection.rollback();
+
+            throw  new InternalServerErrorException();
         }
         finally
         {

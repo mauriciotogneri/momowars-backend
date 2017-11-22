@@ -4,8 +4,6 @@ import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
 
 import java.sql.Connection;
 
-import javax.ws.rs.WebApplicationException;
-
 public class DatabaseConnection
 {
     private final Connection connection;
@@ -44,13 +42,11 @@ public class DatabaseConnection
         }
     }
 
-    public WebApplicationException rollback()
+    public void rollback()
     {
         try
         {
             connection.rollback();
-
-            return new InternalServerErrorException();
         }
         catch (Exception e)
         {
