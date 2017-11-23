@@ -9,6 +9,7 @@ import com.mauriciotogneri.momowars.database.SQL.TypeQueries;
 import com.zaxxer.hikari.HikariDataSource;
 
 import java.sql.Connection;
+import java.sql.Statement;
 
 public class Database
 {
@@ -70,7 +71,9 @@ public class Database
 
     private static void execute(Connection connection, String sqlFile) throws Exception
     {
-        String query = Resource.string(sqlFile);
-        connection.createStatement().execute(query);
+        try (Statement statement = connection.createStatement())
+        {
+            statement.execute(Resource.string(sqlFile));
+        }
     }
 }
