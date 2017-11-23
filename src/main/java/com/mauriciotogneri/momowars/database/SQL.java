@@ -18,6 +18,11 @@ public class SQL
         public static final String UNIT = "sql/tables/unit.sql";
     }
 
+    public class IndexQueries
+    {
+        public static final String ACCOUNT_SESSION = "sql/indices/account_session.sql";
+    }
+
     public class RelationshipQueries
     {
         public static final String ACCOUNT_GAMES = "sql/relationships/account_games.sql";

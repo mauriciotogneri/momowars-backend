@@ -1,0 +1,1 @@
+CREATE INDEX account_session ON account(session);

@@ -2,6 +2,7 @@ package com.mauriciotogneri.momowars.database;
 
 import com.mauriciotogneri.javautils.Resource;
 import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
+import com.mauriciotogneri.momowars.database.SQL.IndexQueries;
 import com.mauriciotogneri.momowars.database.SQL.RelationshipQueries;
 import com.mauriciotogneri.momowars.database.SQL.TableQueries;
 import com.mauriciotogneri.momowars.database.SQL.TypeQueries;
@@ -55,6 +56,8 @@ public class Database
         execute(connection, TableQueries.PLAYER);
         execute(connection, TableQueries.UNIT);
         execute(connection, TableQueries.QUEUE);
+
+        execute(connection, IndexQueries.ACCOUNT_SESSION);
 
         execute(connection, RelationshipQueries.ACCOUNT_GAMES);
         execute(connection, RelationshipQueries.GAME_PLAYERS);
