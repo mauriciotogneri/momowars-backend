@@ -1,6 +1,8 @@
 package com.mauriciotogneri.momowars.endpoint.session;
 
+import com.mauriciotogneri.javautils.Encoding;
 import com.mauriciotogneri.jerry.EntityProvider;
+import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
 import com.mauriciotogneri.momowars.api.Api;
 import com.mauriciotogneri.momowars.api.BaseEndPoint;
 import com.mauriciotogneri.momowars.dao.AccountDao;
@@ -8,8 +10,8 @@ import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.DatabaseException;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.exceptions.AccountNotFoundException;
-import com.mauriciotogneri.momowars.utils.SHA;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
 import javax.ws.rs.Consumes;
@@ -57,7 +59,14 @@ public class CreateSession extends BaseEndPoint
 
     public static String newSessionToken()
     {
-        return SHA.sha512(UUID.randomUUID().toString());
+        try
+        {
+            return Encoding.sha512(UUID.randomUUID().toString());
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            throw new InternalServerErrorException(e);
+        }
     }
 
     @Provider

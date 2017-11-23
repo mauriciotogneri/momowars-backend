@@ -1,5 +1,7 @@
 package com.mauriciotogneri.momowars.dao;
 
+import com.mauriciotogneri.javautils.Encoding;
+import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.DatabaseException;
 import com.mauriciotogneri.momowars.database.SQL.AccountQueries;
@@ -11,8 +13,8 @@ import com.mauriciotogneri.momowars.database.sql.UpdateQuery;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.exceptions.AccountAlreadyExistsException;
 import com.mauriciotogneri.momowars.model.exceptions.AccountNotFoundException;
-import com.mauriciotogneri.momowars.utils.SHA;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 
 public class AccountDao
@@ -41,17 +43,24 @@ public class AccountDao
 
     public Account byCredentials(String email, String password) throws AccountNotFoundException, DatabaseException
     {
-        SelectQuery<AccountRow> query = new SelectQuery<>(connection, AccountQueries.SELECT_BY_CREDENTIALS, AccountRow.class);
-
-        QueryResult<AccountRow> result = query.execute(email, SHA.sha512(password));
-
-        if (result.hasElements())
+        try
         {
-            return result.first().account();
+            SelectQuery<AccountRow> query = new SelectQuery<>(connection, AccountQueries.SELECT_BY_CREDENTIALS, AccountRow.class);
+
+            QueryResult<AccountRow> result = query.execute(email, Encoding.sha512(password));
+
+            if (result.hasElements())
+            {
+                return result.first().account();
+            }
+            else
+            {
+                throw new AccountNotFoundException();
+            }
         }
-        else
+        catch (NoSuchAlgorithmException e)
         {
-            throw new AccountNotFoundException();
+            throw new InternalServerErrorException(e);
         }
     }
 
@@ -76,11 +85,15 @@ public class AccountDao
             long id = query.execute(
                     email,
                     nickname,
-                    SHA.sha512(password),
+                    Encoding.sha512(password),
                     sessionToken
             );
 
             return new Account(id, email, nickname);
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            throw new InternalServerErrorException(e);
         }
         catch (DatabaseException e)
         {
