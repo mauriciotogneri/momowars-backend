@@ -1,7 +1,7 @@
 package com.mauriciotogneri.momowars.database.sql;
 
+import com.mauriciotogneri.javautils.Resource;
 import com.mauriciotogneri.momowars.database.DatabaseException;
-import com.mauriciotogneri.momowars.utils.Resources;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,8 +28,8 @@ public class InsertQuery extends Query
             {
                 long id = rows.getLong(1);
 
-                Resources.close(rows);
-                Resources.close(statement);
+                Resource.close(rows);
+                Resource.close(statement);
 
                 return id;
             }

@@ -1,7 +1,7 @@
 package com.mauriciotogneri.momowars.database.sql;
 
+import com.mauriciotogneri.javautils.Resource;
 import com.mauriciotogneri.momowars.database.DatabaseException;
-import com.mauriciotogneri.momowars.utils.Resources;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,7 +27,7 @@ public class Query
 
     private String query()
     {
-        return Resources.content(queryFile);
+        return Resource.string(queryFile);
     }
 
     private PreparedStatement preparedStatement() throws DatabaseException, SQLException

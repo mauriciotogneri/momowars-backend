@@ -1,7 +1,7 @@
 package com.mauriciotogneri.momowars.database;
 
+import com.mauriciotogneri.javautils.Resource;
 import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
-import com.mauriciotogneri.momowars.utils.Resources;
 
 import java.sql.Connection;
 
@@ -33,7 +33,7 @@ public class DatabaseConnection
 
     public void close()
     {
-        Resources.close(connection);
+        Resource.close(connection);
     }
 
     public void rollback()

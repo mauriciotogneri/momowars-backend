@@ -1,10 +1,10 @@
 package com.mauriciotogneri.momowars.database;
 
+import com.mauriciotogneri.javautils.Resource;
 import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
 import com.mauriciotogneri.momowars.database.SQL.RelationshipQueries;
 import com.mauriciotogneri.momowars.database.SQL.TableQueries;
 import com.mauriciotogneri.momowars.database.SQL.TypeQueries;
-import com.mauriciotogneri.momowars.utils.Resources;
 import com.zaxxer.hikari.HikariDataSource;
 
 import java.sql.Connection;
@@ -67,7 +67,7 @@ public class Database
 
     private static void execute(Connection connection, String sqlFile) throws Exception
     {
-        String query = Resources.content(sqlFile);
+        String query = Resource.string(sqlFile);
         connection.createStatement().execute(query);
     }
 }

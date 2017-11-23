@@ -1,7 +1,7 @@
 package com.mauriciotogneri.momowars.database.sql;
 
+import com.mauriciotogneri.javautils.Resource;
 import com.mauriciotogneri.momowars.database.DatabaseException;
-import com.mauriciotogneri.momowars.utils.Resources;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +21,7 @@ public class UpdateQuery extends Query
 
             int rowsAffected = statement.executeUpdate();
 
-            Resources.close(statement);
+            Resource.close(statement);
 
             return rowsAffected;
         }
