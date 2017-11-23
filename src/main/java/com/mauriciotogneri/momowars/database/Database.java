@@ -1,7 +1,6 @@
 package com.mauriciotogneri.momowars.database;
 
 import com.mauriciotogneri.javautils.Resource;
-import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
 import com.mauriciotogneri.momowars.database.SQL.IndexQueries;
 import com.mauriciotogneri.momowars.database.SQL.RelationshipQueries;
 import com.mauriciotogneri.momowars.database.SQL.TableQueries;
@@ -13,32 +12,23 @@ import java.sql.Statement;
 
 public class Database
 {
-    private static HikariDataSource connectionPool;
+    private final HikariDataSource connectionPool;
 
-    private static final int CONNECTION_POOL_SIZE = 3;
-
-    public static synchronized Connection newConnection()
+    public Database(String url, int poolSize) throws Exception
     {
-        try
-        {
-            if (connectionPool == null)
-            {
-                connectionPool = dataSource();
-            }
-
-            return connectionPool.getConnection();
-        }
-        catch (Exception e)
-        {
-            throw new InternalServerErrorException(e);
-        }
+        this.connectionPool = connectionPool(url, poolSize);
     }
 
-    private static HikariDataSource dataSource() throws Exception
+    public synchronized Connection newConnection() throws Exception
     {
-        connectionPool = new HikariDataSource();
-        connectionPool.setJdbcUrl(System.getenv("JDBC_DATABASE_URL"));
-        connectionPool.setMaximumPoolSize(CONNECTION_POOL_SIZE);
+        return connectionPool.getConnection();
+    }
+
+    private HikariDataSource connectionPool(String url, int poolSize) throws Exception
+    {
+        HikariDataSource connectionPool = new HikariDataSource();
+        connectionPool.setJdbcUrl(url);
+        connectionPool.setMaximumPoolSize(poolSize);
         connectionPool.setAutoCommit(false);
 
         initialize(connectionPool.getConnection());
@@ -46,7 +36,7 @@ public class Database
         return connectionPool;
     }
 
-    private static void initialize(Connection connection) throws Exception
+    private void initialize(Connection connection) throws Exception
     {
         execute(connection, TypeQueries.TYPES);
 
@@ -69,7 +59,7 @@ public class Database
         connection.commit();
     }
 
-    private static void execute(Connection connection, String sqlFile) throws Exception
+    private void execute(Connection connection, String sqlFile) throws Exception
     {
         try (Statement statement = connection.createStatement())
         {

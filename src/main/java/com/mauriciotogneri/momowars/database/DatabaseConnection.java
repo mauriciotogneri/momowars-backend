@@ -2,6 +2,7 @@ package com.mauriciotogneri.momowars.database;
 
 import com.mauriciotogneri.javautils.Resource;
 import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
+import com.mauriciotogneri.momowars.Main;
 
 import java.sql.Connection;
 
@@ -9,9 +10,9 @@ public class DatabaseConnection
 {
     private final Connection connection;
 
-    public DatabaseConnection()
+    public DatabaseConnection() throws Exception
     {
-        this.connection = Database.newConnection();
+        this.connection = Main.database.newConnection();
     }
 
     public Connection connection()

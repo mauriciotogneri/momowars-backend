@@ -38,7 +38,7 @@ public class BaseEndPoint extends EndPoint
         {
             e.printStackTrace();
 
-            throw e;
+            throw new RuntimeException(e);
         }
     }
 
