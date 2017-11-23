@@ -5,7 +5,6 @@ import com.mauriciotogneri.momowars.database.DatabaseException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 public class Query
 {
@@ -30,7 +29,7 @@ public class Query
         return Resource.string(queryFile);
     }
 
-    private PreparedStatement preparedStatement() throws DatabaseException, SQLException
+    private PreparedStatement preparedStatement() throws Exception
     {
         if (flag != null)
         {
