@@ -1,12 +1,10 @@
 package com.mauriciotogneri.momowars.endpoint.account;
 
-import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.momowars.api.Api;
 import com.mauriciotogneri.momowars.api.BaseEndPoint;
-import com.mauriciotogneri.momowars.dao.AccountDao;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.model.Account;
-import com.mauriciotogneri.momowars.model.exceptions.AccountNotFoundException;
+import com.mauriciotogneri.momowars.services.AccountService;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -16,31 +14,22 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import static javax.ws.rs.core.Response.Status.OK;
-import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
 
-@Path("/api")
+@Path("api")
 public class GetAccount extends BaseEndPoint
 {
     @GET
-    @Path("/v1/account")
+    @Path("v1/account")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAccount(@HeaderParam(Api.HEADER_SESSION_TOKEN) String sessionToken) throws Exception
     {
         return process(connection -> getAccount(connection, sessionToken));
     }
 
-    private Response getAccount(DatabaseConnection connection, String sessionToken) throws DatabaseException
+    private Response getAccount(DatabaseConnection connection, String sessionToken) throws Exception
     {
-        try
-        {
-            AccountDao accountDao = new AccountDao(connection);
-            Account account = accountDao.bySessionToken(sessionToken);
+        Account account = AccountService.getAccount(connection, sessionToken);
 
-            return response(OK, account);
-        }
-        catch (AccountNotFoundException e)
-        {
-            return response(UNAUTHORIZED);
-        }
+        return response(OK, account);
     }
 }

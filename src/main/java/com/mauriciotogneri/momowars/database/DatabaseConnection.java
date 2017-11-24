@@ -20,11 +20,6 @@ public class DatabaseConnection
         this.connection = Main.database.newConnection();
     }
 
-    public Connection connection()
-    {
-        return connection;
-    }
-
     public <T> SelectQuery<T> selectQuery(String queryPath, Class<T> clazz)
     {
         return new SelectQuery<>(connection, Resource.string(queryPath), clazz);

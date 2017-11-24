@@ -1,4 +1,4 @@
-package com.mauriciotogneri.momowars.model.exceptions;
+package com.mauriciotogneri.momowars.exceptions;
 
 public class AccountAlreadyExistsException extends Exception
 {

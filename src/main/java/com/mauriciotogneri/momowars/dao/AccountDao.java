@@ -10,9 +10,10 @@ import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.AccountQueries;
 import com.mauriciotogneri.momowars.database.rows.AccountRow;
+import com.mauriciotogneri.momowars.exceptions.AccountAlreadyExistsException;
+import com.mauriciotogneri.momowars.exceptions.InvalidCredentialsException;
+import com.mauriciotogneri.momowars.exceptions.InvalidSessionTokenException;
 import com.mauriciotogneri.momowars.model.Account;
-import com.mauriciotogneri.momowars.model.exceptions.AccountAlreadyExistsException;
-import com.mauriciotogneri.momowars.model.exceptions.AccountNotFoundException;
 
 import java.security.NoSuchAlgorithmException;
 
@@ -25,7 +26,7 @@ public class AccountDao
         this.connection = connection;
     }
 
-    public Account bySessionToken(String sessionToken) throws AccountNotFoundException, DatabaseException
+    public Account bySessionToken(String sessionToken) throws InvalidSessionTokenException, DatabaseException
     {
         SelectQuery<AccountRow> query = connection.selectQuery(AccountQueries.SELECT_BY_SESSION_TOKEN, AccountRow.class);
         QueryResult<AccountRow> result = query.execute(sessionToken);
@@ -36,11 +37,11 @@ public class AccountDao
         }
         else
         {
-            throw new AccountNotFoundException();
+            throw new InvalidSessionTokenException();
         }
     }
 
-    public Account byCredentials(String email, String password) throws AccountNotFoundException, DatabaseException
+    public Account byCredentials(String email, String password) throws InvalidCredentialsException, DatabaseException
     {
         try
         {
@@ -54,7 +55,7 @@ public class AccountDao
             }
             else
             {
-                throw new AccountNotFoundException();
+                throw new InvalidCredentialsException();
             }
         }
         catch (NoSuchAlgorithmException e)
