@@ -38,7 +38,11 @@ public class Database
 
     private void initialize(Connection connection) throws Exception
     {
-        execute(connection, TypeQueries.TYPES);
+        execute(connection, TypeQueries.CELL_TYPE);
+        execute(connection, TypeQueries.GAME_STATUS);
+        execute(connection, TypeQueries.MOVEMENT_TYPE);
+        execute(connection, TypeQueries.PLAYER_STATUS);
+        execute(connection, TypeQueries.UNIT_TYPE);
 
         execute(connection, TableQueries.MAP);
         execute(connection, TableQueries.CELL);

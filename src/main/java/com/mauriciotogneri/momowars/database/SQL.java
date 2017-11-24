@@ -4,7 +4,11 @@ public class SQL
 {
     public class TypeQueries
     {
-        public static final String TYPES = "sql/types/types.sql";
+        public static final String CELL_TYPE = "sql/types/cell_type.sql";
+        public static final String GAME_STATUS = "sql/types/game_status.sql";
+        public static final String MOVEMENT_TYPE = "sql/types/movement_type.sql";
+        public static final String PLAYER_STATUS = "sql/types/player_status.sql";
+        public static final String UNIT_TYPE = "sql/types/unit_type.sql";
     }
 
     public class TableQueries
@@ -35,8 +39,8 @@ public class SQL
     public class AccountQueries
     {
         public static final String INSERT = "sql/queries/account/insert.sql";
-        public static final String SELECT_BY_CREDENTIALS = "sql/queries/account/select-by-credentials.sql";
-        public static final String SELECT_BY_SESSION_TOKEN = "sql/queries/account/select-by-session-token.sql";
-        public static final String UPDATE_SESSION_TOKEN = "sql/queries/account/update-session-token.sql";
+        public static final String SELECT_BY_CREDENTIALS = "sql/queries/account/select_by_credentials.sql";
+        public static final String SELECT_BY_SESSION_TOKEN = "sql/queries/account/select_by_session_token.sql";
+        public static final String UPDATE_SESSION_TOKEN = "sql/queries/account/update_session_token.sql";
     }
 }

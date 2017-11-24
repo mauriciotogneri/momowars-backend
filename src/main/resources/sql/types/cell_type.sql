@@ -1,0 +1,8 @@
+DO $$
+BEGIN
+
+	IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'cell_type') THEN
+		CREATE TYPE CELL_TYPE AS ENUM ('BASE', 'GRASS', 'EARTH', 'MOUNTAIN', 'FOREST', 'DESERT', 'CONCRETE', 'WATER', 'ICE');
+	END IF;
+    
+END $$;
