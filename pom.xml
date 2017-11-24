@@ -90,6 +90,12 @@
 
         <dependency>
             <groupId>com.mauriciotogneri</groupId>
+            <artifactId>inquiry</artifactId>
+            <version>0.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mauriciotogneri</groupId>
             <artifactId>javautils</artifactId>
             <version>1.8.0</version>
         </dependency>

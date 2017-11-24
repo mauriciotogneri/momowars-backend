@@ -1,5 +1,6 @@
 package com.mauriciotogneri.momowars.endpoint.session;
 
+import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.javautils.Encoding;
 import com.mauriciotogneri.javautils.Strings;
 import com.mauriciotogneri.jerry.EntityProvider;
@@ -9,7 +10,6 @@ import com.mauriciotogneri.momowars.api.Api;
 import com.mauriciotogneri.momowars.api.BaseEndPoint;
 import com.mauriciotogneri.momowars.dao.AccountDao;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
-import com.mauriciotogneri.momowars.database.DatabaseException;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.exceptions.AccountNotFoundException;
 

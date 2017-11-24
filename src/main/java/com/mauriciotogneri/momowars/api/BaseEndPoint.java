@@ -1,9 +1,9 @@
 package com.mauriciotogneri.momowars.api;
 
+import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.jerry.EndPoint;
 import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
-import com.mauriciotogneri.momowars.database.DatabaseException;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
@@ -34,6 +34,12 @@ public class BaseEndPoint extends EndPoint
             {
                 connection.close();
             }
+        }
+        catch (InternalServerErrorException e)
+        {
+            e.printStackTrace();
+
+            throw e;
         }
         catch (WebApplicationException e)
         {
