@@ -24,7 +24,7 @@ public class GetAccount extends BaseEndPoint
     @GET
     @Path("/v1/account")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAccount(@HeaderParam(Api.HEADER_SESSION_TOKEN) String sessionToken)
+    public Response getAccount(@HeaderParam(Api.HEADER_SESSION_TOKEN) String sessionToken) throws Exception
     {
         return process(connection -> getAccount(connection, sessionToken));
     }

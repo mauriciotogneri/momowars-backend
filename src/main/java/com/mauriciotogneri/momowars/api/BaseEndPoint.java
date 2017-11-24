@@ -5,11 +5,12 @@ import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.DatabaseException;
 
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
 public class BaseEndPoint extends EndPoint
 {
-    protected Response process(EndPointImplementation endPoint)
+    protected Response process(EndPointImplementation endPoint) throws Exception
     {
         try
         {
@@ -34,11 +35,15 @@ public class BaseEndPoint extends EndPoint
                 connection.close();
             }
         }
+        catch (WebApplicationException e)
+        {
+            throw e;
+        }
         catch (Exception e)
         {
             e.printStackTrace();
 
-            throw new RuntimeException(e);
+            throw e;
         }
     }
 

@@ -30,7 +30,7 @@ public class CreateSession extends BaseEndPoint
     @POST
     @Path("/v1/session")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createSession(CreateSessionRequest sessionRequest)
+    public Response createSession(CreateSessionRequest sessionRequest) throws Exception
     {
         return process(connection -> createSession(connection, sessionRequest));
     }
