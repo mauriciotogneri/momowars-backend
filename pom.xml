@@ -85,13 +85,13 @@
         <dependency>
             <groupId>com.mauriciotogneri</groupId>
             <artifactId>jerry</artifactId>
-            <version>1.4.0</version>
+            <version>1.5.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.mauriciotogneri</groupId>
             <artifactId>javautils</artifactId>
-            <version>1.7.0</version>
+            <version>1.8.0</version>
         </dependency>
 
         <dependency>
