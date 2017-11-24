@@ -1,6 +1,6 @@
-package com.mauriciotogneri.momowars.endpoint.account;
+package com.mauriciotogneri.momowars.controllers.account;
 
-import com.mauriciotogneri.momowars.server.BaseEndPoint;
+import com.mauriciotogneri.momowars.server.BaseController;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.services.AccountService;
@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import static javax.ws.rs.core.Response.Status.OK;
 
 @Path("api")
-public class GetAccount extends BaseEndPoint
+public class GetAccount extends BaseController
 {
     @GET
     @Path("v1/account")

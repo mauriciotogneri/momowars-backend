@@ -1,10 +1,10 @@
-package com.mauriciotogneri.momowars.endpoint.session;
+package com.mauriciotogneri.momowars.controllers.session;
 
 import com.mauriciotogneri.javautils.Strings;
-import com.mauriciotogneri.jerry.EntityProvider;
-import com.mauriciotogneri.jerry.EntityProvider.EntityObject;
-import com.mauriciotogneri.momowars.server.BaseEndPoint;
+import com.mauriciotogneri.jerry.controller.EntityProvider;
+import com.mauriciotogneri.jerry.controller.EntityProvider.EntityObject;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
+import com.mauriciotogneri.momowars.server.BaseController;
 import com.mauriciotogneri.momowars.services.SessionService;
 
 import javax.ws.rs.Consumes;
@@ -17,7 +17,7 @@ import javax.ws.rs.ext.Provider;
 import static javax.ws.rs.core.Response.Status.OK;
 
 @Path("api")
-public class CreateSession extends BaseEndPoint
+public class CreateSession extends BaseController
 {
     @POST
     @Path("v1/session")

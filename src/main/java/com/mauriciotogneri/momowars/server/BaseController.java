@@ -1,7 +1,7 @@
 package com.mauriciotogneri.momowars.server;
 
 import com.mauriciotogneri.inquiry.DatabaseException;
-import com.mauriciotogneri.jerry.EndPoint;
+import com.mauriciotogneri.jerry.controller.Controller;
 import com.mauriciotogneri.jerry.exceptions.client.BadRequestException;
 import com.mauriciotogneri.jerry.exceptions.client.ConflictException;
 import com.mauriciotogneri.jerry.exceptions.client.UnauthorizedException;
@@ -17,11 +17,11 @@ import javax.ws.rs.NotFoundException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
-public class BaseEndPoint extends EndPoint
+public class BaseController extends Controller
 {
     protected static final String HEADER_SESSION_TOKEN = "Session-Token";
 
-    protected Response process(EndPointImplementation endPoint) throws Exception
+    protected Response process(ControllerImplementation controller) throws Exception
     {
         try
         {
@@ -29,7 +29,7 @@ public class BaseEndPoint extends EndPoint
 
             try
             {
-                Response response = endPoint.response(connection);
+                Response response = controller.response(connection);
 
                 connection.commit();
 
@@ -92,7 +92,7 @@ public class BaseEndPoint extends EndPoint
         }
     }
 
-    public interface EndPointImplementation
+    public interface ControllerImplementation
     {
         Response response(DatabaseConnection connection) throws Exception;
     }
