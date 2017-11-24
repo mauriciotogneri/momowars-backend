@@ -3,7 +3,7 @@ package com.mauriciotogneri.momowars.endpoint.account;
 import com.mauriciotogneri.javautils.Strings;
 import com.mauriciotogneri.jerry.EntityProvider;
 import com.mauriciotogneri.jerry.EntityProvider.EntityObject;
-import com.mauriciotogneri.momowars.api.BaseEndPoint;
+import com.mauriciotogneri.momowars.server.BaseEndPoint;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.services.AccountService;

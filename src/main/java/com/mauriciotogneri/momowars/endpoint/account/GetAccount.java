@@ -1,7 +1,6 @@
 package com.mauriciotogneri.momowars.endpoint.account;
 
-import com.mauriciotogneri.momowars.api.Api;
-import com.mauriciotogneri.momowars.api.BaseEndPoint;
+import com.mauriciotogneri.momowars.server.BaseEndPoint;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.services.AccountService;
@@ -21,7 +20,7 @@ public class GetAccount extends BaseEndPoint
     @GET
     @Path("v1/account")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAccount(@HeaderParam(Api.HEADER_SESSION_TOKEN) String sessionToken) throws Exception
+    public Response getAccount(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken) throws Exception
     {
         return process(connection -> getAccount(connection, sessionToken));
     }

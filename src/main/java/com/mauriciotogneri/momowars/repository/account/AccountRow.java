@@ -1,4 +1,4 @@
-package com.mauriciotogneri.momowars.database.rows;
+package com.mauriciotogneri.momowars.repository.account;
 
 import com.mauriciotogneri.momowars.model.Account;
 

@@ -3,7 +3,7 @@ package com.mauriciotogneri.momowars.services;
 import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.javautils.Encoding;
 import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
-import com.mauriciotogneri.momowars.dao.AccountDao;
+import com.mauriciotogneri.momowars.repository.account.AccountDao;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.exceptions.InvalidCredentialsException;
 import com.mauriciotogneri.momowars.model.Account;

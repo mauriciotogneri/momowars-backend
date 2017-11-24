@@ -1,4 +1,4 @@
-package com.mauriciotogneri.momowars.endpoint;
+package com.mauriciotogneri.momowars.server;
 
 import com.mauriciotogneri.jerry.logging.ResponseLogger;
 

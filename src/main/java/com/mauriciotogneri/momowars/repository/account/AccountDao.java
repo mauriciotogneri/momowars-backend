@@ -1,4 +1,4 @@
-package com.mauriciotogneri.momowars.dao;
+package com.mauriciotogneri.momowars.repository.account;
 
 import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.inquiry.QueryResult;
@@ -9,7 +9,6 @@ import com.mauriciotogneri.javautils.Encoding;
 import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.AccountQueries;
-import com.mauriciotogneri.momowars.database.rows.AccountRow;
 import com.mauriciotogneri.momowars.exceptions.AccountAlreadyExistsException;
 import com.mauriciotogneri.momowars.exceptions.InvalidCredentialsException;
 import com.mauriciotogneri.momowars.exceptions.InvalidSessionTokenException;

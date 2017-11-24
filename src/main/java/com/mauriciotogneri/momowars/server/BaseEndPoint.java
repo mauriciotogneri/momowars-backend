@@ -1,4 +1,4 @@
-package com.mauriciotogneri.momowars.api;
+package com.mauriciotogneri.momowars.server;
 
 import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.jerry.EndPoint;
@@ -19,6 +19,8 @@ import javax.ws.rs.core.Response;
 
 public class BaseEndPoint extends EndPoint
 {
+    protected static final String HEADER_SESSION_TOKEN = "Session-Token";
+
     protected Response process(EndPointImplementation endPoint) throws Exception
     {
         try
