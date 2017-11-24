@@ -1,6 +1,8 @@
 package com.mauriciotogneri.momowars.endpoint.account;
 
+import com.mauriciotogneri.javautils.Strings;
 import com.mauriciotogneri.jerry.EntityProvider;
+import com.mauriciotogneri.jerry.EntityProvider.EntityObject;
 import com.mauriciotogneri.jerry.exceptions.client.BadRequestException;
 import com.mauriciotogneri.jerry.exceptions.client.ConflictException;
 import com.mauriciotogneri.momowars.api.BaseEndPoint;
@@ -66,10 +68,16 @@ public class CreateAccount extends BaseEndPoint
         }
     }
 
-    private static class CreateAccountRequest
+    private static class CreateAccountRequest implements EntityObject
     {
         private String email;
         private String nickname;
         private String password;
+
+        @Override
+        public boolean isValid()
+        {
+            return Strings.isNotEmpty(email) && Strings.isNotEmpty(nickname) && Strings.isNotEmpty(password);
+        }
     }
 }

@@ -1,7 +1,9 @@
 package com.mauriciotogneri.momowars.endpoint.session;
 
 import com.mauriciotogneri.javautils.Encoding;
+import com.mauriciotogneri.javautils.Strings;
 import com.mauriciotogneri.jerry.EntityProvider;
+import com.mauriciotogneri.jerry.EntityProvider.EntityObject;
 import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
 import com.mauriciotogneri.momowars.api.Api;
 import com.mauriciotogneri.momowars.api.BaseEndPoint;
@@ -79,9 +81,15 @@ public class CreateSession extends BaseEndPoint
         }
     }
 
-    private static class CreateSessionRequest
+    private static class CreateSessionRequest implements EntityObject
     {
         private String email;
         private String password;
+
+        @Override
+        public boolean isValid()
+        {
+            return Strings.isNotEmpty(email) && Strings.isNotEmpty(password);
+        }
     }
 }
