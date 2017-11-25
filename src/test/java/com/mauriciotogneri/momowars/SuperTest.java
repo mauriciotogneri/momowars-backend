@@ -8,6 +8,6 @@ public class SuperTest
     @Test
     public void superTest()
     {
-        Assert.assertEquals("xxx", System.getenv("VERSION"));
+        Assert.assertEquals("xxxx", System.getenv("VERSION"));
     }
 }
