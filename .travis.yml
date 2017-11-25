@@ -6,9 +6,15 @@ jdk:
 env:
   - VERSION=xxx
 
+services:
+  - postgresql
+
 cache:
   directories:
   - $HOME/.m2
+
+before_script:
+  - psql -c 'create database momowars;' -U postgres
 
 script:
   - mvn clean package test
