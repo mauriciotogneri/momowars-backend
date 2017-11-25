@@ -17,7 +17,7 @@ public class EndPointDefinition
         Responses responses = clazz.getAnnotation(Responses.class);
         Response response = responses.value()[0];
 
-        this.path = String.format("http://127.0.0.1:%s/api", System.getenv("PORT")) + endPoint.path();
+        this.path = System.getenv("LOCAL_SERVER") + endPoint.path();
         this.method = endPoint.method();
         this.code = response.code();
         this.type = response.type();
