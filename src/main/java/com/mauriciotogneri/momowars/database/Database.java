@@ -31,7 +31,7 @@ public class Database
         connectionPool.setMaximumPoolSize(poolSize);
         connectionPool.setAutoCommit(false);
 
-        initialize(connectionPool.getConnection());
+        //initialize(connectionPool.getConnection());
 
         return connectionPool;
     }
