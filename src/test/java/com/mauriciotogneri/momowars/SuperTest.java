@@ -25,6 +25,6 @@ public class SuperTest extends BaseTest
 
         connection.connect();
 
-        Assert.assertEquals(connection.getResponseCode(), 200);
+        Assert.assertEquals(connection.getResponseCode(), 201);
     }
 }
