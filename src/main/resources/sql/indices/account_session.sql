@@ -1,1 +1,1 @@
-CREATE INDEX IF NOT EXISTS account_session ON account(session);
+CREATE INDEX account_session ON account(session);

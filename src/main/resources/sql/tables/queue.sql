@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS queue (
+CREATE TABLE queue (
 	id SERIAL PRIMARY KEY,
 	type UNIT_TYPE NOT NULL,
 	quantity INTEGER NOT NULL CHECK (quantity > 0),

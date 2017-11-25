@@ -11,6 +11,7 @@ services:
 
 cache:
   directories:
+  - .autoconf
   - $HOME/.m2
 
 before_script:

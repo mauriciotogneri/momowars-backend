@@ -23,8 +23,15 @@ public class BaseTest
     }
 
     @AfterClass
-    public static void stopJetty() throws Exception
+    public static void stopJetty()
     {
-        server.stop();
+        try
+        {
+            server.stop();
+        }
+        catch (Exception e)
+        {
+            // ignore
+        }
     }
 }
