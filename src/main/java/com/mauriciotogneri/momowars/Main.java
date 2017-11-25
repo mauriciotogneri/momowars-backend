@@ -1,9 +1,12 @@
 package com.mauriciotogneri.momowars;
 
 import com.mauriciotogneri.jerry.Jerry;
+import com.mauriciotogneri.jerry.Jerry.Mode;
 import com.mauriciotogneri.momowars.database.Database;
 
-public class Main extends Jerry
+import org.eclipse.jetty.server.Server;
+
+public class Main
 {
     private final int port;
     private final Mode mode;
@@ -18,7 +21,24 @@ public class Main extends Jerry
 
     public void start() throws Exception
     {
-        start(port, mode, getClass().getPackage());
+        Server server = server();
+
+        try
+        {
+            server.start();
+            server.join();
+        }
+        finally
+        {
+            server.destroy();
+        }
+    }
+
+    public Server server() throws Exception
+    {
+        Jerry jerry = new Jerry();
+
+        return jerry.create(port, mode, getClass().getPackage());
     }
 
     public static void main(String[] args) throws Exception

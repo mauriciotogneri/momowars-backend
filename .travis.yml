@@ -11,4 +11,4 @@ cache:
   - $HOME/.m2
 
 script:
-  - mvn clean install test
+  - mvn clean package test
