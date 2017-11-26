@@ -2,6 +2,12 @@ package com.mauriciotogneri.momowars.database;
 
 public class SQL
 {
+    public class SchemaQueries
+    {
+        public static final String CREATE_SCHEMA = "sql/schema/create_schema.sql";
+        public static final String DROP_SCHEMA = "sql/schema/drop_schema.sql";
+    }
+
     public class TypeQueries
     {
         public static final String CELL_TYPE = "sql/types/cell_type.sql";

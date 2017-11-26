@@ -1,4 +1,4 @@
-package com.mauriciotogneri.momowars;
+package com.mauriciotogneri.momowars.unit;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -7,7 +7,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URI;
 
-public class SuperTest extends BaseTest
+public class SuperTestA extends BaseTest
 {
     @Test
     public void superTest() throws Exception
@@ -25,6 +25,6 @@ public class SuperTest extends BaseTest
 
         connection.connect();
 
-        Assert.assertEquals(connection.getResponseCode(), 201);
+        Assert.assertEquals(201, connection.getResponseCode());
     }
 }

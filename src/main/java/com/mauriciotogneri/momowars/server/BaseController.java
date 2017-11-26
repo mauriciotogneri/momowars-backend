@@ -92,6 +92,14 @@ public class BaseController extends Controller
         }
     }
 
+    protected void checkIfNotEmpty(Object entity)
+    {
+        if (entity == null)
+        {
+            throw new BadRequestException();
+        }
+    }
+
     public interface ControllerImplementation
     {
         Response response(DatabaseConnection connection) throws Exception;

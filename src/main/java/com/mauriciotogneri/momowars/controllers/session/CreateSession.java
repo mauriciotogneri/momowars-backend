@@ -29,6 +29,8 @@ public class CreateSession extends BaseController
 
     private Response createSession(DatabaseConnection connection, SessionEntity entity) throws Exception
     {
+        checkIfNotEmpty(entity);
+
         String sessionToken = SessionService.createSession(connection, entity.email, entity.password);
 
         return Response
