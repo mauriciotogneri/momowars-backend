@@ -1,5 +1,6 @@
 package com.mauriciotogneri.momowars.unit.session;
 
+import com.mauriciotogneri.momowars.services.AccountServiceTest.TestAccount;
 import com.mauriciotogneri.momowars.unit.BaseTest;
 
 import org.junit.Assert;
@@ -23,35 +24,25 @@ public class CreateSessionTests extends BaseTest
     @Test
     public void test2LoginWithAnInvalidEmail() throws Exception
     {
-        String email = randomEmail();
-        String password = randomPassword();
-        String nickname = randomNickname();
+        TestAccount account = accountService.testAccount();
 
-        accountService.createAccount(CREATED, email, password, nickname);
-        sessionService.createSession(UNAUTHORIZED, "x" + email, password);
+        sessionService.createSession(UNAUTHORIZED, "x" + account.email, account.password);
     }
 
     @Test
     public void test3LoginWithAnInvalidPassword() throws Exception
     {
-        String email = randomEmail();
-        String password = randomPassword();
-        String nickname = randomNickname();
+        TestAccount account = accountService.testAccount();
 
-        accountService.createAccount(CREATED, email, password, nickname);
-        sessionService.createSession(UNAUTHORIZED, email, password + "x");
+        sessionService.createSession(UNAUTHORIZED, account.email, account.password + "x");
     }
 
     @Test
     public void test4LoginWithValidCredentials() throws Exception
     {
-        String email = randomEmail();
-        String password = randomPassword();
-        String nickname = randomNickname();
+        TestAccount account = accountService.testAccount();
 
-        accountService.createAccount(CREATED, email, password, nickname);
-
-        String sessionToken = sessionService.createSession(CREATED, email, password);
+        String sessionToken = sessionService.createSession(CREATED, account.email, account.password);
         Assert.assertNotNull(sessionToken);
     }
 }
