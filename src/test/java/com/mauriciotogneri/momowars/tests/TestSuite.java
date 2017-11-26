@@ -21,7 +21,7 @@ import org.junit.runners.Suite;
         GameSuite.class,
         PlayerSuite.class
 })
-public class JunitTestSuite
+public class TestSuite
 {
     private static Server server;
 
