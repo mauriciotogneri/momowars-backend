@@ -1,7 +1,6 @@
 package com.mauriciotogneri.momowars.unit.account;
 
 import com.mauriciotogneri.momowars.model.accounts.Account;
-import com.mauriciotogneri.momowars.services.AccountServiceTest.TestAccount;
 import com.mauriciotogneri.momowars.unit.BaseTest;
 
 import org.junit.Assert;
@@ -24,7 +23,7 @@ public class GetAccountSteps extends BaseTest
     @Test
     public void test2GetAccountWithAValidSession() throws Exception
     {
-        TestAccount testAccount = accountService.testAccountLogged();
+        TestAccount testAccount = testAccountLogged();
 
         Account account = accountService.getAccount(OK, testAccount.sessionToken);
         Assert.assertEquals(testAccount.email, account.email);

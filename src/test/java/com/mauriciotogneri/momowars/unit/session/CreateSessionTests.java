@@ -1,6 +1,5 @@
 package com.mauriciotogneri.momowars.unit.session;
 
-import com.mauriciotogneri.momowars.services.AccountServiceTest.TestAccount;
 import com.mauriciotogneri.momowars.unit.BaseTest;
 
 import org.junit.Assert;
@@ -24,7 +23,7 @@ public class CreateSessionTests extends BaseTest
     @Test
     public void test2LoginWithAnInvalidEmail() throws Exception
     {
-        TestAccount account = accountService.testAccount();
+        TestAccount account = testAccount();
 
         sessionService.createSession(UNAUTHORIZED, "x" + account.email, account.password);
     }
@@ -32,7 +31,7 @@ public class CreateSessionTests extends BaseTest
     @Test
     public void test3LoginWithAnInvalidPassword() throws Exception
     {
-        TestAccount account = accountService.testAccount();
+        TestAccount account = testAccount();
 
         sessionService.createSession(UNAUTHORIZED, account.email, account.password + "x");
     }
@@ -40,7 +39,7 @@ public class CreateSessionTests extends BaseTest
     @Test
     public void test4LoginWithValidCredentials() throws Exception
     {
-        TestAccount account = accountService.testAccount();
+        TestAccount account = testAccount();
 
         String sessionToken = sessionService.createSession(CREATED, account.email, account.password);
         Assert.assertNotNull(sessionToken);
