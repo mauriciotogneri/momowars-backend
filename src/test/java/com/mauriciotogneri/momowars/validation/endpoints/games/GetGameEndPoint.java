@@ -14,7 +14,7 @@ public class GetGameEndPoint extends BaseEndPoint implements GetGame
         super(new EndPointDefinition(GetGame.class));
     }
 
-    public ApiResult execute(String sessionToken, String gameId) throws Exception
+    public ApiResult execute(String sessionToken, Long gameId) throws Exception
     {
         PathParameter path = new PathParameter();
         path.gameId = gameId;

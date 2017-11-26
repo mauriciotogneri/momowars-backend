@@ -37,7 +37,7 @@ public class CreateAccountSteps extends BaseSteps
         Account account = json(result, Account.class);
         Assert.assertEquals(email, account.email);
         Assert.assertEquals(nickname, account.nickname);
-        Assert.assertEquals(new String[0], account.games);
+        Assert.assertArrayEquals(new String[0], account.games);
     }
 
     @When("^I create a new account with valid data$")

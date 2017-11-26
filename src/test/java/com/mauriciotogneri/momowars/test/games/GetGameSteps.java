@@ -20,28 +20,28 @@ public class GetGameSteps extends BaseSteps
     @When("^I get a game with an invalid session$")
     public void getAGameWithAnInvalidSession() throws Exception
     {
-        ApiResult result = getGameEndPoint.execute("xxx", "xxx");
+        ApiResult result = getGameEndPoint.execute("xxx", 0L);
         checkHttpStatus(UNAUTHORIZED, result);
     }
 
     @When("^I get a game with invalid parameters$")
     public void getAGameWithInvalidParameters() throws Exception
     {
-        ApiResult result = getGameEndPoint.execute("", "xxx");
+        ApiResult result = getGameEndPoint.execute("", 0L);
         checkHttpStatus(BAD_REQUEST, result);
     }
 
     @When("^I get a game with a valid session and invalid id$")
     public void getAGameWithAValidSessionAndInvalidId() throws Exception
     {
-        ApiResult result = getGameEndPoint.execute(CreateSessionSteps.SESSION_TOKEN, "xxx");
+        ApiResult result = getGameEndPoint.execute(CreateSessionSteps.SESSION_TOKEN, 0L);
         checkHttpStatus(FORBIDDEN, result);
     }
 
     @When("^I get a game with a valid session and valid id$")
     public void getAGameWithAValidSessionAndValidId() throws Exception
     {
-        for (String gameId : ACCOUNT.games)
+        for (Long gameId : ACCOUNT.games)
         {
             ApiResult result = getGameEndPoint.execute(CreateSessionSteps.SESSION_TOKEN, gameId);
             checkHttpStatus(OK, result);

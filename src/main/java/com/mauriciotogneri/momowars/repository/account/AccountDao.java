@@ -88,7 +88,7 @@ public class AccountDao
                     sessionToken
             );
 
-            return new Account(id, email, nickname);
+            return new Account(id, email, nickname, new Long[0]); // TODO
         }
         catch (NoSuchAlgorithmException e)
         {

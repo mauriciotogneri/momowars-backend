@@ -48,6 +48,6 @@ public interface GetGame
 {
     class PathParameter
     {
-        public String gameId;
+        public Long gameId;
     }
 }

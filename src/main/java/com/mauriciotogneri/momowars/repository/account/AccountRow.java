@@ -12,6 +12,6 @@ public class AccountRow
 
     public Account account()
     {
-        return new Account(id, email, nickname);
+        return new Account(id, email, nickname, new Long[0]); // TODO
     }
 }

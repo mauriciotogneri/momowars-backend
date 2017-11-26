@@ -6,5 +6,5 @@ public class Account
 
     public String nickname;
 
-    public String[] games;
+    public Long[] games;
 }
