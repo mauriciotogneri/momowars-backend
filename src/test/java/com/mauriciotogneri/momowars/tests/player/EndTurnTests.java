@@ -1,6 +1,6 @@
-package com.mauriciotogneri.momowars.unit.player;
+package com.mauriciotogneri.momowars.tests.player;
 
-import com.mauriciotogneri.momowars.unit.BaseTest;
+import com.mauriciotogneri.momowars.tests.BaseTest;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;

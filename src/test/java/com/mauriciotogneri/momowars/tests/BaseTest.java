@@ -1,4 +1,4 @@
-package com.mauriciotogneri.momowars.unit;
+package com.mauriciotogneri.momowars.tests;
 
 import com.mauriciotogneri.momowars.model.accounts.Account;
 import com.mauriciotogneri.momowars.services.AccountServiceTest;

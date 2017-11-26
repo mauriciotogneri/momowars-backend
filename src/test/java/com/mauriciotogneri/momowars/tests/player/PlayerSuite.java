@@ -1,4 +1,4 @@
-package com.mauriciotogneri.momowars.unit.player;
+package com.mauriciotogneri.momowars.tests.player;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

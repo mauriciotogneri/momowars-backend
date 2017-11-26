@@ -1,4 +1,4 @@
-package com.mauriciotogneri.momowars.unit;
+package com.mauriciotogneri.momowars.tests;
 
 import com.mauriciotogneri.javautils.Resource;
 import com.mauriciotogneri.jerry.Jerry.Mode;
@@ -8,10 +8,10 @@ import com.mauriciotogneri.momowars.database.SQL.RelationshipQueries;
 import com.mauriciotogneri.momowars.database.SQL.SchemaQueries;
 import com.mauriciotogneri.momowars.database.SQL.TableQueries;
 import com.mauriciotogneri.momowars.database.SQL.TypeQueries;
-import com.mauriciotogneri.momowars.unit.account.AccountSuite;
-import com.mauriciotogneri.momowars.unit.game.GameSuite;
-import com.mauriciotogneri.momowars.unit.player.PlayerSuite;
-import com.mauriciotogneri.momowars.unit.session.SessionSuite;
+import com.mauriciotogneri.momowars.tests.account.AccountSuite;
+import com.mauriciotogneri.momowars.tests.game.GameSuite;
+import com.mauriciotogneri.momowars.tests.player.PlayerSuite;
+import com.mauriciotogneri.momowars.tests.session.SessionSuite;
 
 import org.eclipse.jetty.server.Server;
 import org.junit.AfterClass;

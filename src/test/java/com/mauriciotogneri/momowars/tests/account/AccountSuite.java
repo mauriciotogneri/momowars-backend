@@ -1,4 +1,4 @@
-package com.mauriciotogneri.momowars.unit.account;
+package com.mauriciotogneri.momowars.tests.account;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

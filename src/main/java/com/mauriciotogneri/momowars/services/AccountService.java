@@ -1,12 +1,12 @@
 package com.mauriciotogneri.momowars.services;
 
 import com.mauriciotogneri.inquiry.DatabaseException;
-import com.mauriciotogneri.momowars.repository.account.AccountDao;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.exceptions.AccountAlreadyExistsException;
 import com.mauriciotogneri.momowars.exceptions.InvalidParametersException;
 import com.mauriciotogneri.momowars.exceptions.InvalidSessionTokenException;
 import com.mauriciotogneri.momowars.model.Account;
+import com.mauriciotogneri.momowars.repository.account.AccountDao;
 import com.mauriciotogneri.momowars.validators.EmailValidator;
 
 public class AccountService

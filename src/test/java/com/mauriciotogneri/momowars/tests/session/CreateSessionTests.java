@@ -1,6 +1,6 @@
-package com.mauriciotogneri.momowars.unit.session;
+package com.mauriciotogneri.momowars.tests.session;
 
-import com.mauriciotogneri.momowars.unit.BaseTest;
+import com.mauriciotogneri.momowars.tests.BaseTest;
 
 import org.junit.Assert;
 import org.junit.FixMethodOrder;

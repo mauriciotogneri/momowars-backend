@@ -1,8 +1,8 @@
 package com.mauriciotogneri.momowars.controllers.account;
 
-import com.mauriciotogneri.momowars.server.BaseController;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.model.Account;
+import com.mauriciotogneri.momowars.server.BaseController;
 import com.mauriciotogneri.momowars.services.AccountService;
 
 import javax.ws.rs.GET;
