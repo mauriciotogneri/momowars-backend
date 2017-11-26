@@ -24,11 +24,11 @@ public class BaseTest
     @BeforeClass
     public static void startServer() throws Exception
     {
-        //int port = Integer.valueOf(System.getenv("PORT"));
-        //String databaseUrl = System.getenv("JDBC_DATABASE_URL");
-        //int connectionPoolSize = Integer.valueOf(System.getenv("CONNECTION_POOL_SIZE"));
+        int port = Integer.valueOf(System.getenv("PORT"));
+        String databaseUrl = System.getenv("JDBC_DATABASE_URL");
+        int connectionPoolSize = Integer.valueOf(System.getenv("CONNECTION_POOL_SIZE"));
 
-        Main main = new Main(5000, Mode.LOCAL, "jdbc:postgresql://localhost:5432/momowarstest?user=postgres&password=password", 3);
+        Main main = new Main(port, Mode.LOCAL, databaseUrl, connectionPoolSize);
 
         initialize(Main.database.newConnection());
 
