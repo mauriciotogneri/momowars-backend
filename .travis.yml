@@ -18,7 +18,8 @@ cache:
   - $HOME/.m2
 
 before_script:
-  - psql -c 'create database momowarstest;' -U postgres
+  - psql -c "create database momowarstest;" -U postgres
+  - psql -c "create user postgres with password 'password';" -U postgres
 
 script:
   - mvn clean package test
