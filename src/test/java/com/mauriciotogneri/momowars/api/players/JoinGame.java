@@ -39,6 +39,6 @@ public interface JoinGame
 {
     class PathParameter
     {
-        public String gameId;
+        public Long gameId;
     }
 }

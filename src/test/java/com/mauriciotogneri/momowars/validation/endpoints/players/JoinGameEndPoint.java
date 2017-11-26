@@ -14,7 +14,7 @@ public class JoinGameEndPoint extends BaseEndPoint implements JoinGame
         super(new EndPointDefinition(JoinGame.class));
     }
 
-    public ApiResult execute(String sessionToken, String gameId) throws Exception
+    public ApiResult execute(String sessionToken, Long gameId) throws Exception
     {
         PathParameter path = new PathParameter();
         path.gameId = gameId;

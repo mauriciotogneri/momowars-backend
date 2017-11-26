@@ -39,8 +39,8 @@ public interface LeaveGame
 {
     class PathParameter
     {
-        public String gameId;
+        public Long gameId;
 
-        public String playerId;
+        public Long playerId;
     }
 }

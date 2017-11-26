@@ -1,6 +1,7 @@
 package com.mauriciotogneri.momowars.api.units;
 
 import com.mauriciotogneri.momowars.api.units.MoveUnits.DataParameter;
+import com.mauriciotogneri.momowars.api.units.MoveUnits.PathParameter;
 import com.mauriciotogneri.momowars.model.constants.MovementType;
 import com.mauriciotogneri.stewie.annotations.EndPoint;
 import com.mauriciotogneri.stewie.annotations.Parameters;
@@ -14,11 +15,12 @@ import static com.mauriciotogneri.stewie.types.StatusCode.NO_CONTENT;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 
 @EndPoint(
-        path = "/v1/games/{gameId}/cells/{cellId}/units/{unitId}/move",
+        path = "/v1/games/{gameId}/players/{playerId}/cells/{cellId}/units/{unitId}/move",
         method = PUT,
         description = "Enqueues the command to move the units"
 )
 @Parameters(
+        path = PathParameter.class,
         data = DataParameter.class
 )
 @Responses({
@@ -41,6 +43,17 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 })
 public interface MoveUnits
 {
+    class PathParameter
+    {
+        public Long gameId;
+
+        public Long playerId;
+
+        public Long cellId;
+
+        public Long unitId;
+    }
+
     class DataParameter
     {
         public MovementType movement;
