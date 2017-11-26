@@ -10,14 +10,20 @@ import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
 import com.mauriciotogneri.momowars.Main;
 
 import java.sql.Connection;
+import java.sql.Statement;
 
 public class DatabaseConnection
 {
     private final Connection connection;
 
+    public DatabaseConnection(Connection connection) throws Exception
+    {
+        this.connection = connection;
+    }
+
     public DatabaseConnection() throws Exception
     {
-        this.connection = Main.database.newConnection();
+        this(Main.database.newConnection());
     }
 
     public <T> SelectQuery<T> selectQuery(String queryPath, Class<T> clazz)
@@ -38,6 +44,14 @@ public class DatabaseConnection
     public DeleteQuery deleteQuery(String queryPath)
     {
         return new DeleteQuery(connection, Resource.string(queryPath));
+    }
+
+    public void executeQuery(String sqlFile) throws Exception
+    {
+        try (Statement statement = connection.createStatement())
+        {
+            statement.execute(Resource.string(sqlFile));
+        }
     }
 
     public void commit() throws DatabaseException
