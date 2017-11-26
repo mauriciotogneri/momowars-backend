@@ -22,12 +22,12 @@ public class CreateSession extends BaseController
     @POST
     @Path("v1/session")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createSession(SessionEntity sessionRequest) throws Exception
+    public Response createSession(Entity sessionRequest) throws Exception
     {
         return process(connection -> createSession(connection, sessionRequest));
     }
 
-    private Response createSession(DatabaseConnection connection, SessionEntity entity) throws Exception
+    private Response createSession(DatabaseConnection connection, Entity entity) throws Exception
     {
         checkIfNotEmpty(entity);
 
@@ -41,15 +41,15 @@ public class CreateSession extends BaseController
 
     @Provider
     @Consumes(MediaType.APPLICATION_JSON)
-    public static class SessionEntityProvider extends EntityProvider<SessionEntity>
+    public static class ControllerEntityProvider extends EntityProvider<Entity>
     {
-        public SessionEntityProvider()
+        public ControllerEntityProvider()
         {
-            super(SessionEntity.class);
+            super(Entity.class);
         }
     }
 
-    private static class SessionEntity implements EntityObject
+    private static class Entity implements EntityObject
     {
         private String email;
         private String password;

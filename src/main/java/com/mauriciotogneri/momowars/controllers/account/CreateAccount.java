@@ -25,12 +25,12 @@ public class CreateAccount extends BaseController
     @Path("v1/account")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createAccount(AccountEntity accountRequest) throws Exception
+    public Response createAccount(Entity accountRequest) throws Exception
     {
         return process(connection -> createAccount(connection, accountRequest));
     }
 
-    private Response createAccount(DatabaseConnection connection, AccountEntity entity) throws Exception
+    private Response createAccount(DatabaseConnection connection, Entity entity) throws Exception
     {
         checkIfNotEmpty(entity);
 
@@ -41,15 +41,15 @@ public class CreateAccount extends BaseController
 
     @Provider
     @Consumes(MediaType.APPLICATION_JSON)
-    public static class AccountEntityProvider extends EntityProvider<AccountEntity>
+    public static class ControllerEntityProvider extends EntityProvider<Entity>
     {
-        public AccountEntityProvider()
+        public ControllerEntityProvider()
         {
-            super(AccountEntity.class);
+            super(Entity.class);
         }
     }
 
-    private static class AccountEntity implements EntityObject
+    private static class Entity implements EntityObject
     {
         private String email;
         private String nickname;

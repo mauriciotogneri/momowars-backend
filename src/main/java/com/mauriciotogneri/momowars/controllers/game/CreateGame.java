@@ -25,12 +25,12 @@ public class CreateGame extends BaseController
     @Path("v1/games")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getGame(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken,
-                            GameEntity entity) throws Exception
+                            Entity entity) throws Exception
     {
         return process(connection -> getGame(connection, sessionToken, entity));
     }
 
-    private Response getGame(DatabaseConnection connection, String sessionToken, GameEntity entity) throws Exception
+    private Response getGame(DatabaseConnection connection, String sessionToken, Entity entity) throws Exception
     {
         checkIfNotEmpty(sessionToken);
         checkIfNotEmpty(entity);
@@ -40,15 +40,15 @@ public class CreateGame extends BaseController
 
     @Provider
     @Consumes(MediaType.APPLICATION_JSON)
-    public static class GameEntityProvider extends EntityProvider<GameEntity>
+    public static class ControllerEntityProvider extends EntityProvider<Entity>
     {
-        public GameEntityProvider()
+        public ControllerEntityProvider()
         {
-            super(GameEntity.class);
+            super(Entity.class);
         }
     }
 
-    private static class GameEntity implements EntityObject
+    private static class Entity implements EntityObject
     {
         private Long mapId;
         private Integer maxPlayers;
