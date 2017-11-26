@@ -35,7 +35,7 @@ public interface CreateGame
 {
     class DataParameter
     {
-        public String mapId;
+        public Long mapId;
 
         @Minimum(2)
         public Integer maxPlayers;

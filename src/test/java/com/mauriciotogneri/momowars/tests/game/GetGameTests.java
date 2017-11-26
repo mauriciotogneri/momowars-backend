@@ -10,28 +10,28 @@ import org.junit.runners.MethodSorters;
 public class GetGameTests extends BaseTest
 {
     @Test
-    public void getAGameWithAnInvalidSession() throws Exception
+    public void test1GetAGameWithAnInvalidSession() throws Exception
     {
         //ApiResult result = getGameEndPoint.execute("xxx", 0L);
         //checkHttpStatus(UNAUTHORIZED, result);
     }
 
     @Test
-    public void getAGameWithInvalidParameters() throws Exception
+    public void test2GetAGameWithInvalidParameters() throws Exception
     {
         //ApiResult result = getGameEndPoint.execute("", 0L);
         //checkHttpStatus(BAD_REQUEST, result);
     }
 
     @Test
-    public void getAGameWithAValidSessionAndInvalidId() throws Exception
+    public void test3GetAGameWithAValidSessionAndInvalidId() throws Exception
     {
         //ApiResult result = getGameEndPoint.execute("xxx", 0L);
         //checkHttpStatus(FORBIDDEN, result);
     }
 
     @Test
-    public void getAGameWithAValidSessionAndValidId() throws Exception
+    public void test4GetAGameWithAValidSessionAndValidId() throws Exception
     {
         /*Long[] gameIds = new Long[0];
 

@@ -14,7 +14,7 @@ public class CreateGameEndPoint extends BaseEndPoint implements CreateGame
         super(new EndPointDefinition(CreateGame.class));
     }
 
-    public ApiResult execute(String sessionToken, String mapId, Integer maxPlayers) throws Exception
+    public ApiResult execute(String sessionToken, Long mapId, Integer maxPlayers) throws Exception
     {
         DataParameter data = new DataParameter();
         data.mapId = mapId;

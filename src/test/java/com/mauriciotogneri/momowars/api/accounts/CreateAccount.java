@@ -1,6 +1,7 @@
 package com.mauriciotogneri.momowars.api.accounts;
 
 import com.mauriciotogneri.jsonschema.annotations.Format;
+import com.mauriciotogneri.jsonschema.annotations.MaxLength;
 import com.mauriciotogneri.momowars.api.accounts.CreateAccount.DataParameter;
 import com.mauriciotogneri.momowars.model.accounts.Account;
 import com.mauriciotogneri.momowars.model.headers.ApplicationJson;
@@ -44,11 +45,13 @@ public interface CreateAccount
 {
     class DataParameter
     {
+        @Format("email")
+        @MaxLength(50)
         public String email;
 
-        @Format("email")
         public String password;
 
+        @MaxLength(30)
         public String nickname;
     }
 }
