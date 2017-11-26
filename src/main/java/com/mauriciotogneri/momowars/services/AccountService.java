@@ -3,6 +3,7 @@ package com.mauriciotogneri.momowars.services;
 import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.exceptions.AccountAlreadyExistsException;
+import com.mauriciotogneri.momowars.exceptions.AccountNotFoundException;
 import com.mauriciotogneri.momowars.exceptions.InvalidParametersException;
 import com.mauriciotogneri.momowars.exceptions.InvalidSessionTokenException;
 import com.mauriciotogneri.momowars.model.Account;
@@ -37,5 +38,28 @@ public class AccountService
         AccountDao accountDao = new AccountDao(connection);
 
         return accountDao.bySessionToken(sessionToken);
+    }
+
+    public static Account updateAccount(DatabaseConnection connection,
+                                        String sessionToken,
+                                        String newPassword,
+                                        String newNickname)
+            throws InvalidSessionTokenException, DatabaseException, AccountNotFoundException
+    {
+        AccountDao accountDao = new AccountDao(connection);
+
+        Account account = getAccount(connection, sessionToken);
+
+        if (newPassword != null)
+        {
+            accountDao.updatePassword(account.id(), newPassword);
+        }
+
+        if (newNickname != null)
+        {
+            accountDao.updateNickname(account.id(), newNickname);
+        }
+
+        return accountDao.byId(account.id());
     }
 }

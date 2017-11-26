@@ -27,6 +27,8 @@ public class GetAccount extends BaseController
 
     private Response getAccount(DatabaseConnection connection, String sessionToken) throws Exception
     {
+        checkIfNotEmpty(sessionToken);
+
         Account account = AccountService.getAccount(connection, sessionToken);
 
         return response(OK, account);

@@ -10,6 +10,7 @@ import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.AccountQueries;
 import com.mauriciotogneri.momowars.exceptions.AccountAlreadyExistsException;
+import com.mauriciotogneri.momowars.exceptions.AccountNotFoundException;
 import com.mauriciotogneri.momowars.exceptions.InvalidCredentialsException;
 import com.mauriciotogneri.momowars.exceptions.InvalidSessionTokenException;
 import com.mauriciotogneri.momowars.model.Account;
@@ -72,6 +73,53 @@ public class AccountDao
         if (rowsAffected != 1)
         {
             throw new DatabaseException();
+        }
+    }
+
+    public void updatePassword(Long id, String password) throws DatabaseException
+    {
+        try
+        {
+            UpdateQuery query = connection.updateQuery(AccountQueries.UPDATE_PASSWORD);
+
+            int rowsAffected = query.execute(Encoding.sha512(password), id);
+
+            if (rowsAffected != 1)
+            {
+                throw new DatabaseException();
+            }
+        }
+        catch (Exception e)
+        {
+            throw new InternalServerErrorException(e);
+        }
+    }
+
+    public void updateNickname(Long id, String nickname) throws DatabaseException
+    {
+        UpdateQuery query = connection.updateQuery(AccountQueries.UPDATE_NICKNAME);
+
+        int rowsAffected = query.execute(nickname, id);
+
+        if (rowsAffected != 1)
+        {
+            throw new DatabaseException();
+        }
+    }
+
+    public Account byId(Long id) throws DatabaseException, AccountNotFoundException
+    {
+        SelectQuery<AccountRow> query = connection.selectQuery(AccountQueries.SELECT_BY_ID, AccountRow.class);
+
+        QueryResult<AccountRow> result = query.execute(id);
+
+        if (result.hasElements())
+        {
+            return result.first().account();
+        }
+        else
+        {
+            throw new AccountNotFoundException();
         }
     }
 
