@@ -43,8 +43,8 @@ public interface EndTurn
 {
     class PathParameter
     {
-        public String gameId;
+        public Long gameId;
 
-        public String playerId;
+        public Long playerId;
     }
 }

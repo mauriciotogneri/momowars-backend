@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
-import static javax.ws.rs.core.Response.Status.OK;
+import static javax.ws.rs.core.Response.Status.CREATED;
 
 @Path("api")
 public class CreateSession extends BaseController
@@ -34,7 +34,7 @@ public class CreateSession extends BaseController
         String sessionToken = SessionService.createSession(connection, entity.email, entity.password);
 
         return Response
-                .status(OK)
+                .status(CREATED)
                 .header(HEADER_SESSION_TOKEN, sessionToken)
                 .build();
     }

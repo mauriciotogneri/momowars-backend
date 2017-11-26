@@ -1,54 +1,35 @@
 package com.mauriciotogneri.momowars.unit;
 
-import com.mauriciotogneri.apivalidator.api.ApiResult;
-import com.mauriciotogneri.javautils.Json;
-import com.mauriciotogneri.momowars.validation.endpoints.accounts.CreateAccountEndPoint;
-import com.mauriciotogneri.momowars.validation.endpoints.accounts.GetAccountEndPoint;
-import com.mauriciotogneri.momowars.validation.endpoints.accounts.UpdateAccountEndPoint;
+import com.mauriciotogneri.momowars.services.AccountServiceTest;
+import com.mauriciotogneri.momowars.services.SessionServiceTest;
 import com.mauriciotogneri.momowars.validation.endpoints.games.GetGameEndPoint;
 import com.mauriciotogneri.momowars.validation.endpoints.games.GetOpenGamesEndPoint;
 import com.mauriciotogneri.momowars.validation.endpoints.players.EndTurnEndPoint;
-import com.mauriciotogneri.momowars.validation.endpoints.session.CreateSessionEndPoint;
 
-import org.junit.Assert;
+import java.util.UUID;
 
 public class BaseTest
 {
-    // SESSION
-    protected final CreateSessionEndPoint createSessionEndPoint = new CreateSessionEndPoint();
-
-    // ACCOUNT
-    protected final CreateAccountEndPoint createAccountEndPoint = new CreateAccountEndPoint();
-    protected final GetAccountEndPoint getAccountEndPoint = new GetAccountEndPoint();
-    protected final UpdateAccountEndPoint updateAccountEndPoint = new UpdateAccountEndPoint();
+    protected final SessionServiceTest sessionService = new SessionServiceTest();
+    protected final AccountServiceTest accountService = new AccountServiceTest();
 
     // GAMES
     protected final GetOpenGamesEndPoint getOpenGamesEndPoint = new GetOpenGamesEndPoint();
     protected final GetGameEndPoint getGameEndPoint = new GetGameEndPoint();
     protected final EndTurnEndPoint endTurnEndPoint = new EndTurnEndPoint();
 
-    @SuppressWarnings("unchecked")
-    protected <T> T json(ApiResult apiResult, Class<T> clazz) throws Exception
+    protected static String randomEmail()
     {
-        if (apiResult.isValid())
-        {
-            T result = Json.object(apiResult.string(), clazz);
-
-            if (result == null)
-            {
-                throw new RuntimeException("Received empty response");
-            }
-
-            return result;
-        }
-        else
-        {
-            throw new RuntimeException(apiResult.error());
-        }
+        return String.format("email_%s@email.com", UUID.randomUUID().toString().replace("-", ""));
     }
 
-    protected void checkHttpStatus(int expected, ApiResult apiResult)
+    protected static String randomPassword()
     {
-        Assert.assertEquals(expected, apiResult.code());
+        return UUID.randomUUID().toString();
+    }
+
+    protected static String randomNickname()
+    {
+        return UUID.randomUUID().toString().substring(0, 8);
     }
 }

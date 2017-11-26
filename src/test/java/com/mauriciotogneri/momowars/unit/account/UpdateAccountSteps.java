@@ -10,7 +10,39 @@ import org.junit.runners.MethodSorters;
 public class UpdateAccountSteps extends BaseTest
 {
     @Test
-    public void superTest() throws Exception
+    public void test1UpdateAccountWithAnInvalidSession() throws Exception
     {
+        /*String email = randomEmail();
+        String password = randomPassword();
+        String nickname = randomNickname();
+
+        accountService.createAccount(CREATED, email, password, nickname);
+        accountService.updateAccount(UNAUTHORIZED, "xxx", password + "x", nickname + "x");*/
+    }
+
+    @Test
+    public void test2UpdateAccountWithInvalidParameters() throws Exception
+    {
+        /*String email = randomEmail();
+        String password = randomPassword();
+        String nickname = randomNickname();
+
+        accountService.createAccount(CREATED, email, password, nickname);
+        String sessionToken = sessionService.createSession(CREATED, email, password);
+        accountService.updateAccount(BAD_REQUEST, sessionToken, null, null);*/
+    }
+
+    @Test
+    public void test3UpdateAccountWithValidParameters() throws Exception
+    {
+        /*String email = randomEmail();
+        String password = randomPassword();
+        String nickname = randomNickname();
+
+        accountService.createAccount(CREATED, email, password, nickname);
+        String sessionToken = sessionService.createSession(CREATED, email, password);
+
+        Account account = accountService.updateAccount(OK, sessionToken, password + "x", nickname + "x");
+        Assert.assertNotEquals(null, account);*/
     }
 }

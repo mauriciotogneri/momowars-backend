@@ -9,6 +9,8 @@ import com.mauriciotogneri.momowars.database.SQL.SchemaQueries;
 import com.mauriciotogneri.momowars.database.SQL.TableQueries;
 import com.mauriciotogneri.momowars.database.SQL.TypeQueries;
 import com.mauriciotogneri.momowars.unit.account.AccountSuite;
+import com.mauriciotogneri.momowars.unit.game.GameSuite;
+import com.mauriciotogneri.momowars.unit.player.PlayerSuite;
 import com.mauriciotogneri.momowars.unit.session.SessionSuite;
 
 import org.eclipse.jetty.server.Server;
@@ -23,7 +25,9 @@ import java.sql.Statement;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         AccountSuite.class,
-        SessionSuite.class
+        SessionSuite.class,
+        GameSuite.class,
+        PlayerSuite.class
 })
 public class JunitTestSuite
 {
@@ -38,13 +42,13 @@ public class JunitTestSuite
 
         Main main = new Main(port, Mode.LOCAL, databaseUrl, connectionPoolSize);
 
-        initialize(Main.database.newConnection());
+        createDatabase(Main.database.newConnection());
 
         server = main.server();
         server.start();
     }
 
-    private static void initialize(Connection connection) throws Exception
+    private static void createDatabase(Connection connection) throws Exception
     {
         execute(connection, SchemaQueries.DROP_SCHEMA);
         execute(connection, SchemaQueries.CREATE_SCHEMA);

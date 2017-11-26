@@ -14,7 +14,7 @@ public class EndTurnEndPoint extends BaseEndPoint implements EndTurn
         super(new EndPointDefinition(EndTurn.class));
     }
 
-    public ApiResult execute(String sessionToken, String gameId, String playerId) throws Exception
+    public ApiResult execute(String sessionToken, Long gameId, Long playerId) throws Exception
     {
         PathParameter path = new PathParameter();
         path.gameId = gameId;
