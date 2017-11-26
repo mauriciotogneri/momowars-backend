@@ -1,13 +1,18 @@
-package com.mauriciotogneri.momowars.unit;
+package com.mauriciotogneri.momowars.unit.account;
+
+import com.mauriciotogneri.momowars.unit.BaseTest;
 
 import org.junit.Assert;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URI;
 
-public class SuperTestA extends BaseTest
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class CreateAccountTests extends BaseTest
 {
     @Test
     public void superTest() throws Exception
