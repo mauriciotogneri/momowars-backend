@@ -1,5 +1,6 @@
 package com.mauriciotogneri.momowars.database;
 
+import com.mauriciotogneri.javautils.Strings;
 import com.zaxxer.hikari.HikariDataSource;
 
 import org.flywaydb.core.Flyway;
@@ -20,11 +21,14 @@ public class Database
 
     private void migrate(DataSource dataSource)
     {
-        Flyway flyway = new Flyway();
-        flyway.setBaselineOnMigrate(true);
-        flyway.setDataSource(dataSource);
-        flyway.setLocations(String.format("%s/migrations", getClass().getPackage().getName().replace(".", "/")));
-        flyway.migrate();
+        if (!Strings.equals(System.getenv("ENVIRONMENT"), "local"))
+        {
+            Flyway flyway = new Flyway();
+            flyway.setBaselineOnMigrate(true);
+            flyway.setDataSource(dataSource);
+            flyway.setLocations(String.format("%s/migrations", getClass().getPackage().getName().replace(".", "/")));
+            flyway.migrate();
+        }
     }
 
     public synchronized Connection newConnection() throws Exception
