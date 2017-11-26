@@ -21,4 +21,4 @@ before_script:
   - psql -c "create database momowarstest;" -U postgres
 
 script:
-  - mvn clean package test
+  - mvn clean test package
