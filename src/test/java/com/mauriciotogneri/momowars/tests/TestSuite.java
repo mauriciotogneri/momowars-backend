@@ -5,6 +5,7 @@ import com.mauriciotogneri.momowars.Main;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.tests.account.AccountSuite;
 import com.mauriciotogneri.momowars.tests.game.GameSuite;
+import com.mauriciotogneri.momowars.tests.map.MapSuite;
 import com.mauriciotogneri.momowars.tests.player.PlayerSuite;
 import com.mauriciotogneri.momowars.tests.session.SessionSuite;
 
@@ -21,6 +22,7 @@ import java.sql.Connection;
         AccountSuite.class,
         SessionSuite.class,
         GameSuite.class,
+        MapSuite.class,
         PlayerSuite.class
 })
 public class TestSuite

@@ -14,7 +14,7 @@ public class GetMapEndPoint extends BaseEndPoint implements GetMap
         super(new EndPointDefinition(GetMap.class));
     }
 
-    public ApiResult execute(String sessionToken, String mapId) throws Exception
+    public ApiResult execute(String sessionToken, Long mapId) throws Exception
     {
         PathParameter path = new PathParameter();
         path.mapId = mapId;

@@ -38,6 +38,6 @@ public interface GetMap
 {
     class PathParameter
     {
-        public String mapId;
+        public Long mapId;
     }
 }
