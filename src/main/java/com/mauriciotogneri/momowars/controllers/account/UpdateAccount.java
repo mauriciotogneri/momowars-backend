@@ -26,12 +26,12 @@ public class UpdateAccount extends BaseController
     @Path("v1/account")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateAccount(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken, Entity accountRequest) throws Exception
+    public Response controller(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken, Entity accountRequest) throws Exception
     {
-        return process(connection -> updateAccount(connection, sessionToken, accountRequest));
+        return process(connection -> controller(connection, sessionToken, accountRequest));
     }
 
-    private Response updateAccount(DatabaseConnection connection, String sessionToken, Entity entity) throws Exception
+    private Response controller(DatabaseConnection connection, String sessionToken, Entity entity) throws Exception
     {
         checkIfNotEmpty(entity);
 

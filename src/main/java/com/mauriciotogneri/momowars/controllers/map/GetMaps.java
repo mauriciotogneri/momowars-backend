@@ -18,12 +18,12 @@ public class GetMaps extends BaseController
     @GET
     @Path("v1/maps")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getMap(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken) throws Exception
+    public Response controller(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken) throws Exception
     {
-        return process(connection -> getMap(connection, sessionToken));
+        return process(connection -> controller(connection, sessionToken));
     }
 
-    private Response getMap(DatabaseConnection connection, String sessionToken) throws Exception
+    private Response controller(DatabaseConnection connection, String sessionToken) throws Exception
     {
         checkIfNotEmpty(sessionToken);
 

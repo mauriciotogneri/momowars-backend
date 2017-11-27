@@ -18,12 +18,12 @@ public class GetOpenGames extends BaseController
     @GET
     @Path("v1/games")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getOpenGames(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken) throws Exception
+    public Response controller(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken) throws Exception
     {
-        return process(connection -> getOpenGames(connection, sessionToken));
+        return process(connection -> controller(connection, sessionToken));
     }
 
-    private Response getOpenGames(DatabaseConnection connection, String sessionToken) throws Exception
+    private Response controller(DatabaseConnection connection, String sessionToken) throws Exception
     {
         checkIfNotEmpty(sessionToken);
 

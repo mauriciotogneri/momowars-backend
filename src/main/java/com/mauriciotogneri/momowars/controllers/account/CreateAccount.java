@@ -25,12 +25,12 @@ public class CreateAccount extends BaseController
     @Path("v1/account")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createAccount(Entity accountRequest) throws Exception
+    public Response controller(Entity accountRequest) throws Exception
     {
-        return process(connection -> createAccount(connection, accountRequest));
+        return process(connection -> controller(connection, accountRequest));
     }
 
-    private Response createAccount(DatabaseConnection connection, Entity entity) throws Exception
+    private Response controller(DatabaseConnection connection, Entity entity) throws Exception
     {
         checkIfNotEmpty(entity);
 

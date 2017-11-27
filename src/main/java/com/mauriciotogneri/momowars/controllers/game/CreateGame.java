@@ -24,13 +24,13 @@ public class CreateGame extends BaseController
     @POST
     @Path("v1/games")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getGame(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken,
-                            Entity entity) throws Exception
+    public Response controller(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken,
+                               Entity entity) throws Exception
     {
-        return process(connection -> getGame(connection, sessionToken, entity));
+        return process(connection -> controller(connection, sessionToken, entity));
     }
 
-    private Response getGame(DatabaseConnection connection, String sessionToken, Entity entity) throws Exception
+    private Response controller(DatabaseConnection connection, String sessionToken, Entity entity) throws Exception
     {
         checkIfNotEmpty(sessionToken);
         checkIfNotEmpty(entity);

@@ -20,12 +20,12 @@ public class GetAccount extends BaseController
     @GET
     @Path("v1/account")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAccount(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken) throws Exception
+    public Response controller(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken) throws Exception
     {
-        return process(connection -> getAccount(connection, sessionToken));
+        return process(connection -> controller(connection, sessionToken));
     }
 
-    private Response getAccount(DatabaseConnection connection, String sessionToken) throws Exception
+    private Response controller(DatabaseConnection connection, String sessionToken) throws Exception
     {
         checkIfNotEmpty(sessionToken);
 

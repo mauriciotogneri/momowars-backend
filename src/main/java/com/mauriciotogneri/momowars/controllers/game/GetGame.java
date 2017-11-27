@@ -19,13 +19,13 @@ public class GetGame extends BaseController
     @GET
     @Path("v1/games/{gameId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getGame(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken,
-                            @PathParam("gameId") Long gameId) throws Exception
+    public Response controller(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken,
+                               @PathParam("gameId") Long gameId) throws Exception
     {
-        return process(connection -> getGame(connection, sessionToken, gameId));
+        return process(connection -> controller(connection, sessionToken, gameId));
     }
 
-    private Response getGame(DatabaseConnection connection, String sessionToken, Long gameId) throws Exception
+    private Response controller(DatabaseConnection connection, String sessionToken, Long gameId) throws Exception
     {
         checkIfNotEmpty(sessionToken);
         checkIfNotEmpty(gameId);

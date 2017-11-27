@@ -22,12 +22,12 @@ public class CreateSession extends BaseController
     @POST
     @Path("v1/session")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createSession(Entity sessionRequest) throws Exception
+    public Response controller(Entity sessionRequest) throws Exception
     {
-        return process(connection -> createSession(connection, sessionRequest));
+        return process(connection -> controller(connection, sessionRequest));
     }
 
-    private Response createSession(DatabaseConnection connection, Entity entity) throws Exception
+    private Response controller(DatabaseConnection connection, Entity entity) throws Exception
     {
         checkIfNotEmpty(entity);
 
