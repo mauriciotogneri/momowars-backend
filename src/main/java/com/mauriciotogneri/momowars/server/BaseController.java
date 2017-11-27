@@ -12,6 +12,7 @@ import com.mauriciotogneri.momowars.exceptions.AccountNotFoundException;
 import com.mauriciotogneri.momowars.exceptions.InvalidCredentialsException;
 import com.mauriciotogneri.momowars.exceptions.InvalidParametersException;
 import com.mauriciotogneri.momowars.exceptions.InvalidSessionTokenException;
+import com.mauriciotogneri.momowars.repository.account.AccountDao;
 
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.WebApplicationException;
@@ -98,6 +99,13 @@ public class BaseController extends Controller
         {
             throw new BadRequestException();
         }
+    }
+
+    protected void validateSessionToken(DatabaseConnection connection, String sessionToken) throws InvalidSessionTokenException, DatabaseException
+    {
+        AccountDao accountDao = new AccountDao(connection);
+
+        accountDao.bySessionToken(sessionToken);
     }
 
     public interface ControllerImplementation

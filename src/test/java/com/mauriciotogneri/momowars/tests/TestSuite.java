@@ -73,6 +73,10 @@ public class TestSuite
         databaseConnection.executeQuery("sql/relationships/player_queues.sql");
         databaseConnection.executeQuery("sql/relationships/player_units.sql");
 
+        databaseConnection.executeQuery("sql/data/cell.sql");
+        databaseConnection.executeQuery("sql/data/map.sql");
+        databaseConnection.executeQuery("sql/data/map_cells.sql");
+
         connection.commit();
     }
 

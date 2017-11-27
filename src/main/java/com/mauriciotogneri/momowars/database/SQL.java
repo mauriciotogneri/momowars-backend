@@ -12,4 +12,9 @@ public class SQL
         public static final String UPDATE_PASSWORD = "queries/account/update_password.sql";
         public static final String UPDATE_NICKNAME = "queries/account/update_nickname.sql";
     }
+
+    public class MapQueries
+    {
+        public static final String SELECT_MAPS = "queries/map/select_maps.sql";
+    }
 }
