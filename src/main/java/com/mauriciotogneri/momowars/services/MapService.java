@@ -3,6 +3,7 @@ package com.mauriciotogneri.momowars.services;
 import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.exceptions.InvalidSessionTokenException;
+import com.mauriciotogneri.momowars.exceptions.MapNotFoundException;
 import com.mauriciotogneri.momowars.model.Map;
 import com.mauriciotogneri.momowars.repository.map.MapDao;
 
@@ -16,5 +17,14 @@ public class MapService
         MapDao mapDao = new MapDao(connection);
 
         return mapDao.getMaps();
+    }
+
+    public static Map getMap(DatabaseConnection connection,
+                             Long mapId)
+            throws MapNotFoundException, DatabaseException
+    {
+        MapDao mapDao = new MapDao(connection);
+
+        return mapDao.getMap(mapId);
     }
 }

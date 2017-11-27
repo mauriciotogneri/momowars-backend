@@ -1,7 +1,9 @@
 package com.mauriciotogneri.momowars.controllers.map;
 
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
+import com.mauriciotogneri.momowars.model.Map;
 import com.mauriciotogneri.momowars.server.BaseController;
+import com.mauriciotogneri.momowars.services.MapService;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -11,7 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static javax.ws.rs.core.Response.Status.NOT_IMPLEMENTED;
+import static javax.ws.rs.core.Response.Status.OK;
 
 @Path("api")
 public class GetMap extends BaseController
@@ -29,7 +31,10 @@ public class GetMap extends BaseController
     {
         checkIfNotEmpty(sessionToken);
         checkIfNotEmpty(mapId);
+        validateSessionToken(connection, sessionToken);
 
-        return response(NOT_IMPLEMENTED);
+        Map map = MapService.getMap(connection, mapId);
+
+        return response(OK, map);
     }
 }

@@ -12,6 +12,7 @@ import com.mauriciotogneri.momowars.exceptions.AccountNotFoundException;
 import com.mauriciotogneri.momowars.exceptions.InvalidCredentialsException;
 import com.mauriciotogneri.momowars.exceptions.InvalidParametersException;
 import com.mauriciotogneri.momowars.exceptions.InvalidSessionTokenException;
+import com.mauriciotogneri.momowars.exceptions.MapNotFoundException;
 import com.mauriciotogneri.momowars.repository.account.AccountDao;
 
 import javax.ws.rs.NotFoundException;
@@ -67,7 +68,7 @@ public class BaseController extends Controller
         {
             return new ConflictException(e);
         }
-        catch (AccountNotFoundException e)
+        catch (AccountNotFoundException | MapNotFoundException e)
         {
             return new NotFoundException(e);
         }

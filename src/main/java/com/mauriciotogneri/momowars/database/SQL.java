@@ -15,7 +15,8 @@ public class SQL
 
     public class MapQueries
     {
-        public static final String SELECT_MAPS = "queries/map/select_maps.sql";
+        public static final String SELECT_BY_ID = "queries/map/select_by_id.sql";
+        public static final String SELECT_ALL = "queries/map/select_all.sql";
     }
 
     public class CellQueries

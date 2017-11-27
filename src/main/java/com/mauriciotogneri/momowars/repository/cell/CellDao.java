@@ -5,7 +5,6 @@ import com.mauriciotogneri.inquiry.QueryResult;
 import com.mauriciotogneri.inquiry.queries.SelectQuery;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.CellQueries;
-import com.mauriciotogneri.momowars.exceptions.InvalidSessionTokenException;
 import com.mauriciotogneri.momowars.model.Cell;
 
 import java.util.List;
@@ -20,7 +19,7 @@ public class CellDao
         this.connection = connection;
     }
 
-    public List<Cell> byMap(Long mapId) throws InvalidSessionTokenException, DatabaseException
+    public List<Cell> byMap(Long mapId) throws DatabaseException
     {
         SelectQuery<CellRow> query = connection.selectQuery(CellQueries.SELECT_BY_MAP, CellRow.class);
         QueryResult<CellRow> result = query.execute(mapId);
