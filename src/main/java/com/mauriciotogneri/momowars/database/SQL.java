@@ -17,4 +17,9 @@ public class SQL
     {
         public static final String SELECT_MAPS = "queries/map/select_maps.sql";
     }
+
+    public class CellQueries
+    {
+        public static final String SELECT_BY_MAP = "queries/cell/select_by_map.sql";
+    }
 }

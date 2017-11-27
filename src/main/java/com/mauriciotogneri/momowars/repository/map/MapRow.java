@@ -1,6 +1,9 @@
 package com.mauriciotogneri.momowars.repository.map;
 
+import com.mauriciotogneri.momowars.model.Cell;
 import com.mauriciotogneri.momowars.model.Map;
+
+import java.util.List;
 
 public class MapRow
 {
@@ -9,8 +12,8 @@ public class MapRow
     public Integer width;
     public Integer height;
 
-    public Map map()
+    public Map map(List<Cell> cells)
     {
-        return new Map(name, width, height);
+        return new Map(name, width, height, cells);
     }
 }

@@ -5,7 +5,7 @@ import com.mauriciotogneri.apivalidator.api.ApiResult;
 import com.mauriciotogneri.apivalidator.parameters.body.JsonBodyParameter;
 import com.mauriciotogneri.apivalidator.parameters.path.PathParameters;
 import com.mauriciotogneri.momowars.api.units.MoveUnits;
-import com.mauriciotogneri.momowars.model.constants.MovementType;
+import com.mauriciotogneri.momowars.types.MovementType;
 import com.mauriciotogneri.momowars.validation.BaseEndPoint;
 import com.mauriciotogneri.momowars.validation.EndPointDefinition;
 

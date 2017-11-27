@@ -3,7 +3,7 @@ package com.mauriciotogneri.momowars.api.units;
 import com.mauriciotogneri.jsonschema.annotations.Minimum;
 import com.mauriciotogneri.momowars.api.units.RecruitUnits.DataParameter;
 import com.mauriciotogneri.momowars.api.units.RecruitUnits.PathParameter;
-import com.mauriciotogneri.momowars.model.constants.UnitType;
+import com.mauriciotogneri.momowars.types.UnitType;
 import com.mauriciotogneri.stewie.annotations.EndPoint;
 import com.mauriciotogneri.stewie.annotations.Parameters;
 import com.mauriciotogneri.stewie.annotations.Response;

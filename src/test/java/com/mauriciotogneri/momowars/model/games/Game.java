@@ -1,6 +1,6 @@
 package com.mauriciotogneri.momowars.model.games;
 
-import com.mauriciotogneri.momowars.model.constants.GameStatus;
+import com.mauriciotogneri.momowars.types.GameStatus;
 
 public class Game
 {

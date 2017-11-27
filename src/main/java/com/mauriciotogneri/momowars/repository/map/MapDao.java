@@ -7,9 +7,10 @@ import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.MapQueries;
 import com.mauriciotogneri.momowars.exceptions.InvalidSessionTokenException;
 import com.mauriciotogneri.momowars.model.Map;
+import com.mauriciotogneri.momowars.repository.cell.CellDao;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MapDao
 {
@@ -22,9 +23,18 @@ public class MapDao
 
     public List<Map> getMaps() throws InvalidSessionTokenException, DatabaseException
     {
+        CellDao cellDao = new CellDao(connection);
+
         SelectQuery<MapRow> query = connection.selectQuery(MapQueries.SELECT_MAPS, MapRow.class);
         QueryResult<MapRow> result = query.execute();
 
-        return result.stream().map(MapRow::map).collect(Collectors.toList());
+        List<Map> maps = new ArrayList<>();
+
+        for (MapRow map : result)
+        {
+            maps.add(map.map(cellDao.byMap(map.id)));
+        }
+
+        return maps;
     }
 }
