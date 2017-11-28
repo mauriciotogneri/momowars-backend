@@ -46,7 +46,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.mauriciotogneri.momowars.Main</mainClass>
+                            <mainClass>com.mauriciotogneri.momowars.app.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -85,7 +85,7 @@
         <dependency>
             <groupId>com.mauriciotogneri</groupId>
             <artifactId>jerry</artifactId>
-            <version>1.8.0</version>
+            <version>1.9.0</version>
         </dependency>
 
         <dependency>

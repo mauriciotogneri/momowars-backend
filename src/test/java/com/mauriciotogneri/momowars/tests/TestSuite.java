@@ -1,7 +1,6 @@
 package com.mauriciotogneri.momowars.tests;
 
-import com.mauriciotogneri.jerry.Jerry.Mode;
-import com.mauriciotogneri.momowars.Main;
+import com.mauriciotogneri.momowars.app.Main;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.tests.account.AccountSuite;
 import com.mauriciotogneri.momowars.tests.game.GameSuite;
@@ -36,7 +35,7 @@ public class TestSuite
         String databaseUrl = System.getenv("JDBC_DATABASE_URL");
         int connectionPoolSize = Integer.valueOf(System.getenv("CONNECTION_POOL_SIZE"));
 
-        Main main = new Main(port, Mode.LOCAL, databaseUrl, connectionPoolSize);
+        Main main = new Main(port, databaseUrl, connectionPoolSize);
 
         createDatabase(Main.database.newConnection());
 

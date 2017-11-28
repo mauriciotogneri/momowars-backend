@@ -7,7 +7,7 @@ import com.mauriciotogneri.inquiry.queries.SelectQuery;
 import com.mauriciotogneri.inquiry.queries.UpdateQuery;
 import com.mauriciotogneri.javautils.Resource;
 import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
-import com.mauriciotogneri.momowars.Main;
+import com.mauriciotogneri.momowars.app.Main;
 
 import java.sql.Connection;
 import java.sql.Statement;

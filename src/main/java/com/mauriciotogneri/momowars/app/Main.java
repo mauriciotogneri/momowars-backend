@@ -1,21 +1,20 @@
-package com.mauriciotogneri.momowars;
+package com.mauriciotogneri.momowars.app;
 
 import com.mauriciotogneri.jerry.Jerry;
-import com.mauriciotogneri.jerry.Jerry.Mode;
+import com.mauriciotogneri.jerry.JerryConfig;
 import com.mauriciotogneri.momowars.database.Database;
+import com.mauriciotogneri.momowars.server.Application;
 
 import org.eclipse.jetty.server.Server;
 
 public class Main
 {
     private final int port;
-    private final Mode mode;
     public static Database database;
 
-    public Main(int port, Mode mode, String databaseUrl, int connectionPoolSize) throws Exception
+    public Main(int port, String databaseUrl, int connectionPoolSize) throws Exception
     {
         this.port = port;
-        this.mode = mode;
         database = new Database(databaseUrl, connectionPoolSize);
     }
 
@@ -38,7 +37,11 @@ public class Main
     {
         Jerry jerry = new Jerry();
 
-        return jerry.create(port, mode, getClass().getPackage());
+        return jerry.create(new JerryConfig(
+                port,
+                "localhost",
+                new Application()
+        ));
     }
 
     public static void main(String[] args) throws Exception
@@ -47,7 +50,7 @@ public class Main
         String databaseUrl = System.getenv("JDBC_DATABASE_URL");
         int connectionPoolSize = Integer.valueOf(System.getenv("CONNECTION_POOL_SIZE"));
 
-        Main main = new Main(port, Mode.LOCAL, databaseUrl, connectionPoolSize);
+        Main main = new Main(port, databaseUrl, connectionPoolSize);
         main.start();
     }
 }
