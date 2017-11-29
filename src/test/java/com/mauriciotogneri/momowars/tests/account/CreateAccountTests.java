@@ -26,7 +26,7 @@ public class CreateAccountTests extends BaseTest
     }
 
     @Test
-    public void test2CreateANewAccountWithAnExistingEmail() throws Exception
+    public void test2CreateANewAccountWithValidData() throws Exception
     {
         Account account = accountService.createAccount(CREATED, TEST_EMAIL, TEST_PASSWORD, TEST_NICKNAME);
         Assert.assertEquals(TEST_EMAIL, account.email);
@@ -35,7 +35,7 @@ public class CreateAccountTests extends BaseTest
     }
 
     @Test
-    public void test3CreateANewAccountWithValidData() throws Exception
+    public void test3CreateANewAccountWithAnExistingEmail() throws Exception
     {
         accountService.createAccount(CONFLICT, TEST_EMAIL, TEST_PASSWORD, TEST_NICKNAME);
     }

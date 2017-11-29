@@ -5,8 +5,6 @@ import com.mauriciotogneri.inquiry.QueryResult;
 import com.mauriciotogneri.inquiry.queries.InsertQuery;
 import com.mauriciotogneri.inquiry.queries.SelectQuery;
 import com.mauriciotogneri.inquiry.queries.UpdateQuery;
-import com.mauriciotogneri.javautils.Encoding;
-import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.AccountQueries;
 import com.mauriciotogneri.momowars.exceptions.AccountAlreadyExistsException;
@@ -14,8 +12,7 @@ import com.mauriciotogneri.momowars.exceptions.AccountNotFoundException;
 import com.mauriciotogneri.momowars.exceptions.InvalidCredentialsException;
 import com.mauriciotogneri.momowars.exceptions.InvalidSessionTokenException;
 import com.mauriciotogneri.momowars.model.Account;
-
-import java.security.NoSuchAlgorithmException;
+import com.mauriciotogneri.momowars.util.Hash;
 
 public class AccountDao
 {
@@ -43,24 +40,17 @@ public class AccountDao
 
     public Account byCredentials(String email, String password) throws InvalidCredentialsException, DatabaseException
     {
-        try
+        SelectQuery<AccountRow> query = connection.selectQuery(AccountQueries.SELECT_BY_CREDENTIALS, AccountRow.class);
+
+        QueryResult<AccountRow> result = query.execute(email, Hash.of(password));
+
+        if (result.hasElements())
         {
-            SelectQuery<AccountRow> query = connection.selectQuery(AccountQueries.SELECT_BY_CREDENTIALS, AccountRow.class);
-
-            QueryResult<AccountRow> result = query.execute(email, Encoding.sha512(password));
-
-            if (result.hasElements())
-            {
-                return result.first().account();
-            }
-            else
-            {
-                throw new InvalidCredentialsException();
-            }
+            return result.first().account();
         }
-        catch (NoSuchAlgorithmException e)
+        else
         {
-            throw new InternalServerErrorException(e);
+            throw new InvalidCredentialsException();
         }
     }
 
@@ -78,20 +68,13 @@ public class AccountDao
 
     public void updatePassword(Long id, String password) throws DatabaseException
     {
-        try
-        {
-            UpdateQuery query = connection.updateQuery(AccountQueries.UPDATE_PASSWORD);
+        UpdateQuery query = connection.updateQuery(AccountQueries.UPDATE_PASSWORD);
 
-            int rowsAffected = query.execute(Encoding.sha512(password), id);
+        int rowsAffected = query.execute(Hash.of(password), id);
 
-            if (rowsAffected != 1)
-            {
-                throw new DatabaseException();
-            }
-        }
-        catch (Exception e)
+        if (rowsAffected != 1)
         {
-            throw new InternalServerErrorException(e);
+            throw new DatabaseException();
         }
     }
 
@@ -132,15 +115,11 @@ public class AccountDao
             long id = query.execute(
                     email,
                     nickname,
-                    Encoding.sha512(password),
+                    Hash.of(password),
                     sessionToken
             );
 
             return new Account(id, email, nickname, new Long[0]); // TODO
-        }
-        catch (NoSuchAlgorithmException e)
-        {
-            throw new InternalServerErrorException(e);
         }
         catch (DatabaseException e)
         {

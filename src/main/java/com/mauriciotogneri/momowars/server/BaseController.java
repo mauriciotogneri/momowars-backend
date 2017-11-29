@@ -5,7 +5,6 @@ import com.mauriciotogneri.jerry.controller.Controller;
 import com.mauriciotogneri.jerry.exceptions.client.BadRequestException;
 import com.mauriciotogneri.jerry.exceptions.client.ConflictException;
 import com.mauriciotogneri.jerry.exceptions.client.UnauthorizedException;
-import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.exceptions.AccountAlreadyExistsException;
 import com.mauriciotogneri.momowars.exceptions.AccountNotFoundException;
@@ -16,7 +15,6 @@ import com.mauriciotogneri.momowars.exceptions.MapNotFoundException;
 import com.mauriciotogneri.momowars.repository.account.AccountDao;
 
 import javax.ws.rs.NotFoundException;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
 public class BaseController extends Controller
@@ -37,11 +35,11 @@ public class BaseController extends Controller
 
                 return response;
             }
-            catch (DatabaseException e)
+            catch (Exception e)
             {
                 connection.rollback();
 
-                throw new InternalServerErrorException(e);
+                throw e;
             }
             finally
             {
@@ -56,6 +54,8 @@ public class BaseController extends Controller
 
     private Exception processException(Exception exception) throws Exception
     {
+        exception.printStackTrace();
+
         try
         {
             throw exception;
@@ -76,20 +76,8 @@ public class BaseController extends Controller
         {
             return new UnauthorizedException(e);
         }
-        catch (InternalServerErrorException e)
-        {
-            e.printStackTrace();
-
-            return e;
-        }
-        catch (WebApplicationException e)
-        {
-            return e;
-        }
         catch (Exception e)
         {
-            e.printStackTrace();
-
             return e;
         }
     }

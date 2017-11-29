@@ -1,14 +1,12 @@
 package com.mauriciotogneri.momowars.services;
 
 import com.mauriciotogneri.inquiry.DatabaseException;
-import com.mauriciotogneri.javautils.Encoding;
-import com.mauriciotogneri.jerry.exceptions.server.InternalServerErrorException;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.exceptions.InvalidCredentialsException;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.repository.account.AccountDao;
+import com.mauriciotogneri.momowars.util.Hash;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
 public class SessionService
@@ -27,13 +25,6 @@ public class SessionService
 
     public static String newSessionToken()
     {
-        try
-        {
-            return Encoding.sha512(UUID.randomUUID().toString());
-        }
-        catch (NoSuchAlgorithmException e)
-        {
-            throw new InternalServerErrorException(e);
-        }
+        return Hash.of(UUID.randomUUID().toString());
     }
 }
