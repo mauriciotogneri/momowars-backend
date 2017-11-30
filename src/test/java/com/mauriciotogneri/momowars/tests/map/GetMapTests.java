@@ -1,10 +1,15 @@
 package com.mauriciotogneri.momowars.tests.map;
 
+import com.mauriciotogneri.momowars.model.games.Map;
 import com.mauriciotogneri.momowars.tests.BaseTest;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+
+import static com.mauriciotogneri.stewie.types.StatusCode.NOT_FOUND;
+import static com.mauriciotogneri.stewie.types.StatusCode.OK;
+import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class GetMapTests extends BaseTest
@@ -12,20 +17,27 @@ public class GetMapTests extends BaseTest
     @Test
     public void test1GetMapWithAnInvalidSession() throws Exception
     {
+        mapService.getMap(UNAUTHORIZED, "xxx", 0L);
     }
 
     @Test
     public void test2GetMapWithInvalidParameters() throws Exception
     {
+        TestAccount testAccount = testAccountLogged();
+
+        mapService.getMap(NOT_FOUND, testAccount.sessionToken, 0L);
     }
 
     @Test
-    public void test3GetMapWithAValidSessionAndInvalidId() throws Exception
+    public void test3GetMapWithAValidSessionAndValidId() throws Exception
     {
-    }
+        TestAccount testAccount = testAccountLogged();
 
-    @Test
-    public void test4GetMapWithAValidSessionAndValidId() throws Exception
-    {
+        Map[] maps = mapService.getMaps(OK, testAccount.sessionToken);
+
+        for (Map map : maps)
+        {
+            mapService.getMap(OK, testAccount.sessionToken, map.id);
+        }
     }
 }

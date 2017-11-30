@@ -2,6 +2,7 @@ package com.mauriciotogneri.momowars.tests;
 
 import com.mauriciotogneri.momowars.model.accounts.Account;
 import com.mauriciotogneri.momowars.services.AccountServiceTest;
+import com.mauriciotogneri.momowars.services.MapServiceTest;
 import com.mauriciotogneri.momowars.services.SessionServiceTest;
 
 import java.util.UUID;
@@ -12,6 +13,7 @@ public class BaseTest
 {
     protected final SessionServiceTest sessionService = new SessionServiceTest();
     protected final AccountServiceTest accountService = new AccountServiceTest();
+    protected final MapServiceTest mapService = new MapServiceTest();
 
     public static String randomEmail()
     {

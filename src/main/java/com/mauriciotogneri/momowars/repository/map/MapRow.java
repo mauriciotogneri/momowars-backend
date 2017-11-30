@@ -14,6 +14,6 @@ public class MapRow
 
     public Map map(List<Cell> cells)
     {
-        return new Map(name, width, height, cells);
+        return new Map(id, name, width, height, cells);
     }
 }
