@@ -20,6 +20,7 @@ public class Main
 
     public void start() throws Exception
     {
+        migrate();
         Server server = server();
 
         try
@@ -31,6 +32,11 @@ public class Main
         {
             server.destroy();
         }
+    }
+
+    public void migrate()
+    {
+        database.migrate();
     }
 
     public Server server() throws Exception

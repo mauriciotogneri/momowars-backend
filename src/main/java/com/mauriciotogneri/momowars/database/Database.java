@@ -1,13 +1,10 @@
 package com.mauriciotogneri.momowars.database;
 
-import com.mauriciotogneri.javautils.Strings;
 import com.zaxxer.hikari.HikariDataSource;
 
 import org.flywaydb.core.Flyway;
 
 import java.sql.Connection;
-
-import javax.sql.DataSource;
 
 public class Database
 {
@@ -16,19 +13,15 @@ public class Database
     public Database(String url, int poolSize) throws Exception
     {
         this.connectionPool = connectionPool(url, poolSize);
-        migrate(connectionPool);
     }
 
-    private void migrate(DataSource dataSource)
+    public void migrate()
     {
-        if (!Strings.equals(System.getenv("ENVIRONMENT"), "local"))
-        {
-            Flyway flyway = new Flyway();
-            flyway.setBaselineOnMigrate(true);
-            flyway.setDataSource(dataSource);
-            flyway.setLocations(String.format("%s/migrations", getClass().getPackage().getName().replace(".", "/")));
-            flyway.migrate();
-        }
+        Flyway flyway = new Flyway();
+        flyway.setBaselineOnMigrate(true);
+        flyway.setDataSource(connectionPool);
+        flyway.setLocations(String.format("%s/migrations", getClass().getPackage().getName().replace(".", "/")));
+        flyway.migrate();
     }
 
     public synchronized Connection newConnection() throws Exception
