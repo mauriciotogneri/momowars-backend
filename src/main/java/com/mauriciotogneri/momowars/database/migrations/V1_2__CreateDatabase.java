@@ -6,7 +6,7 @@ import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
 
 import java.sql.Connection;
 
-public class V1_2__Test implements JdbcMigration
+public class V1_2__CreateDatabase implements JdbcMigration
 {
     public void migrate(Connection connection) throws Exception
     {
@@ -33,9 +33,5 @@ public class V1_2__Test implements JdbcMigration
         databaseConnection.executeQuery("sql/relationships/map_cells.sql");
         databaseConnection.executeQuery("sql/relationships/player_queues.sql");
         databaseConnection.executeQuery("sql/relationships/player_units.sql");
-
-        databaseConnection.executeQuery("sql/data/cell.sql");
-        databaseConnection.executeQuery("sql/data/map.sql");
-        databaseConnection.executeQuery("sql/data/map_cells.sql");
     }
 }

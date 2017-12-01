@@ -37,8 +37,10 @@ public class TestSuite
 
         Main main = new Main(port, databaseUrl, connectionPoolSize);
 
-        cleanDatabase(Main.database.newConnection());
+        Connection connection = Main.database.newConnection();
+        cleanDatabase(connection);
         main.migrate();
+        populateDatabase(connection);
 
         server = main.server();
         server.start();
@@ -51,6 +53,14 @@ public class TestSuite
         databaseConnection.executeQuery("sql/schema/create_schema.sql");
 
         connection.commit();
+    }
+
+    private static void populateDatabase(Connection connection) throws Exception
+    {
+        DatabaseConnection databaseConnection = new DatabaseConnection(connection);
+        databaseConnection.executeQuery("sql/data/cell.sql");
+        databaseConnection.executeQuery("sql/data/map.sql");
+        databaseConnection.executeQuery("sql/data/map_cells.sql");
     }
 
     @AfterClass
