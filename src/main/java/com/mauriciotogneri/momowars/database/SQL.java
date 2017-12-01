@@ -23,4 +23,9 @@ public class SQL
     {
         public static final String SELECT_BY_MAP = "queries/cell/select_by_map.sql";
     }
+
+    public class LogQueries
+    {
+        public static final String INSERT = "queries/log/insert.sql";
+    }
 }

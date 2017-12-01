@@ -19,10 +19,10 @@ public class ServerRequestFilter implements ContainerRequestFilter
     @Override
     public void filter(ContainerRequestContext request)
     {
-        logRequest(request);
+        logRequestInConsole(request);
     }
 
-    private void logRequest(ContainerRequestContext request)
+    private void logRequestInConsole(ContainerRequestContext request)
     {
         try
         {
