@@ -1,7 +1,11 @@
 package com.mauriciotogneri.momowars.controllers.game;
 
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
+import com.mauriciotogneri.momowars.model.Game;
 import com.mauriciotogneri.momowars.server.BaseController;
+import com.mauriciotogneri.momowars.services.GameService;
+
+import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -10,7 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static javax.ws.rs.core.Response.Status.NOT_IMPLEMENTED;
+import static javax.ws.rs.core.Response.Status.OK;
 
 @Path("api")
 public class GetOpenGames extends BaseController
@@ -28,6 +32,8 @@ public class GetOpenGames extends BaseController
         checkIfNotEmpty(sessionToken);
         validateSessionToken(connection, sessionToken);
 
-        return response(NOT_IMPLEMENTED);
+        List<Game> games = GameService.getOpenGames(connection);
+
+        return response(OK, games);
     }
 }

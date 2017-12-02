@@ -1,12 +1,19 @@
 package com.mauriciotogneri.momowars.repository.game;
 
 import com.mauriciotogneri.inquiry.DatabaseException;
+import com.mauriciotogneri.inquiry.QueryResult;
 import com.mauriciotogneri.inquiry.queries.InsertQuery;
+import com.mauriciotogneri.inquiry.queries.SelectQuery;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.GameQueries;
+import com.mauriciotogneri.momowars.exceptions.MapNotFoundException;
 import com.mauriciotogneri.momowars.model.Game;
 import com.mauriciotogneri.momowars.model.Map;
+import com.mauriciotogneri.momowars.repository.map.MapDao;
 import com.mauriciotogneri.momowars.types.GameStatus;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameDao
 {
@@ -27,5 +34,22 @@ public class GameDao
         );
 
         return new Game(id, GameStatus.OPEN, maxPlayers, map);
+    }
+
+    public List<Game> getOpenGames() throws DatabaseException, MapNotFoundException
+    {
+        MapDao mapDao = new MapDao(connection);
+
+        SelectQuery<GameRow> query = connection.selectQuery(GameQueries.SELECT_OPEN, GameRow.class);
+        QueryResult<GameRow> result = query.execute();
+
+        List<Game> games = new ArrayList<>();
+
+        for (GameRow game : result)
+        {
+            games.add(game.game(mapDao.getMap(game.mapId)));
+        }
+
+        return games;
     }
 }

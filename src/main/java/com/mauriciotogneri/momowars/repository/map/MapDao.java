@@ -5,7 +5,6 @@ import com.mauriciotogneri.inquiry.QueryResult;
 import com.mauriciotogneri.inquiry.queries.SelectQuery;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.MapQueries;
-import com.mauriciotogneri.momowars.exceptions.InvalidSessionTokenException;
 import com.mauriciotogneri.momowars.exceptions.MapNotFoundException;
 import com.mauriciotogneri.momowars.model.Map;
 import com.mauriciotogneri.momowars.repository.cell.CellDao;
@@ -22,7 +21,7 @@ public class MapDao
         this.connection = connection;
     }
 
-    public List<Map> getMaps() throws InvalidSessionTokenException, DatabaseException
+    public List<Map> getMaps() throws DatabaseException
     {
         CellDao cellDao = new CellDao(connection);
 

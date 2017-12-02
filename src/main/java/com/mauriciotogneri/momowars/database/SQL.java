@@ -16,6 +16,7 @@ public class SQL
     public class GameQueries
     {
         public static final String INSERT = "queries/game/insert.sql";
+        public static final String SELECT_OPEN = "queries/game/select_open.sql";
     }
 
     public class MapQueries

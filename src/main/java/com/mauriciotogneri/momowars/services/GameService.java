@@ -8,6 +8,8 @@ import com.mauriciotogneri.momowars.model.Game;
 import com.mauriciotogneri.momowars.model.Map;
 import com.mauriciotogneri.momowars.repository.game.GameDao;
 
+import java.util.List;
+
 public class GameService
 {
     public static Game createGame(DatabaseConnection connection,
@@ -25,5 +27,13 @@ public class GameService
         GameDao accountDao = new GameDao(connection);
 
         return accountDao.create(maxPlayers, map);
+    }
+
+    public static List<Game> getOpenGames(DatabaseConnection connection)
+            throws DatabaseException, MapNotFoundException
+    {
+        GameDao accountDao = new GameDao(connection);
+
+        return accountDao.getOpenGames();
     }
 }
