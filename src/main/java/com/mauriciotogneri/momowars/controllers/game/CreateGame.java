@@ -3,9 +3,11 @@ package com.mauriciotogneri.momowars.controllers.game;
 import com.mauriciotogneri.jerry.controller.EntityProvider;
 import com.mauriciotogneri.jerry.controller.EntityProvider.EntityObject;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
+import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.Game;
 import com.mauriciotogneri.momowars.server.BaseController;
 import com.mauriciotogneri.momowars.services.GameService;
+import com.mauriciotogneri.momowars.services.PlayerService;
 
 import java.util.Objects;
 
@@ -36,10 +38,12 @@ public class CreateGame extends BaseController
     {
         checkIfNotEmpty(sessionToken);
         checkIfNotEmpty(entity);
-        validateSessionToken(connection, sessionToken);
+
+        Account account = validateSessionToken(connection, sessionToken);
 
         Game game = GameService.createGame(connection, entity.maxPlayers, entity.mapId);
-        // TODO: create player and add it to the game
+
+        PlayerService.create(connection, account.id(), game.id());
 
         return response(CREATED, game);
     }

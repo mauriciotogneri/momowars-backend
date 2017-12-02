@@ -16,4 +16,9 @@ public class Game
         this.maxPlayers = maxPlayers;
         this.map = map;
     }
+
+    public Long id()
+    {
+        return id;
+    }
 }

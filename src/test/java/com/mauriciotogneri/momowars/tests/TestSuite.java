@@ -1,7 +1,7 @@
 package com.mauriciotogneri.momowars.tests;
 
+import com.mauriciotogneri.momowars.app.DatabaseHelper;
 import com.mauriciotogneri.momowars.app.Main;
-import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.tests.account.AccountSuite;
 import com.mauriciotogneri.momowars.tests.game.GameSuite;
 import com.mauriciotogneri.momowars.tests.map.MapSuite;
@@ -13,8 +13,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-
-import java.sql.Connection;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
@@ -37,30 +35,10 @@ public class TestSuite
 
         Main main = new Main(port, databaseUrl, connectionPoolSize);
 
-        Connection connection = Main.database.newConnection();
-        cleanDatabase(connection);
-        main.migrate();
-        populateDatabase(connection);
+        DatabaseHelper.initialize(Main.database);
 
         server = main.server();
         server.start();
-    }
-
-    private static void cleanDatabase(Connection connection) throws Exception
-    {
-        DatabaseConnection databaseConnection = new DatabaseConnection(connection);
-        databaseConnection.executeQuery("sql/schema/drop_schema.sql");
-        databaseConnection.executeQuery("sql/schema/create_schema.sql");
-
-        connection.commit();
-    }
-
-    private static void populateDatabase(Connection connection) throws Exception
-    {
-        DatabaseConnection databaseConnection = new DatabaseConnection(connection);
-        databaseConnection.executeQuery("sql/data/cell.sql");
-        databaseConnection.executeQuery("sql/data/map.sql");
-        databaseConnection.executeQuery("sql/data/map_cells.sql");
     }
 
     @AfterClass

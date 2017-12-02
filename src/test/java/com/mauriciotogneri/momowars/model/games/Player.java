@@ -7,6 +7,4 @@ public class Player
     public String nickname;
 
     public PlayerStatus status;
-
-    public String color;
 }

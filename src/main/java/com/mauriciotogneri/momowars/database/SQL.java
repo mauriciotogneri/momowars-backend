@@ -11,12 +11,18 @@ public class SQL
         public static final String UPDATE_SESSION_TOKEN = "queries/account/update_session_token.sql";
         public static final String UPDATE_PASSWORD = "queries/account/update_password.sql";
         public static final String UPDATE_NICKNAME = "queries/account/update_nickname.sql";
+        public static final String JOIN_GAME = "queries/account/join_game.sql";
     }
 
     public class GameQueries
     {
         public static final String INSERT = "queries/game/insert.sql";
         public static final String SELECT_OPEN = "queries/game/select_open.sql";
+    }
+
+    public class PlayerQueries
+    {
+        public static final String INSERT = "queries/player/insert.sql";
     }
 
     public class MapQueries

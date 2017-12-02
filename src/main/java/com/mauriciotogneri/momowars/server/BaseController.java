@@ -13,6 +13,7 @@ import com.mauriciotogneri.momowars.exceptions.InvalidParametersException;
 import com.mauriciotogneri.momowars.exceptions.InvalidSessionTokenException;
 import com.mauriciotogneri.momowars.exceptions.MapNotFoundException;
 import com.mauriciotogneri.momowars.logger.ErrorLogger;
+import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.repository.account.AccountDao;
 
 import javax.ws.rs.NotFoundException;
@@ -91,11 +92,11 @@ public class BaseController extends Controller
         }
     }
 
-    protected void validateSessionToken(DatabaseConnection connection, String sessionToken) throws InvalidSessionTokenException, DatabaseException
+    protected Account validateSessionToken(DatabaseConnection connection, String sessionToken) throws InvalidSessionTokenException, DatabaseException
     {
         AccountDao accountDao = new AccountDao(connection);
 
-        accountDao.bySessionToken(sessionToken);
+        return accountDao.bySessionToken(sessionToken);
     }
 
     public interface ControllerImplementation
