@@ -25,8 +25,6 @@ public class BaseController extends Controller
     {
         try
         {
-            int a = 1 / 0;
-
             DatabaseConnection connection = new DatabaseConnection();
 
             try

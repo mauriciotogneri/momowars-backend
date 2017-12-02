@@ -3,7 +3,9 @@ package com.mauriciotogneri.momowars.server;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.email.Email;
 import com.mauriciotogneri.momowars.repository.error.ErrorDao;
+import com.mauriciotogneri.momowars.tasks.SendEmailTask;
 import com.mauriciotogneri.momowars.util.Now;
+import com.mauriciotogneri.momowars.util.TaskPool;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -51,18 +53,12 @@ public class ErrorLogger
 
     private static void sendAlert(String stacktrace)
     {
-        try
-        {
-            Email email = new Email(
-                    "error@momowars.com",
-                    "mauricio.togneri@gmail.com",
-                    String.format("Momowars error: %s", Now.timestamp()),
-                    String.format("<pre>%s</pre>", stacktrace));
-            email.send();
-        }
-        catch (Exception e)
-        {
-            // ignore
-        }
+        Email email = new Email(
+                "error@momowars.com",
+                "mauricio.togneri@gmail.com",
+                String.format("Momowars error: %s", Now.timestamp()),
+                String.format("<pre>%s</pre>", stacktrace));
+
+        TaskPool.submit(new SendEmailTask(email));
     }
 }
