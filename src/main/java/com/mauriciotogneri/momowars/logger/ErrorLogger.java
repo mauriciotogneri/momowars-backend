@@ -1,4 +1,4 @@
-package com.mauriciotogneri.momowars.server;
+package com.mauriciotogneri.momowars.logger;
 
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.email.Email;

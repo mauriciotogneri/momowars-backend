@@ -26,6 +26,7 @@ public class GetOpenGames extends BaseController
     private Response controller(DatabaseConnection connection, String sessionToken) throws Exception
     {
         checkIfNotEmpty(sessionToken);
+        validateSessionToken(connection, sessionToken);
 
         return response(NOT_IMPLEMENTED);
     }

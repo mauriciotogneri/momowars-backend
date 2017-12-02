@@ -29,6 +29,7 @@ public class GetGame extends BaseController
     {
         checkIfNotEmpty(sessionToken);
         checkIfNotEmpty(gameId);
+        validateSessionToken(connection, sessionToken);
 
         return response(NOT_IMPLEMENTED);
     }

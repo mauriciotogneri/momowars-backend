@@ -1,4 +1,4 @@
-package com.mauriciotogneri.momowars.server;
+package com.mauriciotogneri.momowars.logger;
 
 import com.mauriciotogneri.jerry.http.HttpRequest;
 import com.mauriciotogneri.jerry.http.HttpResponse;

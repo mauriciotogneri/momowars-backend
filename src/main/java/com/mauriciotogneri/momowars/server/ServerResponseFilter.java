@@ -1,6 +1,9 @@
 package com.mauriciotogneri.momowars.server;
 
 import com.mauriciotogneri.jerry.http.HttpResponse;
+import com.mauriciotogneri.momowars.logger.ConsoleLogger;
+import com.mauriciotogneri.momowars.logger.DatabaseLogger;
+import com.mauriciotogneri.momowars.logger.ErrorLogger;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;

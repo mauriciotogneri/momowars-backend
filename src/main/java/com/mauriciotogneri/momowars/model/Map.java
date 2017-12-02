@@ -18,4 +18,9 @@ public class Map
         this.height = height;
         this.cells = cells;
     }
+
+    public Long id()
+    {
+        return id;
+    }
 }

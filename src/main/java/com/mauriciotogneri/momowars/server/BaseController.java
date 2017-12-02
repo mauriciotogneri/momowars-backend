@@ -12,6 +12,7 @@ import com.mauriciotogneri.momowars.exceptions.InvalidCredentialsException;
 import com.mauriciotogneri.momowars.exceptions.InvalidParametersException;
 import com.mauriciotogneri.momowars.exceptions.InvalidSessionTokenException;
 import com.mauriciotogneri.momowars.exceptions.MapNotFoundException;
+import com.mauriciotogneri.momowars.logger.ErrorLogger;
 import com.mauriciotogneri.momowars.repository.account.AccountDao;
 
 import javax.ws.rs.NotFoundException;

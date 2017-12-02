@@ -3,7 +3,9 @@ package com.mauriciotogneri.momowars.controllers.game;
 import com.mauriciotogneri.jerry.controller.EntityProvider;
 import com.mauriciotogneri.jerry.controller.EntityProvider.EntityObject;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
+import com.mauriciotogneri.momowars.model.Game;
 import com.mauriciotogneri.momowars.server.BaseController;
+import com.mauriciotogneri.momowars.services.GameService;
 
 import java.util.Objects;
 
@@ -16,7 +18,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
-import static javax.ws.rs.core.Response.Status.NOT_IMPLEMENTED;
+import static javax.ws.rs.core.Response.Status.CREATED;
 
 @Path("api")
 public class CreateGame extends BaseController
@@ -34,8 +36,12 @@ public class CreateGame extends BaseController
     {
         checkIfNotEmpty(sessionToken);
         checkIfNotEmpty(entity);
+        validateSessionToken(connection, sessionToken);
 
-        return response(NOT_IMPLEMENTED);
+        Game game = GameService.createGame(connection, entity.maxPlayers, entity.mapId);
+        // TODO: create player and add it to the game
+
+        return response(CREATED, game);
     }
 
     @Provider

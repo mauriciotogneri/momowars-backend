@@ -13,6 +13,11 @@ public class SQL
         public static final String UPDATE_NICKNAME = "queries/account/update_nickname.sql";
     }
 
+    public class GameQueries
+    {
+        public static final String INSERT = "queries/game/insert.sql";
+    }
+
     public class MapQueries
     {
         public static final String SELECT_BY_ID = "queries/map/select_by_id.sql";
