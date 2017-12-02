@@ -27,5 +27,6 @@ public class SQL
     public class LogQueries
     {
         public static final String INSERT = "queries/log/insert.sql";
+        public static final String UPDATE = "queries/log/update.sql";
     }
 }

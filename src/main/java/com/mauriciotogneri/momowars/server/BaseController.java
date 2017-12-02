@@ -52,7 +52,7 @@ public class BaseController extends Controller
         }
     }
 
-    private Exception processException(Exception exception) throws Exception
+    private Exception processException(Exception exception)
     {
         exception.printStackTrace();
 

@@ -2,6 +2,9 @@ package com.mauriciotogneri.momowars.repository.log;
 
 import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.inquiry.queries.InsertQuery;
+import com.mauriciotogneri.inquiry.queries.UpdateQuery;
+import com.mauriciotogneri.jerry.http.HttpRequest;
+import com.mauriciotogneri.jerry.http.HttpResponse;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.LogQueries;
 
@@ -18,7 +21,7 @@ public class LogDao
         this.connection = connection;
     }
 
-    public void create(String ip, String request, String response) throws DatabaseException
+    public long create(String ip, HttpRequest request) throws DatabaseException
     {
         InsertQuery query = connection.insertQuery(LogQueries.INSERT);
 
@@ -26,11 +29,26 @@ public class LogDao
         Date now = calendar.getTime();
         Timestamp timestamp = new Timestamp(now.getTime());
 
-        query.execute(
+        return query.execute(
                 timestamp,
                 ip,
-                request,
-                response
+                request.method(),
+                request.path(),
+                request.headers().toString(),
+                request.entity()
+        );
+    }
+
+    public void addResponse(Long id, HttpResponse response, int duration) throws DatabaseException
+    {
+        UpdateQuery query = connection.updateQuery(LogQueries.UPDATE);
+
+        query.execute(
+                response.status(),
+                response.headers().toString(),
+                response.entity(),
+                duration,
+                id
         );
     }
 }
