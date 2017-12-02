@@ -59,11 +59,6 @@ public class ConsoleLogger
         }
     }
 
-    public static void logException(Exception e)
-    {
-        e.printStackTrace();
-    }
-
     private static void log(String text)
     {
         System.out.print(text);
