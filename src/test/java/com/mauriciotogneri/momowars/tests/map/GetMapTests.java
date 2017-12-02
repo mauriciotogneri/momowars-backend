@@ -17,7 +17,7 @@ public class GetMapTests extends BaseTest
     @Test
     public void test1GetMapWithAnInvalidSession() throws Exception
     {
-        mapService.getMap(UNAUTHORIZED, "xxx", 0L);
+        mapService.getMap(UNAUTHORIZED, INVALID_SESSION_TOKEN, 0L);
     }
 
     @Test

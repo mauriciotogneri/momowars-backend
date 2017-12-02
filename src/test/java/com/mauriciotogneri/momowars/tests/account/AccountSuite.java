@@ -7,7 +7,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
         CreateAccountTests.class,
         GetAccountSteps.class,
-        UpdateAccountSteps.class,
+        UpdateAccountTests.class,
 })
 public class AccountSuite
 {

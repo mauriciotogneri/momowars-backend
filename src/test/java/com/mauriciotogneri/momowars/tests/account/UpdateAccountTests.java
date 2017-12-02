@@ -13,13 +13,13 @@ import static com.mauriciotogneri.stewie.types.StatusCode.OK;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class UpdateAccountSteps extends BaseTest
+public class UpdateAccountTests extends BaseTest
 {
     @Test
     public void test1UpdateAccountWithAnInvalidSession() throws Exception
     {
         TestAccount account = testAccountLogged();
-        accountService.updateAccount(UNAUTHORIZED, "xxx", account.password, account.nickname);
+        accountService.updateAccount(UNAUTHORIZED, INVALID_SESSION_TOKEN, account.password, account.nickname);
     }
 
     @Test

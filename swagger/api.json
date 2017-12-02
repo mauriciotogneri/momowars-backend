@@ -212,39 +212,6 @@
         }
       }
     },
-    "/v1/games/{gameId}/cells/{cellId}/units": {
-      "patch": {
-        "tags": [
-          "Units"
-        ],
-        "summary": "RecruitUnits",
-        "description": "Enqueues the command to recruit of the units",
-        "parameters": [
-          {
-            "name": "data",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/com.mauriciotogneri.momowars.api.units.RecruitUnits.DataParameter"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "400": {
-            "description": "Parameters missing or invalid"
-          },
-          "401": {
-            "description": "Session token not valid"
-          },
-          "204": {
-            "description": "Successful operation"
-          },
-          "404": {
-            "description": "Invalid gameId or cellId"
-          }
-        }
-      }
-    },
     "/v1/games": {
       "post": {
         "tags": [
@@ -378,27 +345,42 @@
             "description": "Parameters missing or invalid"
           },
           "401": {
-            "description": "Invalid password"
-          },
-          "404": {
-            "description": "Invalid email"
+            "description": "Invalid email or password"
           }
         }
       }
     },
-    "/v1/games/{gameId}/cells/{cellId}/units/{unitId}/move": {
+    "/v1/games/{gameId}/players/{playerId}/cells/{cellId}/queue": {
       "put": {
         "tags": [
           "Units"
         ],
-        "summary": "MoveUnits",
-        "description": "Enqueues the command to move the units",
+        "summary": "RecruitUnits",
+        "description": "Enqueues the command to recruit of the units",
         "parameters": [
+          {
+            "name": "gameId",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "playerId",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "cellId",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
           {
             "name": "data",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/com.mauriciotogneri.momowars.api.units.MoveUnits.DataParameter"
+              "$ref": "#/definitions/com.mauriciotogneri.momowars.api.units.RecruitUnits.DataParameter"
             },
             "required": true
           }
@@ -414,7 +396,7 @@
             "description": "Successful operation"
           },
           "404": {
-            "description": "Invalid gameId, cellId or unitId"
+            "description": "Invalid gameId or cellId"
           }
         }
       }
@@ -440,7 +422,7 @@
             "name": "mapId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "integer"
           }
         ],
         "responses": {
@@ -474,7 +456,7 @@
             "name": "gameId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "integer"
           }
         ],
         "responses": {
@@ -486,6 +468,63 @@
           },
           "409": {
             "description": "The game is full"
+          }
+        }
+      }
+    },
+    "/v1/games/{gameId}/players/{playerId}/cells/{cellId}/units/{unitId}/move": {
+      "put": {
+        "tags": [
+          "Units"
+        ],
+        "summary": "MoveUnits",
+        "description": "Enqueues the command to move the units",
+        "parameters": [
+          {
+            "name": "gameId",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "playerId",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "cellId",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "unitId",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/com.mauriciotogneri.momowars.api.units.MoveUnits.DataParameter"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Parameters missing or invalid"
+          },
+          "401": {
+            "description": "Session token not valid"
+          },
+          "204": {
+            "description": "Successful operation"
+          },
+          "404": {
+            "description": "Invalid gameId, cellId or unitId"
           }
         }
       }
@@ -508,13 +547,13 @@
             "name": "gameId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "integer"
           },
           {
             "name": "playerId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "integer"
           }
         ],
         "responses": {
@@ -538,13 +577,13 @@
         "movement": {
           "type": "string",
           "enum": [
-            "none",
-            "up_left",
-            "up",
-            "up_right",
-            "down_right",
-            "down",
-            "down_left"
+            "NONE",
+            "UP_LEFT",
+            "UP",
+            "UP_RIGHT",
+            "DOWN_RIGHT",
+            "DOWN",
+            "DOWN_LEFT"
           ]
         }
       },
@@ -577,41 +616,59 @@
     "com.mauriciotogneri.momowars.model.games.Game": {
       "type": "object",
       "properties": {
+        "id": {
+          "type": "integer"
+        },
         "status": {
           "type": "string",
           "enum": [
-            "open",
-            "playing",
-            "calculating",
-            "finished"
+            "OPEN",
+            "PLAYING",
+            "CALCULATING",
+            "FINISHED"
           ]
         },
         "map": {
           "$ref": "#/definitions/com.mauriciotogneri.momowars.model.games.Map"
+        },
+        "maxPlayers": {
+          "type": "integer"
         },
         "players": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/com.mauriciotogneri.momowars.model.games.Player"
           }
-        },
-        "cells": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/com.mauriciotogneri.momowars.model.games.Cell"
-          }
         }
       },
       "required": [
+        "id",
         "status",
         "map",
-        "players",
-        "cells"
+        "maxPlayers",
+        "players"
       ]
     },
     "com.mauriciotogneri.momowars.model.games.Cell": {
       "type": "object",
       "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "BASE",
+            "GRASS",
+            "EARTH",
+            "MOUNTAIN",
+            "FOREST",
+            "DESERT",
+            "CONCRETE",
+            "WATER",
+            "ICE"
+          ]
+        },
         "x": {
           "type": "integer"
         },
@@ -620,6 +677,8 @@
         }
       },
       "required": [
+        "id",
+        "type",
         "x",
         "y"
       ]
@@ -629,10 +688,12 @@
       "properties": {
         "password": {
           "type": "string",
-          "format": "email"
+          "format": "email",
+          "maxLength": 50
         },
         "nickname": {
-          "type": "string"
+          "type": "string",
+          "maxLength": 30
         }
       },
       "required": [
@@ -644,7 +705,7 @@
       "type": "object",
       "properties": {
         "mapId": {
-          "type": "string"
+          "type": "integer"
         },
         "maxPlayers": {
           "type": "integer",
@@ -659,16 +720,31 @@
     "com.mauriciotogneri.momowars.model.games.Map": {
       "type": "object",
       "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
         "width": {
           "type": "integer"
         },
         "height": {
           "type": "integer"
+        },
+        "cells": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/com.mauriciotogneri.momowars.model.games.Cell"
+          }
         }
       },
       "required": [
+        "id",
+        "name",
         "width",
-        "height"
+        "height",
+        "cells"
       ]
     },
     "com.mauriciotogneri.momowars.model.games.Player": {
@@ -680,21 +756,17 @@
         "status": {
           "type": "string",
           "enum": [
-            "playing",
-            "waiting",
-            "victorious",
-            "defeated",
-            "surrended"
+            "PLAYING",
+            "WAITING",
+            "VICTORIOUS",
+            "DEFEATED",
+            "SURRENDERED"
           ]
-        },
-        "color": {
-          "type": "string"
         }
       },
       "required": [
         "nickname",
-        "status",
-        "color"
+        "status"
       ]
     },
     "com.mauriciotogneri.momowars.api.units.RecruitUnits.DataParameter": {
@@ -703,12 +775,12 @@
         "type": {
           "type": "string",
           "enum": [
-            "squad",
-            "mortar",
-            "humvee",
-            "light_tank",
-            "heavy_tank",
-            "helicopter"
+            "SQUAD",
+            "MORTAR",
+            "HUMVEE",
+            "LIGHT_TANK",
+            "HEAVY_TANK",
+            "HELICOPTER"
           ]
         },
         "quantity": {
@@ -726,7 +798,8 @@
       "properties": {
         "email": {
           "type": "string",
-          "format": "email"
+          "format": "email",
+          "maxLength": 50
         },
         "password": {
           "type": "string"
@@ -741,14 +814,16 @@
       "type": "object",
       "properties": {
         "email": {
-          "type": "string"
+          "type": "string",
+          "format": "email",
+          "maxLength": 50
         },
         "password": {
-          "type": "string",
-          "format": "email"
+          "type": "string"
         },
         "nickname": {
-          "type": "string"
+          "type": "string",
+          "maxLength": 30
         }
       },
       "required": [

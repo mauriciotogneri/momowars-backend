@@ -17,7 +17,7 @@ public class GetAccountSteps extends BaseTest
     @Test
     public void test1GetAccountWithAnInvalidSession() throws Exception
     {
-        accountService.getAccount(UNAUTHORIZED, "xxx");
+        accountService.getAccount(UNAUTHORIZED, INVALID_SESSION_TOKEN);
     }
 
     @Test

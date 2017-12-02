@@ -3,8 +3,6 @@ package com.mauriciotogneri.momowars.app;
 import com.mauriciotogneri.momowars.database.Database;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 
-import java.sql.Connection;
-
 public class DatabaseHelper
 {
     public static void main(String[] args) throws Exception
@@ -18,31 +16,28 @@ public class DatabaseHelper
 
     public static void initialize(Database database) throws Exception
     {
-        Connection connection = database.newConnection();
-        DatabaseConnection databaseConnection = new DatabaseConnection(connection);
+        DatabaseConnection connection = new DatabaseConnection(database.newConnection());
 
-        cleanDatabase(databaseConnection);
-        connection.commit();
-
+        cleanDatabase(connection);
         database.migrate();
-
-        populateDatabase(databaseConnection);
-        connection.commit();
+        populateDatabase(connection);
 
         connection.close();
     }
 
-    private static void cleanDatabase(DatabaseConnection databaseConnection) throws Exception
+    private static void cleanDatabase(DatabaseConnection connection) throws Exception
     {
-        databaseConnection.executeQuery("sql/schema/drop_schema.sql");
-        databaseConnection.executeQuery("sql/schema/create_schema.sql");
+        connection.executeQuery("sql/schema/drop_schema.sql");
+        connection.executeQuery("sql/schema/create_schema.sql");
+        connection.commit();
     }
 
-    private static void populateDatabase(DatabaseConnection databaseConnection) throws Exception
+    private static void populateDatabase(DatabaseConnection connection) throws Exception
     {
-        databaseConnection.executeQuery("sql/data/account.sql");
-        databaseConnection.executeQuery("sql/data/cell.sql");
-        databaseConnection.executeQuery("sql/data/map.sql");
-        databaseConnection.executeQuery("sql/data/map_cells.sql");
+        connection.executeQuery("sql/data/account.sql");
+        connection.executeQuery("sql/data/cell.sql");
+        connection.executeQuery("sql/data/map.sql");
+        connection.executeQuery("sql/data/map_cells.sql");
+        connection.commit();
     }
 }

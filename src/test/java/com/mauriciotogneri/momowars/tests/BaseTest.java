@@ -15,6 +15,8 @@ public class BaseTest
     protected final AccountServiceTest accountService = new AccountServiceTest();
     protected final MapServiceTest mapService = new MapServiceTest();
 
+    protected static final String INVALID_SESSION_TOKEN = "invalid.session.token";
+
     public static String randomEmail()
     {
         return String.format("email_%s@email.com", UUID.randomUUID().toString().replace("-", ""));
