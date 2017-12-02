@@ -7,10 +7,7 @@ import com.mauriciotogneri.jerry.http.HttpRequest;
 import com.mauriciotogneri.jerry.http.HttpResponse;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.LogQueries;
-
-import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.Date;
+import com.mauriciotogneri.momowars.util.Now;
 
 public class LogDao
 {
@@ -25,12 +22,8 @@ public class LogDao
     {
         InsertQuery query = connection.insertQuery(LogQueries.INSERT);
 
-        Calendar calendar = Calendar.getInstance();
-        Date now = calendar.getTime();
-        Timestamp timestamp = new Timestamp(now.getTime());
-
         return query.execute(
-                timestamp,
+                Now.timestamp(),
                 ip,
                 request.method(),
                 request.path(),

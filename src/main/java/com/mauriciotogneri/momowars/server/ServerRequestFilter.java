@@ -33,7 +33,7 @@ public class ServerRequestFilter implements ContainerRequestFilter
         }
         catch (Exception e)
         {
-            // ignore
+            ErrorLogger.log(e);
         }
     }
 }

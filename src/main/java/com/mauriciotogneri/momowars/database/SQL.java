@@ -29,4 +29,9 @@ public class SQL
         public static final String INSERT = "queries/log/insert.sql";
         public static final String UPDATE = "queries/log/update.sql";
     }
+
+    public class ErrorQueries
+    {
+        public static final String INSERT = "queries/error/insert.sql";
+    }
 }

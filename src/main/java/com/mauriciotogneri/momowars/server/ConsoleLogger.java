@@ -34,7 +34,7 @@ public class ConsoleLogger
         }
         catch (Exception e)
         {
-            // ignore
+            ErrorLogger.log(e);
         }
     }
 
@@ -55,8 +55,13 @@ public class ConsoleLogger
         }
         catch (Exception e)
         {
-            // ignore
+            ErrorLogger.log(e);
         }
+    }
+
+    public static void logException(Exception e)
+    {
+        e.printStackTrace();
     }
 
     private static void log(String text)

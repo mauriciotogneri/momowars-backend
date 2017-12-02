@@ -54,8 +54,6 @@ public class BaseController extends Controller
 
     private Exception processException(Exception exception)
     {
-        exception.printStackTrace();
-
         try
         {
             throw exception;
@@ -78,6 +76,8 @@ public class BaseController extends Controller
         }
         catch (Exception e)
         {
+            ErrorLogger.log(e);
+
             return e;
         }
     }

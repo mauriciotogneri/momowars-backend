@@ -35,7 +35,7 @@ public class DatabaseLogger
         }
         catch (Exception e)
         {
-            // ignore
+            ErrorLogger.log(e);
         }
 
         return 0;
@@ -68,7 +68,7 @@ public class DatabaseLogger
         }
         catch (Exception e)
         {
-            // ignore
+            ErrorLogger.log(e);
         }
     }
 }
