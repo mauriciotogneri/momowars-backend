@@ -575,7 +575,6 @@
       "properties": {
         "password": {
           "type": "string",
-          "format": "email",
           "maxLength": 50
         },
         "nickname": {

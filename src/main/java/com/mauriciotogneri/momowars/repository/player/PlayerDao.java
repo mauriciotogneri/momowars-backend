@@ -6,10 +6,8 @@ import com.mauriciotogneri.inquiry.queries.InsertQuery;
 import com.mauriciotogneri.inquiry.queries.SelectQuery;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.PlayerQueries;
-import com.mauriciotogneri.momowars.exceptions.ApiException;
 import com.mauriciotogneri.momowars.model.Constants;
 import com.mauriciotogneri.momowars.model.Player;
-import com.mauriciotogneri.momowars.repository.account.AccountDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,10 +38,8 @@ public class PlayerDao
         );
     }
 
-    public List<Player> getPlayers(Long gameId, Long forAccountId) throws DatabaseException, ApiException
+    public List<Player> getPlayers(Long gameId, Long forAccountId) throws DatabaseException
     {
-        AccountDao accountDao = new AccountDao(connection);
-
         SelectQuery<PlayerRow> query = connection.selectQuery(PlayerQueries.SELECT_BY_GAME, PlayerRow.class);
         QueryResult<PlayerRow> result = query.execute(gameId);
 
@@ -51,7 +47,7 @@ public class PlayerDao
 
         for (PlayerRow player : result)
         {
-            players.add(player.player(accountDao.getAccount(player.accountId), forAccountId));
+            players.add(player.player(forAccountId));
         }
 
         return players;
