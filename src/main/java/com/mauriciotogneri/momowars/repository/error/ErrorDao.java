@@ -17,7 +17,7 @@ public class ErrorDao
 
     public void create(String stacktrace) throws DatabaseException
     {
-        InsertQuery query = connection.insertQuery(ErrorQueries.INSERT);
+        InsertQuery query = connection.insertQuery(ErrorQueries.CREATE);
 
         query.execute(
                 Now.timestamp(),

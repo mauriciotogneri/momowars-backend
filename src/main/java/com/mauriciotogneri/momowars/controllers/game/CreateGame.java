@@ -6,6 +6,7 @@ import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.Game;
 import com.mauriciotogneri.momowars.server.BaseController;
+import com.mauriciotogneri.momowars.services.AccountService;
 import com.mauriciotogneri.momowars.services.GameService;
 import com.mauriciotogneri.momowars.services.PlayerService;
 
@@ -43,6 +44,7 @@ public class CreateGame extends BaseController
 
         Game game = GameService.createGame(connection, entity.maxPlayers, entity.mapId);
 
+        AccountService.joinGame(connection, account.id(), game.id());
         PlayerService.create(connection, account.id(), game.id());
 
         return response(CREATED, game);

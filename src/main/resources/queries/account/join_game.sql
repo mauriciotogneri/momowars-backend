@@ -1,4 +1,4 @@
 INSERT
-	INTO game_players
-	(game, player)
+	INTO account_games
+	(account, game)
     VALUES (?, ?)

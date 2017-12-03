@@ -14,6 +14,9 @@ import com.mauriciotogneri.momowars.exceptions.InvalidSessionTokenException;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.util.Hash;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AccountDao
 {
     private final DatabaseConnection connection;
@@ -30,7 +33,9 @@ public class AccountDao
 
         if (result.hasElements())
         {
-            return result.first().account();
+            AccountRow row = result.first();
+
+            return row.account(accountGames(row.id));
         }
         else
         {
@@ -46,7 +51,9 @@ public class AccountDao
 
         if (result.hasElements())
         {
-            return result.first().account();
+            AccountRow row = result.first();
+
+            return row.account(accountGames(row.id));
         }
         else
         {
@@ -98,7 +105,9 @@ public class AccountDao
 
         if (result.hasElements())
         {
-            return result.first().account();
+            AccountRow row = result.first();
+
+            return row.account(accountGames(row.id));
         }
         else
         {
@@ -108,7 +117,7 @@ public class AccountDao
 
     public Account create(String email, String nickname, String password, String sessionToken) throws AccountAlreadyExistsException
     {
-        InsertQuery query = connection.insertQuery(AccountQueries.INSERT);
+        InsertQuery query = connection.insertQuery(AccountQueries.CREATE);
 
         try
         {
@@ -119,11 +128,36 @@ public class AccountDao
                     sessionToken
             );
 
-            return new Account(id, email, nickname, new Long[0]); // TODO
+            return new Account(id, email, nickname, new ArrayList<>());
         }
         catch (DatabaseException e)
         {
             throw new AccountAlreadyExistsException(e);
         }
+    }
+
+    public void joinGame(Long accountId, Long gameId) throws DatabaseException
+    {
+        InsertQuery query = connection.insertQuery(AccountQueries.JOIN_GAME);
+
+        query.execute(
+                accountId,
+                gameId
+        );
+    }
+
+    private List<Long> accountGames(Long id) throws DatabaseException
+    {
+        SelectQuery<AccountGamesRow> query = connection.selectQuery(AccountQueries.SELECT_GAMES, AccountGamesRow.class);
+        QueryResult<AccountGamesRow> result = query.execute(id);
+
+        List<Long> games = new ArrayList<>();
+
+        for (AccountGamesRow row : result)
+        {
+            games.add(row.game);
+        }
+
+        return games;
     }
 }

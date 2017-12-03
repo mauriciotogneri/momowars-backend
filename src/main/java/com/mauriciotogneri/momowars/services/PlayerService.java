@@ -2,7 +2,6 @@ package com.mauriciotogneri.momowars.services;
 
 import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
-import com.mauriciotogneri.momowars.model.Player;
 import com.mauriciotogneri.momowars.repository.player.PlayerDao;
 
 public class PlayerService
@@ -13,8 +12,6 @@ public class PlayerService
     {
         PlayerDao playerDao = new PlayerDao(connection);
 
-        Player player = playerDao.create(accountId);
-
-        playerDao.joinGame(gameId, player.id());
+        playerDao.create(accountId, gameId);
     }
 }

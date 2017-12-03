@@ -20,7 +20,7 @@ public class LogDao
 
     public long create(String ip, HttpRequest request) throws DatabaseException
     {
-        InsertQuery query = connection.insertQuery(LogQueries.INSERT);
+        InsertQuery query = connection.insertQuery(LogQueries.CREATE);
 
         return query.execute(
                 Now.timestamp(),

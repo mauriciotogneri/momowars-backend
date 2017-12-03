@@ -26,7 +26,7 @@ public class GameDao
 
     public Game create(Integer maxPlayers, Map map) throws DatabaseException
     {
-        InsertQuery query = connection.insertQuery(GameQueries.INSERT);
+        InsertQuery query = connection.insertQuery(GameQueries.CREATE);
 
         long id = query.execute(
                 maxPlayers,

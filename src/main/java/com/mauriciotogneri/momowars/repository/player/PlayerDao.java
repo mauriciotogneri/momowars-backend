@@ -3,11 +3,8 @@ package com.mauriciotogneri.momowars.repository.player;
 import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.inquiry.queries.InsertQuery;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
-import com.mauriciotogneri.momowars.database.SQL.AccountQueries;
 import com.mauriciotogneri.momowars.database.SQL.PlayerQueries;
 import com.mauriciotogneri.momowars.model.Constants;
-import com.mauriciotogneri.momowars.model.Player;
-import com.mauriciotogneri.momowars.types.PlayerStatus;
 
 public class PlayerDao
 {
@@ -18,23 +15,18 @@ public class PlayerDao
         this.connection = connection;
     }
 
-    public Player create(Long accountId) throws DatabaseException
+    public void create(Long accountId, Long gameId) throws DatabaseException
     {
-        InsertQuery query = connection.insertQuery(PlayerQueries.INSERT);
+        InsertQuery createPlayerQuery = connection.insertQuery(PlayerQueries.CREATE);
 
-        long id = query.execute(
+        long playerId = createPlayerQuery.execute(
                 accountId,
                 Constants.INITIAL_RESOURCES
         );
 
-        return new Player(id, Constants.INITIAL_RESOURCES, PlayerStatus.WAITING);
-    }
+        InsertQuery joinGameQuery = connection.insertQuery(PlayerQueries.JOIN_GAME);
 
-    public void joinGame(Long gameId, Long playerId) throws DatabaseException
-    {
-        InsertQuery query = connection.insertQuery(AccountQueries.JOIN_GAME);
-
-        query.execute(
+        joinGameQuery.execute(
                 gameId,
                 playerId
         );
