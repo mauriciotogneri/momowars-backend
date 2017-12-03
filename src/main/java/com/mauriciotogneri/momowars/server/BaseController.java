@@ -71,7 +71,7 @@ public class BaseController extends Controller
         {
             return new ConflictException(e);
         }
-        catch (AccountNotFoundException | MapNotFoundException |GameNotFoundException e)
+        catch (AccountNotFoundException | MapNotFoundException | GameNotFoundException e)
         {
             return new NotFoundException(e);
         }
