@@ -40,7 +40,7 @@ public class JoinGameTests extends BaseTest
     }
 
     @Test
-    public void test3Valid() throws Exception
+    public void test4Valid() throws Exception
     {
         TestAccount testAccount1 = testAccountLogged();
         Map[] maps = mapService.getMaps(OK, testAccount1.sessionToken);

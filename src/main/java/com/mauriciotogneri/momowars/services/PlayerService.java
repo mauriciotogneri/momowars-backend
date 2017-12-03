@@ -24,4 +24,13 @@ public class PlayerService
 
         playerDao.endTurn(playerId, accountId);
     }
+
+    public static void leaveGame(DatabaseConnection connection,
+                                 Long playerId,
+                                 Long accountId) throws DatabaseException, ApiException
+    {
+        PlayerDao playerDao = new PlayerDao(connection);
+
+        playerDao.endTurn(playerId, accountId);
+    }
 }

@@ -16,10 +16,10 @@ import javax.ws.rs.core.Response;
 import static javax.ws.rs.core.Response.Status.NO_CONTENT;
 
 @Path("api")
-public class EndTurnGame extends BaseController
+public class LeaveGame extends BaseController
 {
     @DELETE
-    @Path("v1/players/{playerId}/turn")
+    @Path("v1/players/{playerId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response controller(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken,
                                @PathParam(PARAM_PLAYER_ID) Long playerId) throws Exception
@@ -34,7 +34,7 @@ public class EndTurnGame extends BaseController
 
         Account account = validateSessionToken(connection, sessionToken);
 
-        PlayerService.endTurn(connection, playerId, account.id());
+        PlayerService.leaveGame(connection, playerId, account.id());
 
         return response(NO_CONTENT);
     }

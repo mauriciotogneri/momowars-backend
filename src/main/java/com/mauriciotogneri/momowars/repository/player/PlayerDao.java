@@ -84,4 +84,17 @@ public class PlayerDao
             throw new PlayerNotFoundException();
         }
     }
+
+    public void leaveGame(Long playerId, Long accountId) throws DatabaseException, ApiException
+    {
+        // TODO
+        // if game is still open =>
+        //      remove player
+        //      remove game from account
+        // if game is running =>
+        //      mark player as surrendered
+        //      remove all units and queues
+        //      remove game from account
+        //      if he was the last one to move, update the game
+    }
 }
