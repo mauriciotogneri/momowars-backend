@@ -25,16 +25,16 @@ public class GameDao
         this.connection = connection;
     }
 
-    public Game create(Integer maxPlayers, Map map) throws DatabaseException, ApiException
+    public Game create(Integer maxPlayers, Map map, Long forAccountId) throws DatabaseException, ApiException
     {
         InsertQuery query = connection.insertQuery(GameQueries.CREATE);
 
-        long id = query.execute(
+        long gameId = query.execute(
                 maxPlayers,
                 map.id()
         );
 
-        return getGame(id);
+        return getGame(gameId, forAccountId);
     }
 
     public List<Game> getOpenGames() throws DatabaseException, ApiException
@@ -51,14 +51,14 @@ public class GameDao
         {
             games.add(game.game(
                     mapDao.getMap(game.mapId),
-                    playerDao.getPlayers(game.id)
+                    playerDao.getPlayers(game.id, 0L)
             ));
         }
 
         return games;
     }
 
-    public Game getGame(Long id) throws DatabaseException, ApiException
+    public Game getGame(Long id, Long forAccountId) throws DatabaseException, ApiException
     {
         MapDao mapDao = new MapDao(connection);
         PlayerDao playerDao = new PlayerDao(connection);
@@ -72,7 +72,7 @@ public class GameDao
 
             return row.game(
                     mapDao.getMapFull(row.mapId),
-                    playerDao.getPlayers(row.id)
+                    playerDao.getPlayers(row.id, forAccountId)
             );
         }
         else

@@ -45,7 +45,7 @@ public class JoinGame extends BaseController
             throw new PlayerAlreadyJoinedException();
         }
 
-        Game game = GameService.getGame(connection, gameId);
+        Game game = GameService.getGame(connection, gameId, account.id());
 
         if (!game.isOpen())
         {
@@ -59,6 +59,6 @@ public class JoinGame extends BaseController
         AccountService.joinGame(connection, account.id(), game.id());
         PlayerService.create(connection, account.id(), game.id());
 
-        return response(CREATED, GameService.getGame(connection, game.id()));
+        return response(CREATED, GameService.getGame(connection, game.id(), account.id()));
     }
 }

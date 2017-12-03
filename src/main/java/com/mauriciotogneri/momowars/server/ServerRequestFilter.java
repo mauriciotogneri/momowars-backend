@@ -31,8 +31,8 @@ public class ServerRequestFilter implements ContainerRequestFilter
 
             HttpRequest httpRequest = new HttpRequest(request);
             ConsoleLogger.logRequest(httpRequest);
-            long id = DatabaseLogger.logRequest(servletRequest.getRemoteAddr(), httpRequest);
-            request.setProperty(PROPERTY_LOG_ID, id);
+            long logId = DatabaseLogger.logRequest(servletRequest.getRemoteAddr(), httpRequest);
+            request.setProperty(PROPERTY_LOG_ID, logId);
         }
         catch (Exception e)
         {

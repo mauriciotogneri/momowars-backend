@@ -11,8 +11,15 @@ public class PlayerRow
     public Integer resources;
     public PlayerStatus status;
 
-    public Player player(Account account)
+    public Player player(Account account, Long forAccountId)
     {
-        return new Player(id, account.nickname(), resources, status);
+        if (account.id().equals(forAccountId))
+        {
+            return new Player(id, account.nickname(), resources, status);
+        }
+        else
+        {
+            return new Player(null, account.nickname(), null, status);
+        }
     }
 }

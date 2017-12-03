@@ -14,7 +14,8 @@ public class GameService
 {
     public static Game createGame(DatabaseConnection connection,
                                   Integer maxPlayers,
-                                  Long mapId) throws DatabaseException, ApiException
+                                  Long mapId,
+                                  Long forAccountId) throws DatabaseException, ApiException
     {
         if (maxPlayers < 2)
         {
@@ -25,7 +26,7 @@ public class GameService
 
         GameDao gameDao = new GameDao(connection);
 
-        return gameDao.create(maxPlayers, map);
+        return gameDao.create(maxPlayers, map, forAccountId);
     }
 
     public static List<Game> getOpenGames(DatabaseConnection connection) throws DatabaseException, ApiException
@@ -36,10 +37,11 @@ public class GameService
     }
 
     public static Game getGame(DatabaseConnection connection,
-                               Long id) throws DatabaseException, ApiException
+                               Long id,
+                               Long forAccountId) throws DatabaseException, ApiException
     {
         GameDao gameDao = new GameDao(connection);
 
-        return gameDao.getGame(id);
+        return gameDao.getGame(id, forAccountId);
     }
 }

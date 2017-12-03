@@ -41,7 +41,7 @@ public class GetGame extends BaseController
             throw new InvalidGameException();
         }
 
-        Game game = GameService.getGame(connection, gameId);
+        Game game = GameService.getGame(connection, gameId, account.id());
 
         return response(OK, game);
     }

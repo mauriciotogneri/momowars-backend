@@ -16,13 +16,13 @@ public class DatabaseLogger
             try
             {
                 LogDao logDao = new LogDao(connection);
-                long id = logDao.create(
+                long logId = logDao.create(
                         ip,
                         httpRequest);
 
                 connection.commit();
 
-                return id;
+                return logId;
             }
             catch (Exception e)
             {

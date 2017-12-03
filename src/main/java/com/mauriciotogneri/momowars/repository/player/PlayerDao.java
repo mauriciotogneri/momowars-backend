@@ -40,7 +40,7 @@ public class PlayerDao
         );
     }
 
-    public List<Player> getPlayers(Long gameId) throws DatabaseException, ApiException
+    public List<Player> getPlayers(Long gameId, Long forAccountId) throws DatabaseException, ApiException
     {
         AccountDao accountDao = new AccountDao(connection);
 
@@ -51,7 +51,7 @@ public class PlayerDao
 
         for (PlayerRow player : result)
         {
-            players.add(player.player(accountDao.getAccount(player.accountId)));
+            players.add(player.player(accountDao.getAccount(player.accountId), forAccountId));
         }
 
         return players;

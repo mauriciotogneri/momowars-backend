@@ -120,14 +120,14 @@ public class AccountDao
 
         try
         {
-            long id = query.execute(
+            long accountId = query.execute(
                     email,
                     nickname,
                     Hash.of(password),
                     sessionToken
             );
 
-            return getAccount(id);
+            return getAccount(accountId);
         }
         catch (DatabaseException e)
         {
