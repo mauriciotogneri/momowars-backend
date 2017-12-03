@@ -9,6 +9,7 @@ import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.AccountQueries;
 import com.mauriciotogneri.momowars.exceptions.AccountAlreadyExistsException;
 import com.mauriciotogneri.momowars.exceptions.AccountNotFoundException;
+import com.mauriciotogneri.momowars.exceptions.ApiException;
 import com.mauriciotogneri.momowars.exceptions.InvalidCredentialsException;
 import com.mauriciotogneri.momowars.exceptions.InvalidSessionTokenException;
 import com.mauriciotogneri.momowars.model.Account;
@@ -26,7 +27,7 @@ public class AccountDao
         this.connection = connection;
     }
 
-    public Account bySessionToken(String sessionToken) throws InvalidSessionTokenException, DatabaseException
+    public Account bySessionToken(String sessionToken) throws DatabaseException, ApiException
     {
         SelectQuery<AccountRow> query = connection.selectQuery(AccountQueries.SELECT_BY_SESSION_TOKEN, AccountRow.class);
         QueryResult<AccountRow> result = query.execute(sessionToken);
@@ -43,7 +44,7 @@ public class AccountDao
         }
     }
 
-    public Account byCredentials(String email, String password) throws InvalidCredentialsException, DatabaseException
+    public Account byCredentials(String email, String password) throws DatabaseException, ApiException
     {
         SelectQuery<AccountRow> query = connection.selectQuery(AccountQueries.SELECT_BY_CREDENTIALS, AccountRow.class);
         QueryResult<AccountRow> result = query.execute(email, Hash.of(password));
@@ -96,7 +97,7 @@ public class AccountDao
         }
     }
 
-    public Account byId(Long id) throws DatabaseException, AccountNotFoundException
+    public Account getAccount(Long id) throws DatabaseException, ApiException
     {
         SelectQuery<AccountRow> query = connection.selectQuery(AccountQueries.SELECT_BY_ID, AccountRow.class);
         QueryResult<AccountRow> result = query.execute(id);
@@ -113,7 +114,7 @@ public class AccountDao
         }
     }
 
-    public Account create(String email, String nickname, String password, String sessionToken) throws AccountAlreadyExistsException
+    public Account create(String email, String nickname, String password, String sessionToken) throws ApiException
     {
         InsertQuery query = connection.insertQuery(AccountQueries.CREATE);
 
@@ -126,7 +127,7 @@ public class AccountDao
                     sessionToken
             );
 
-            return new Account(id, email, nickname, new ArrayList<>());
+            return getAccount(id);
         }
         catch (DatabaseException e)
         {

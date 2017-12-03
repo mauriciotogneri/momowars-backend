@@ -32,7 +32,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
         ),
         @Response(
                 code = CONFLICT,
-                description = "The game is full"
+                description = "The player is already in the game. The game is not open. The game is full"
         )
 })
 public interface JoinGame

@@ -2,9 +2,8 @@ package com.mauriciotogneri.momowars.services;
 
 import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
-import com.mauriciotogneri.momowars.exceptions.GameNotFoundException;
+import com.mauriciotogneri.momowars.exceptions.ApiException;
 import com.mauriciotogneri.momowars.exceptions.InvalidParametersException;
-import com.mauriciotogneri.momowars.exceptions.MapNotFoundException;
 import com.mauriciotogneri.momowars.model.Game;
 import com.mauriciotogneri.momowars.model.Map;
 import com.mauriciotogneri.momowars.repository.game.GameDao;
@@ -15,8 +14,7 @@ public class GameService
 {
     public static Game createGame(DatabaseConnection connection,
                                   Integer maxPlayers,
-                                  Long mapId)
-            throws InvalidParametersException, MapNotFoundException, DatabaseException
+                                  Long mapId) throws DatabaseException, ApiException
     {
         if (maxPlayers < 2)
         {
@@ -30,17 +28,15 @@ public class GameService
         return gameDao.create(maxPlayers, map);
     }
 
-    public static List<Game> getOpenGames(DatabaseConnection connection)
-            throws DatabaseException, MapNotFoundException
+    public static List<Game> getOpenGames(DatabaseConnection connection) throws DatabaseException, ApiException
     {
         GameDao gameDao = new GameDao(connection);
 
         return gameDao.getOpenGames();
     }
 
-    public static Game byId(DatabaseConnection connection,
-                            Long id)
-            throws MapNotFoundException, DatabaseException, GameNotFoundException
+    public static Game getGame(DatabaseConnection connection,
+                               Long id) throws DatabaseException, ApiException
     {
         GameDao gameDao = new GameDao(connection);
 

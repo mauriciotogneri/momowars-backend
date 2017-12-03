@@ -22,6 +22,11 @@ public class Account
         return id;
     }
 
+    public String nickname()
+    {
+        return nickname;
+    }
+
     public boolean hasGame(Long gameId)
     {
         for (Long id : games)

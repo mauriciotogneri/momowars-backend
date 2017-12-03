@@ -1,5 +1,5 @@
 package com.mauriciotogneri.momowars.exceptions;
 
-public class InvalidSessionTokenException extends Exception
+public class InvalidSessionTokenException extends ApiException
 {
 }

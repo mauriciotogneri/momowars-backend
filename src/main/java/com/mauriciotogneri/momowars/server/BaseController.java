@@ -9,12 +9,16 @@ import com.mauriciotogneri.jerry.exceptions.client.UnauthorizedException;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.exceptions.AccountAlreadyExistsException;
 import com.mauriciotogneri.momowars.exceptions.AccountNotFoundException;
+import com.mauriciotogneri.momowars.exceptions.ApiException;
+import com.mauriciotogneri.momowars.exceptions.GameFullException;
 import com.mauriciotogneri.momowars.exceptions.GameNotFoundException;
+import com.mauriciotogneri.momowars.exceptions.GameNotOpenException;
 import com.mauriciotogneri.momowars.exceptions.InvalidCredentialsException;
 import com.mauriciotogneri.momowars.exceptions.InvalidGameException;
 import com.mauriciotogneri.momowars.exceptions.InvalidParametersException;
 import com.mauriciotogneri.momowars.exceptions.InvalidSessionTokenException;
 import com.mauriciotogneri.momowars.exceptions.MapNotFoundException;
+import com.mauriciotogneri.momowars.exceptions.PlayerAlreadyJoinedException;
 import com.mauriciotogneri.momowars.logger.ErrorLogger;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.repository.account.AccountDao;
@@ -25,6 +29,9 @@ import javax.ws.rs.core.Response;
 public class BaseController extends Controller
 {
     protected static final String HEADER_SESSION_TOKEN = "Session-Token";
+
+    protected static final String PARAM_GAME_ID = "gameId";
+    protected static final String PARAM_MAP_ID = "mapId";
 
     protected Response process(ControllerImplementation controller) throws Exception
     {
@@ -67,7 +74,7 @@ public class BaseController extends Controller
         {
             return new BadRequestException(e);
         }
-        catch (AccountAlreadyExistsException e)
+        catch (AccountAlreadyExistsException | PlayerAlreadyJoinedException | GameNotOpenException | GameFullException e)
         {
             return new ConflictException(e);
         }
@@ -99,7 +106,7 @@ public class BaseController extends Controller
         }
     }
 
-    protected Account validateSessionToken(DatabaseConnection connection, String sessionToken) throws InvalidSessionTokenException, DatabaseException
+    protected Account validateSessionToken(DatabaseConnection connection, String sessionToken) throws DatabaseException, ApiException
     {
         AccountDao accountDao = new AccountDao(connection);
 

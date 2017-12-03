@@ -2,10 +2,8 @@ package com.mauriciotogneri.momowars.services;
 
 import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
-import com.mauriciotogneri.momowars.exceptions.AccountAlreadyExistsException;
-import com.mauriciotogneri.momowars.exceptions.AccountNotFoundException;
+import com.mauriciotogneri.momowars.exceptions.ApiException;
 import com.mauriciotogneri.momowars.exceptions.InvalidParametersException;
-import com.mauriciotogneri.momowars.exceptions.InvalidSessionTokenException;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.repository.account.AccountDao;
 import com.mauriciotogneri.momowars.validators.EmailValidator;
@@ -15,8 +13,7 @@ public class AccountService
     public static Account createAccount(DatabaseConnection connection,
                                         String email,
                                         String nickname,
-                                        String password)
-            throws AccountAlreadyExistsException, InvalidParametersException
+                                        String password) throws ApiException
     {
         if (!EmailValidator.isValid(email))
         {
@@ -32,8 +29,7 @@ public class AccountService
     }
 
     public static Account getAccount(DatabaseConnection connection,
-                                     String sessionToken)
-            throws InvalidSessionTokenException, DatabaseException
+                                     String sessionToken) throws DatabaseException, ApiException
     {
         AccountDao accountDao = new AccountDao(connection);
 
@@ -43,8 +39,7 @@ public class AccountService
     public static Account updateAccount(DatabaseConnection connection,
                                         String sessionToken,
                                         String newPassword,
-                                        String newNickname)
-            throws InvalidSessionTokenException, DatabaseException, AccountNotFoundException
+                                        String newNickname) throws DatabaseException, ApiException
     {
         AccountDao accountDao = new AccountDao(connection);
 
@@ -60,7 +55,7 @@ public class AccountService
             accountDao.updateNickname(account.id(), newNickname);
         }
 
-        return accountDao.byId(account.id());
+        return accountDao.getAccount(account.id());
     }
 
     public static void joinGame(DatabaseConnection connection,

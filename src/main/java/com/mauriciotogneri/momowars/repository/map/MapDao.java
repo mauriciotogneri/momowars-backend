@@ -5,6 +5,7 @@ import com.mauriciotogneri.inquiry.QueryResult;
 import com.mauriciotogneri.inquiry.queries.SelectQuery;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.MapQueries;
+import com.mauriciotogneri.momowars.exceptions.ApiException;
 import com.mauriciotogneri.momowars.exceptions.MapNotFoundException;
 import com.mauriciotogneri.momowars.model.Map;
 import com.mauriciotogneri.momowars.repository.cell.CellDao;
@@ -38,7 +39,25 @@ public class MapDao
         return maps;
     }
 
-    public Map getMap(Long mapId) throws MapNotFoundException, DatabaseException
+    public Map getMap(Long mapId) throws DatabaseException, ApiException
+    {
+        CellDao cellDao = new CellDao(connection);
+
+        SelectQuery<MapRow> query = connection.selectQuery(MapQueries.SELECT_BY_ID, MapRow.class);
+        QueryResult<MapRow> result = query.execute(mapId);
+
+        if (result.hasElements())
+        {
+            return result.first().map(cellDao.byMap(mapId));
+        }
+        else
+        {
+            throw new MapNotFoundException();
+        }
+    }
+
+    // TODO: add units and queues
+    public Map getMapFull(Long mapId) throws DatabaseException, ApiException
     {
         CellDao cellDao = new CellDao(connection);
 

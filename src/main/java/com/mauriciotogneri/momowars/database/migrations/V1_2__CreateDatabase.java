@@ -26,6 +26,7 @@ public class V1_2__CreateDatabase implements JdbcMigration
         databaseConnection.executeQuery("sql/tables/unit.sql");
         databaseConnection.executeQuery("sql/tables/queue.sql");
         databaseConnection.executeQuery("sql/tables/log.sql");
+        databaseConnection.executeQuery("sql/tables/error.sql");
 
         databaseConnection.executeQuery("sql/indices/account_session.sql");
 

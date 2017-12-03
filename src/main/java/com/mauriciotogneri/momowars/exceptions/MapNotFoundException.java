@@ -1,5 +1,5 @@
 package com.mauriciotogneri.momowars.exceptions;
 
-public class MapNotFoundException extends Exception
+public class MapNotFoundException extends ApiException
 {
 }

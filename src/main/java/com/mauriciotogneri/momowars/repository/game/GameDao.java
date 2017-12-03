@@ -6,12 +6,12 @@ import com.mauriciotogneri.inquiry.queries.InsertQuery;
 import com.mauriciotogneri.inquiry.queries.SelectQuery;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.GameQueries;
+import com.mauriciotogneri.momowars.exceptions.ApiException;
 import com.mauriciotogneri.momowars.exceptions.GameNotFoundException;
-import com.mauriciotogneri.momowars.exceptions.MapNotFoundException;
 import com.mauriciotogneri.momowars.model.Game;
 import com.mauriciotogneri.momowars.model.Map;
 import com.mauriciotogneri.momowars.repository.map.MapDao;
-import com.mauriciotogneri.momowars.types.GameStatus;
+import com.mauriciotogneri.momowars.repository.player.PlayerDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class GameDao
         this.connection = connection;
     }
 
-    public Game create(Integer maxPlayers, Map map) throws DatabaseException
+    public Game create(Integer maxPlayers, Map map) throws DatabaseException, ApiException
     {
         InsertQuery query = connection.insertQuery(GameQueries.CREATE);
 
@@ -34,12 +34,13 @@ public class GameDao
                 map.id()
         );
 
-        return new Game(id, GameStatus.OPEN, maxPlayers, map);
+        return getGame(id);
     }
 
-    public List<Game> getOpenGames() throws DatabaseException, MapNotFoundException
+    public List<Game> getOpenGames() throws DatabaseException, ApiException
     {
         MapDao mapDao = new MapDao(connection);
+        PlayerDao playerDao = new PlayerDao(connection);
 
         SelectQuery<GameRow> query = connection.selectQuery(GameQueries.SELECT_OPEN, GameRow.class);
         QueryResult<GameRow> result = query.execute();
@@ -48,15 +49,19 @@ public class GameDao
 
         for (GameRow game : result)
         {
-            games.add(game.game(mapDao.getMap(game.mapId)));
+            games.add(game.game(
+                    mapDao.getMap(game.mapId),
+                    playerDao.getPlayers(game.id)
+            ));
         }
 
         return games;
     }
 
-    public Game getGame(Long id) throws DatabaseException, MapNotFoundException, GameNotFoundException
+    public Game getGame(Long id) throws DatabaseException, ApiException
     {
         MapDao mapDao = new MapDao(connection);
+        PlayerDao playerDao = new PlayerDao(connection);
 
         SelectQuery<GameRow> query = connection.selectQuery(GameQueries.SELECT_BY_ID, GameRow.class);
         QueryResult<GameRow> result = query.execute(id);
@@ -65,7 +70,10 @@ public class GameDao
         {
             GameRow row = result.first();
 
-            return row.game(mapDao.getMap(row.mapId));
+            return row.game(
+                    mapDao.getMapFull(row.mapId),
+                    playerDao.getPlayers(row.id)
+            );
         }
         else
         {

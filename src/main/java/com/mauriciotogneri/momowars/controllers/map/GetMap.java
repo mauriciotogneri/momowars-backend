@@ -22,7 +22,7 @@ public class GetMap extends BaseController
     @Path("v1/maps/{mapId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response controller(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken,
-                               @PathParam("mapId") Long mapId) throws Exception
+                               @PathParam(PARAM_MAP_ID) Long mapId) throws Exception
     {
         return process(connection -> controller(connection, sessionToken, mapId));
     }
