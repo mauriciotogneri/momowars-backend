@@ -5,9 +5,9 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+        CreateGameTests.class,
         GetGameTests.class,
-        GetOpenGamesTests.class,
-        CreateGameTests.class
+        GetOpenGamesTests.class
 })
 public class GameSuite
 {

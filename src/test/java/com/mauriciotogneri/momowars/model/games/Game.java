@@ -12,5 +12,5 @@ public class Game
 
     public Integer maxPlayers;
 
-    public Player[] players;
+    //TODO public Player[] players;
 }
