@@ -30,49 +30,6 @@
     "https"
   ],
   "paths": {
-    "/v1/games/{gameId}/players/{playerId}/turn": {
-      "delete": {
-        "tags": [
-          "Players"
-        ],
-        "summary": "EndTurn",
-        "description": "Ends the turn of the player for the given game",
-        "parameters": [
-          {
-            "name": "Session-Token",
-            "in": "header",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "gameId",
-            "in": "path",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "playerId",
-            "in": "path",
-            "required": true,
-            "type": "integer"
-          }
-        ],
-        "responses": {
-          "400": {
-            "description": "Session token not provided"
-          },
-          "401": {
-            "description": "Session token not valid"
-          },
-          "412": {
-            "description": "Not allowed to end the turn on the given game"
-          },
-          "204": {
-            "description": "Successful operation"
-          }
-        }
-      }
-    },
     "/v1/maps": {
       "get": {
         "tags": [
@@ -114,13 +71,13 @@
         ],
         "summary": "JoinGame",
         "description": "Joins the given game",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
-          {
-            "name": "Session-Token",
-            "in": "header",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "data",
             "in": "body",
@@ -132,6 +89,9 @@
         ],
         "responses": {
           "201": {
+            "schema": {
+              "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.games.Game"
+            },
             "description": "Successful operation"
           },
           "401": {
@@ -362,6 +322,77 @@
         }
       }
     },
+    "/v1/players/{playerId}/turn": {
+      "delete": {
+        "tags": [
+          "Players"
+        ],
+        "summary": "EndTurn",
+        "description": "Ends the turn of the player for the given game",
+        "parameters": [
+          {
+            "name": "Session-Token",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "playerId",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Session token not provided"
+          },
+          "401": {
+            "description": "Session token not valid"
+          },
+          "412": {
+            "description": "Not allowed to end the turn on the given game"
+          },
+          "204": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/v1/players/{playerId}": {
+      "delete": {
+        "tags": [
+          "Players"
+        ],
+        "summary": "LeaveGame",
+        "description": "Leaves the given game",
+        "parameters": [
+          {
+            "name": "Session-Token",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "playerId",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Session token not valid"
+          },
+          "204": {
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Not allowed to leave the given game"
+          }
+        }
+      }
+    },
     "/v1/session": {
       "post": {
         "tags": [
@@ -533,46 +564,6 @@
           },
           "404": {
             "description": "Invalid gameId, cellId or unitId"
-          }
-        }
-      }
-    },
-    "/v1/games/{gameId}/players/{playerId}": {
-      "delete": {
-        "tags": [
-          "Players"
-        ],
-        "summary": "LeaveGame",
-        "description": "Leaves the given game",
-        "parameters": [
-          {
-            "name": "Session-Token",
-            "in": "header",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "gameId",
-            "in": "path",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "playerId",
-            "in": "path",
-            "required": true,
-            "type": "integer"
-          }
-        ],
-        "responses": {
-          "401": {
-            "description": "Session token not valid"
-          },
-          "204": {
-            "description": "Successful operation"
-          },
-          "403": {
-            "description": "Not allowed to leave the given game"
           }
         }
       }

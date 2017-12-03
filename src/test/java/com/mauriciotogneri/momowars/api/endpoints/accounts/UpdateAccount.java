@@ -1,6 +1,5 @@
 package com.mauriciotogneri.momowars.api.endpoints.accounts;
 
-import com.mauriciotogneri.jsonschema.annotations.Format;
 import com.mauriciotogneri.jsonschema.annotations.MaxLength;
 import com.mauriciotogneri.momowars.api.endpoints.accounts.UpdateAccount.DataParameter;
 import com.mauriciotogneri.momowars.api.model.accounts.Account;
@@ -45,7 +44,6 @@ public interface UpdateAccount
 {
     class DataParameter
     {
-        @Format("email")
         @MaxLength(50)
         public String password;
 

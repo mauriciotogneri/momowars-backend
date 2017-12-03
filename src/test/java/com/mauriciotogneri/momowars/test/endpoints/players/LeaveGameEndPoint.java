@@ -14,10 +14,9 @@ public class LeaveGameEndPoint extends BaseEndPoint implements LeaveGame
         super(new EndPointDefinition(LeaveGame.class));
     }
 
-    public ApiResult execute(String sessionToken, Long gameId, Long playerId) throws Exception
+    public ApiResult execute(String sessionToken, Long playerId) throws Exception
     {
         PathParameter path = new PathParameter();
-        path.gameId = gameId;
         path.playerId = playerId;
 
         ApiRequest.Builder builder = request();

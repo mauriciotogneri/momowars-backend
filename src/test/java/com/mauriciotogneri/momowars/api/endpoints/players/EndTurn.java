@@ -13,7 +13,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.NO_CONTENT;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 
 @EndPoint(
-        path = "/v1/games/{gameId}/players/{playerId}/turn",
+        path = "/v1/players/{playerId}/turn",
         method = DELETE,
         description = "Ends the turn of the player for the given game"
 )
@@ -43,8 +43,6 @@ public interface EndTurn
 {
     class PathParameter
     {
-        public Long gameId;
-
         public Long playerId;
     }
 }

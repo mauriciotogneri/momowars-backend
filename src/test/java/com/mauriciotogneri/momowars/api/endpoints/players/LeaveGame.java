@@ -13,7 +13,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.NO_CONTENT;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 
 @EndPoint(
-        path = "/v1/games/{gameId}/players/{playerId}",
+        path = "/v1/players/{playerId}",
         method = DELETE,
         description = "Leaves the given game"
 )
@@ -39,8 +39,6 @@ public interface LeaveGame
 {
     class PathParameter
     {
-        public Long gameId;
-
         public Long playerId;
     }
 }
