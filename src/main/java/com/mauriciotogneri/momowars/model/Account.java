@@ -21,4 +21,17 @@ public class Account
     {
         return id;
     }
+
+    public boolean hasGame(Long gameId)
+    {
+        for (Long id : games)
+        {
+            if (id.equals(gameId))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

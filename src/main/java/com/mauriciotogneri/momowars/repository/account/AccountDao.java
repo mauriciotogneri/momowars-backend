@@ -46,7 +46,6 @@ public class AccountDao
     public Account byCredentials(String email, String password) throws InvalidCredentialsException, DatabaseException
     {
         SelectQuery<AccountRow> query = connection.selectQuery(AccountQueries.SELECT_BY_CREDENTIALS, AccountRow.class);
-
         QueryResult<AccountRow> result = query.execute(email, Hash.of(password));
 
         if (result.hasElements())
@@ -100,7 +99,6 @@ public class AccountDao
     public Account byId(Long id) throws DatabaseException, AccountNotFoundException
     {
         SelectQuery<AccountRow> query = connection.selectQuery(AccountQueries.SELECT_BY_ID, AccountRow.class);
-
         QueryResult<AccountRow> result = query.execute(id);
 
         if (result.hasElements())

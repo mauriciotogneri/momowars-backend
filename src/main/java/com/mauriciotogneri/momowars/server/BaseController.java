@@ -4,11 +4,14 @@ import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.jerry.controller.Controller;
 import com.mauriciotogneri.jerry.exceptions.client.BadRequestException;
 import com.mauriciotogneri.jerry.exceptions.client.ConflictException;
+import com.mauriciotogneri.jerry.exceptions.client.ForbiddenException;
 import com.mauriciotogneri.jerry.exceptions.client.UnauthorizedException;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.exceptions.AccountAlreadyExistsException;
 import com.mauriciotogneri.momowars.exceptions.AccountNotFoundException;
+import com.mauriciotogneri.momowars.exceptions.GameNotFoundException;
 import com.mauriciotogneri.momowars.exceptions.InvalidCredentialsException;
+import com.mauriciotogneri.momowars.exceptions.InvalidGameException;
 import com.mauriciotogneri.momowars.exceptions.InvalidParametersException;
 import com.mauriciotogneri.momowars.exceptions.InvalidSessionTokenException;
 import com.mauriciotogneri.momowars.exceptions.MapNotFoundException;
@@ -68,13 +71,17 @@ public class BaseController extends Controller
         {
             return new ConflictException(e);
         }
-        catch (AccountNotFoundException | MapNotFoundException e)
+        catch (AccountNotFoundException | MapNotFoundException |GameNotFoundException e)
         {
             return new NotFoundException(e);
         }
         catch (InvalidCredentialsException | InvalidSessionTokenException e)
         {
             return new UnauthorizedException(e);
+        }
+        catch (InvalidGameException e)
+        {
+            return new ForbiddenException(e);
         }
         catch (Exception e)
         {

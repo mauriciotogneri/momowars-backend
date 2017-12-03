@@ -6,6 +6,7 @@ import com.mauriciotogneri.inquiry.queries.InsertQuery;
 import com.mauriciotogneri.inquiry.queries.SelectQuery;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.GameQueries;
+import com.mauriciotogneri.momowars.exceptions.GameNotFoundException;
 import com.mauriciotogneri.momowars.exceptions.MapNotFoundException;
 import com.mauriciotogneri.momowars.model.Game;
 import com.mauriciotogneri.momowars.model.Map;
@@ -51,5 +52,24 @@ public class GameDao
         }
 
         return games;
+    }
+
+    public Game getGame(Long id) throws DatabaseException, MapNotFoundException, GameNotFoundException
+    {
+        MapDao mapDao = new MapDao(connection);
+
+        SelectQuery<GameRow> query = connection.selectQuery(GameQueries.SELECT_BY_ID, GameRow.class);
+        QueryResult<GameRow> result = query.execute(id);
+
+        if (result.hasElements())
+        {
+            GameRow row = result.first();
+
+            return row.game(mapDao.getMap(row.mapId));
+        }
+        else
+        {
+            throw new GameNotFoundException();
+        }
     }
 }

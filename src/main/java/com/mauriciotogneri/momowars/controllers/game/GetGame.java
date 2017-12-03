@@ -1,7 +1,11 @@
 package com.mauriciotogneri.momowars.controllers.game;
 
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
+import com.mauriciotogneri.momowars.exceptions.InvalidGameException;
+import com.mauriciotogneri.momowars.model.Account;
+import com.mauriciotogneri.momowars.model.Game;
 import com.mauriciotogneri.momowars.server.BaseController;
+import com.mauriciotogneri.momowars.services.GameService;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -11,7 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static javax.ws.rs.core.Response.Status.NOT_IMPLEMENTED;
+import static javax.ws.rs.core.Response.Status.OK;
 
 @Path("api")
 public class GetGame extends BaseController
@@ -29,8 +33,16 @@ public class GetGame extends BaseController
     {
         checkIfNotEmpty(sessionToken);
         checkIfNotEmpty(gameId);
-        validateSessionToken(connection, sessionToken);
 
-        return response(NOT_IMPLEMENTED);
+        Account account = validateSessionToken(connection, sessionToken);
+
+        if (!account.hasGame(gameId))
+        {
+            throw new InvalidGameException();
+        }
+
+        Game game = GameService.byId(connection, gameId);
+
+        return response(OK, game);
     }
 }
