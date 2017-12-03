@@ -41,18 +41,15 @@ public class CreateSession extends BaseController
 
     @Provider
     @Consumes(MediaType.APPLICATION_JSON)
-    public static class ControllerEntityProvider extends EntityProvider<Entity>
-    {
-        public ControllerEntityProvider()
-        {
-            super(Entity.class);
-        }
-    }
-
-    private static class Entity implements EntityObject
+    public static class Entity extends EntityProvider<Entity> implements EntityObject
     {
         private String email;
         private String password;
+
+        public Entity()
+        {
+            super(Entity.class);
+        }
 
         @Override
         public boolean isValid()

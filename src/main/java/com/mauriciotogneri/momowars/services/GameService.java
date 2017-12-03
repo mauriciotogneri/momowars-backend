@@ -24,16 +24,16 @@ public class GameService
 
         Map map = MapService.getMap(connection, mapId);
 
-        GameDao accountDao = new GameDao(connection);
+        GameDao gameDao = new GameDao(connection);
 
-        return accountDao.create(maxPlayers, map);
+        return gameDao.create(maxPlayers, map);
     }
 
     public static List<Game> getOpenGames(DatabaseConnection connection)
             throws DatabaseException, MapNotFoundException
     {
-        GameDao accountDao = new GameDao(connection);
+        GameDao gameDao = new GameDao(connection);
 
-        return accountDao.getOpenGames();
+        return gameDao.getOpenGames();
     }
 }
