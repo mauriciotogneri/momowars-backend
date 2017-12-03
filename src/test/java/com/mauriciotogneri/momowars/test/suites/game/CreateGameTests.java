@@ -1,5 +1,6 @@
 package com.mauriciotogneri.momowars.test.suites.game;
 
+import com.mauriciotogneri.momowars.api.model.games.Map;
 import com.mauriciotogneri.momowars.test.suites.BaseTest;
 
 import org.junit.FixMethodOrder;
@@ -9,6 +10,7 @@ import org.junit.runners.MethodSorters;
 import static com.mauriciotogneri.stewie.types.StatusCode.BAD_REQUEST;
 import static com.mauriciotogneri.stewie.types.StatusCode.CREATED;
 import static com.mauriciotogneri.stewie.types.StatusCode.NOT_FOUND;
+import static com.mauriciotogneri.stewie.types.StatusCode.OK;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -29,18 +31,22 @@ public class CreateGameTests extends BaseTest
     }
 
     @Test
-    public void test2CreateGameWithInvalidPlayers() throws Exception
+    public void test3CreateGameWithInvalidPlayers() throws Exception
     {
         TestAccount testAccount = testAccountLogged();
 
-        gameService.createGame(BAD_REQUEST, 1L, 1, testAccount.sessionToken);
+        Map[] maps = mapService.getMaps(OK, testAccount.sessionToken);
+
+        gameService.createGame(BAD_REQUEST, maps[0].id, 1, testAccount.sessionToken);
     }
 
     @Test
-    public void test2CreateGameWithAValidSession() throws Exception
+    public void test4CreateGameWithAValidSession() throws Exception
     {
         TestAccount testAccount = testAccountLogged();
 
-        gameService.createGame(CREATED, 1L, 6, testAccount.sessionToken);
+        Map[] maps = mapService.getMaps(OK, testAccount.sessionToken);
+
+        gameService.createGame(CREATED, maps[0].id, 6, testAccount.sessionToken);
     }
 }

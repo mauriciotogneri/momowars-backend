@@ -1,10 +1,17 @@
 package com.mauriciotogneri.momowars.test.suites.game;
 
+import com.mauriciotogneri.momowars.api.model.games.Game;
+import com.mauriciotogneri.momowars.api.model.games.Map;
 import com.mauriciotogneri.momowars.test.suites.BaseTest;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+
+import static com.mauriciotogneri.stewie.types.StatusCode.CREATED;
+import static com.mauriciotogneri.stewie.types.StatusCode.FORBIDDEN;
+import static com.mauriciotogneri.stewie.types.StatusCode.OK;
+import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class GetGameTests extends BaseTest
@@ -12,36 +19,26 @@ public class GetGameTests extends BaseTest
     @Test
     public void test1GetAGameWithAnInvalidSession() throws Exception
     {
-        //ApiResult result = getGameEndPoint.execute("xxx", 0L);
-        //checkHttpStatus(UNAUTHORIZED, result);
+        gameService.getGame(UNAUTHORIZED, 0L, INVALID_SESSION_TOKEN);
     }
 
     @Test
     public void test2GetAGameWithInvalidParameters() throws Exception
     {
-        //ApiResult result = getGameEndPoint.execute("", 0L);
-        //checkHttpStatus(BAD_REQUEST, result);
+        TestAccount testAccount = testAccountLogged();
+
+        gameService.getGame(FORBIDDEN, 0L, testAccount.sessionToken);
     }
 
     @Test
-    public void test3GetAGameWithAValidSessionAndInvalidId() throws Exception
+    public void test3GetAGameWithAValidSession() throws Exception
     {
-        //ApiResult result = getGameEndPoint.execute("xxx", 0L);
-        //checkHttpStatus(FORBIDDEN, result);
-    }
+        TestAccount testAccount = testAccountLogged();
 
-    @Test
-    public void test4GetAGameWithAValidSessionAndValidId() throws Exception
-    {
-        /*Long[] gameIds = new Long[0];
+        Map[] maps = mapService.getMaps(OK, testAccount.sessionToken);
 
-        for (Long gameId : gameIds)
-        {
-            ApiResult result = getGameEndPoint.execute("xx", gameId);
-            checkHttpStatus(OK, result);
+        Game game = gameService.createGame(CREATED, maps[0].id, 6, testAccount.sessionToken);
 
-            Game game = json(result, Game.class);
-            Assert.assertNotEquals(null, game);
-        }*/
+        gameService.getGame(OK, game.id, testAccount.sessionToken);
     }
 }

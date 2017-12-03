@@ -39,7 +39,7 @@ public class Main
         database.migrate();
     }
 
-    public Server server() throws Exception
+    public Server server()
     {
         Jerry jerry = new Jerry();
 

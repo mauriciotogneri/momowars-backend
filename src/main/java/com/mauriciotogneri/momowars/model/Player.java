@@ -14,9 +14,4 @@ public class Player
         this.resources = resources;
         this.status = status;
     }
-
-    public Long id()
-    {
-        return id;
-    }
 }

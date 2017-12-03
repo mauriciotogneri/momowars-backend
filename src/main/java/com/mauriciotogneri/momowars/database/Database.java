@@ -29,7 +29,7 @@ public class Database
         return connectionPool.getConnection();
     }
 
-    private HikariDataSource connectionPool(String url, int poolSize) throws Exception
+    private HikariDataSource connectionPool(String url, int poolSize)
     {
         HikariDataSource connectionPool = new HikariDataSource();
         connectionPool.setJdbcUrl(url);

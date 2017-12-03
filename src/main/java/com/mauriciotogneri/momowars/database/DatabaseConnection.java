@@ -16,7 +16,7 @@ public class DatabaseConnection
 {
     private final Connection connection;
 
-    public DatabaseConnection(Connection connection) throws Exception
+    public DatabaseConnection(Connection connection)
     {
         this.connection = connection;
     }

@@ -27,14 +27,6 @@ public class BaseService
         }
     }
 
-    protected void empty(ApiResult apiResult)
-    {
-        if (!apiResult.isValid())
-        {
-            throw new RuntimeException(apiResult.error());
-        }
-    }
-
     protected void checkHttpStatus(int expected, ApiResult apiResult)
     {
         Assert.assertEquals(expected, apiResult.code());

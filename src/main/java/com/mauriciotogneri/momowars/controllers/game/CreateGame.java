@@ -47,7 +47,7 @@ public class CreateGame extends BaseController
         AccountService.joinGame(connection, account.id(), game.id());
         PlayerService.create(connection, account.id(), game.id());
 
-        return response(CREATED, game);
+        return response(CREATED, GameService.byId(connection, game.id()));
     }
 
     @Provider
