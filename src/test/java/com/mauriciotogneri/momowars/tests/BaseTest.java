@@ -2,6 +2,7 @@ package com.mauriciotogneri.momowars.tests;
 
 import com.mauriciotogneri.momowars.model.accounts.Account;
 import com.mauriciotogneri.momowars.services.AccountServiceTest;
+import com.mauriciotogneri.momowars.services.GameServiceTest;
 import com.mauriciotogneri.momowars.services.MapServiceTest;
 import com.mauriciotogneri.momowars.services.SessionServiceTest;
 
@@ -13,6 +14,7 @@ public class BaseTest
 {
     protected final SessionServiceTest sessionService = new SessionServiceTest();
     protected final AccountServiceTest accountService = new AccountServiceTest();
+    protected final GameServiceTest gameService = new GameServiceTest();
     protected final MapServiceTest mapService = new MapServiceTest();
 
     protected static final String INVALID_SESSION_TOKEN = "invalid.session.token";

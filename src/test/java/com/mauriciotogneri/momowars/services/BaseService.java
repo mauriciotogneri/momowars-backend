@@ -8,7 +8,7 @@ import org.junit.Assert;
 public class BaseService
 {
     @SuppressWarnings("unchecked")
-    protected <T> T json(ApiResult apiResult, Class<T> clazz) throws Exception
+    protected <T> T json(ApiResult apiResult, Class<T> clazz)
     {
         if (apiResult.isValid())
         {
@@ -22,6 +22,14 @@ public class BaseService
             return result;
         }
         else
+        {
+            throw new RuntimeException(apiResult.error());
+        }
+    }
+
+    protected void empty(ApiResult apiResult)
+    {
+        if (!apiResult.isValid())
         {
             throw new RuntimeException(apiResult.error());
         }
