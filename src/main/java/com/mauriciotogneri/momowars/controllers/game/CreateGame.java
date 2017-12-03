@@ -42,12 +42,14 @@ public class CreateGame extends BaseController
 
         Account account = validateSessionToken(connection, sessionToken);
 
-        Game game = GameService.createGame(connection, entity.maxPlayers, entity.mapId, account.id());
+        Game newGame = GameService.createGame(connection, entity.maxPlayers, entity.mapId, account.id());
 
-        AccountService.joinGame(connection, account.id(), game.id());
-        PlayerService.create(connection, account.id(), game.id());
+        AccountService.joinGame(connection, account.id(), newGame.id());
+        PlayerService.create(connection, account.id(), newGame.id());
 
-        return response(CREATED, GameService.getGame(connection, game.id(), account.id()));
+        Game game = GameService.getGame(connection, newGame.id(), account.id());
+
+        return response(CREATED, game);
     }
 
     @Provider

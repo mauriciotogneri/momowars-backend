@@ -15,13 +15,13 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 public class GetMapTests extends BaseTest
 {
     @Test
-    public void test1GetMapWithAnInvalidSession() throws Exception
+    public void test1InvalidSession() throws Exception
     {
         mapService.getMap(UNAUTHORIZED, INVALID_SESSION_TOKEN, 0L);
     }
 
     @Test
-    public void test2GetMapWithInvalidParameters() throws Exception
+    public void test2InvalidParameters() throws Exception
     {
         TestAccount testAccount = testAccountLogged();
 
@@ -29,7 +29,7 @@ public class GetMapTests extends BaseTest
     }
 
     @Test
-    public void test3GetMapWithAValidSessionAndValidId() throws Exception
+    public void test3Valid() throws Exception
     {
         TestAccount testAccount = testAccountLogged();
 

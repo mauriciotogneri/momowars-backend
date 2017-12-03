@@ -15,13 +15,13 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 public class CreateSessionTests extends BaseTest
 {
     @Test
-    public void test1LoginWithNoParameters() throws Exception
+    public void test1NoParameters() throws Exception
     {
         sessionService.createSession(BAD_REQUEST, null, null);
     }
 
     @Test
-    public void test2LoginWithAnInvalidEmail() throws Exception
+    public void test2InvalidEmail() throws Exception
     {
         TestAccount account = testAccount();
 
@@ -29,7 +29,7 @@ public class CreateSessionTests extends BaseTest
     }
 
     @Test
-    public void test3LoginWithAnInvalidPassword() throws Exception
+    public void test3InvalidPassword() throws Exception
     {
         TestAccount account = testAccount();
 
@@ -37,7 +37,7 @@ public class CreateSessionTests extends BaseTest
     }
 
     @Test
-    public void test4LoginWithValidCredentials() throws Exception
+    public void test4Valid() throws Exception
     {
         TestAccount account = testAccount();
 

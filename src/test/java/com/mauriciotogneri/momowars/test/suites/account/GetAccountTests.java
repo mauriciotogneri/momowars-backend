@@ -15,13 +15,13 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 public class GetAccountTests extends BaseTest
 {
     @Test
-    public void test1GetAccountWithAnInvalidSession() throws Exception
+    public void test1InvalidSession() throws Exception
     {
         accountService.getAccount(UNAUTHORIZED, INVALID_SESSION_TOKEN);
     }
 
     @Test
-    public void test2GetAccountWithAValidSession() throws Exception
+    public void test2Valid() throws Exception
     {
         TestAccount testAccount = testAccountLogged();
 

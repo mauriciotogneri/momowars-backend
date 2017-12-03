@@ -17,13 +17,13 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 public class CreateGameTests extends BaseTest
 {
     @Test
-    public void test1CreateGameWithAnInvalidSession() throws Exception
+    public void test1InvalidSession() throws Exception
     {
         gameService.createGame(UNAUTHORIZED, 0L, 0, INVALID_SESSION_TOKEN);
     }
 
     @Test
-    public void test2CreateGameWithInvalidMap() throws Exception
+    public void test2InvalidMap() throws Exception
     {
         TestAccount testAccount = testAccountLogged();
 
@@ -31,7 +31,7 @@ public class CreateGameTests extends BaseTest
     }
 
     @Test
-    public void test3CreateGameWithInvalidPlayers() throws Exception
+    public void test3InvalidPlayers() throws Exception
     {
         TestAccount testAccount = testAccountLogged();
 
@@ -41,7 +41,7 @@ public class CreateGameTests extends BaseTest
     }
 
     @Test
-    public void test4CreateGameWithAValidSession() throws Exception
+    public void test4Valid() throws Exception
     {
         TestAccount testAccount = testAccountLogged();
 

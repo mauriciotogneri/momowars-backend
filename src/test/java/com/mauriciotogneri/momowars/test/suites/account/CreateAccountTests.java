@@ -20,13 +20,13 @@ public class CreateAccountTests extends BaseTest
     private static final String TEST_NICKNAME = randomNickname();
 
     @Test
-    public void test1CreateANewAccountWithMissingData() throws Exception
+    public void test1MissingData() throws Exception
     {
         accountService.createAccount(BAD_REQUEST, null, null, null);
     }
 
     @Test
-    public void test2CreateANewAccountWithValidData() throws Exception
+    public void test2Valid() throws Exception
     {
         Account account = accountService.createAccount(CREATED, TEST_EMAIL, TEST_PASSWORD, TEST_NICKNAME);
         Assert.assertEquals(TEST_EMAIL, account.email);
@@ -35,7 +35,7 @@ public class CreateAccountTests extends BaseTest
     }
 
     @Test
-    public void test3CreateANewAccountWithAnExistingEmail() throws Exception
+    public void test3ExistingEmail() throws Exception
     {
         accountService.createAccount(CONFLICT, TEST_EMAIL, TEST_PASSWORD, TEST_NICKNAME);
     }

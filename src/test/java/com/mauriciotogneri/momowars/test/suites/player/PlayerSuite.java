@@ -5,7 +5,9 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        EndTurnTests.class
+        JoinGameTests.class,
+        EndTurnTests.class,
+        LeaveGameTests.class
 })
 public class PlayerSuite
 {

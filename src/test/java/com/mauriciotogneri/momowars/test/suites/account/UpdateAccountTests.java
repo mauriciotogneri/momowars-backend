@@ -16,21 +16,21 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 public class UpdateAccountTests extends BaseTest
 {
     @Test
-    public void test1UpdateAccountWithAnInvalidSession() throws Exception
+    public void test1InvalidSession() throws Exception
     {
         TestAccount account = testAccountLogged();
         accountService.updateAccount(UNAUTHORIZED, INVALID_SESSION_TOKEN, account.password, account.nickname);
     }
 
     @Test
-    public void test2UpdateAccountWithInvalidParameters() throws Exception
+    public void test2InvalidParameters() throws Exception
     {
         TestAccount account = testAccountLogged();
         accountService.updateAccount(BAD_REQUEST, account.sessionToken, null, null);
     }
 
     @Test
-    public void test3UpdateAccountWithValidParameters() throws Exception
+    public void test3Valid() throws Exception
     {
         TestAccount testAccount = testAccountLogged();
 

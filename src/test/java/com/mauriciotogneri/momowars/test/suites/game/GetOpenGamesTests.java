@@ -15,13 +15,13 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 public class GetOpenGamesTests extends BaseTest
 {
     @Test
-    public void test1GetTheOpenGamesWithAnInvalidSession() throws Exception
+    public void test1InvalidSession() throws Exception
     {
         gameService.getOpenGames(UNAUTHORIZED, INVALID_SESSION_TOKEN);
     }
 
     @Test
-    public void test2GetTheOpenGamesWithAValidSession() throws Exception
+    public void test2Valid() throws Exception
     {
         TestAccount testAccount = testAccountLogged();
 
