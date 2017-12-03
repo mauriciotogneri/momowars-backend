@@ -4,8 +4,11 @@ import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.inquiry.QueryResult;
 import com.mauriciotogneri.inquiry.queries.InsertQuery;
 import com.mauriciotogneri.inquiry.queries.SelectQuery;
+import com.mauriciotogneri.inquiry.queries.UpdateQuery;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.PlayerQueries;
+import com.mauriciotogneri.momowars.exceptions.ApiException;
+import com.mauriciotogneri.momowars.exceptions.PlayerNotFoundException;
 import com.mauriciotogneri.momowars.model.Constants;
 import com.mauriciotogneri.momowars.model.Player;
 
@@ -51,5 +54,34 @@ public class PlayerDao
         }
 
         return players;
+    }
+
+    public void endTurn(Long playerId, Long accountId) throws DatabaseException, ApiException
+    {
+        SelectQuery<PlayerRow> query = connection.selectQuery(PlayerQueries.SELECT_BY_ID, PlayerRow.class);
+        QueryResult<PlayerRow> result = query.execute(playerId);
+
+        if (result.hasElements())
+        {
+            PlayerRow row = result.first();
+
+            if (!row.accountId.equals(accountId))
+            {
+                throw new PlayerNotFoundException();
+            }
+
+            UpdateQuery updateQuery = connection.updateQuery(PlayerQueries.UPDATE_TURN);
+
+            int rowsAffected = updateQuery.execute(playerId);
+
+            if (rowsAffected != 1)
+            {
+                throw new DatabaseException();
+            }
+        }
+        else
+        {
+            throw new PlayerNotFoundException();
+        }
     }
 }

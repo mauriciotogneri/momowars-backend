@@ -44,7 +44,6 @@ public interface UpdateAccount
 {
     class DataParameter
     {
-        @MaxLength(50)
         public String password;
 
         @MaxLength(30)

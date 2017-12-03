@@ -16,4 +16,12 @@ public class Player
         this.resources = resources;
         this.status = status;
     }
+
+    public Player(String nickname, PlayerStatus status)
+    {
+        this.id = null;
+        this.nickname = nickname;
+        this.resources = null;
+        this.status = status;
+    }
 }

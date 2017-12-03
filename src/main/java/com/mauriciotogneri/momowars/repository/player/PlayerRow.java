@@ -19,7 +19,7 @@ public class PlayerRow
         }
         else
         {
-            return new Player(null, nickname, null, status);
+            return new Player(nickname, status);
         }
     }
 }

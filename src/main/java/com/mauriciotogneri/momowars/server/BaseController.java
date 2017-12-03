@@ -19,6 +19,7 @@ import com.mauriciotogneri.momowars.exceptions.InvalidParametersException;
 import com.mauriciotogneri.momowars.exceptions.InvalidSessionTokenException;
 import com.mauriciotogneri.momowars.exceptions.MapNotFoundException;
 import com.mauriciotogneri.momowars.exceptions.PlayerAlreadyJoinedException;
+import com.mauriciotogneri.momowars.exceptions.PlayerNotFoundException;
 import com.mauriciotogneri.momowars.logger.ErrorLogger;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.repository.account.AccountDao;
@@ -32,6 +33,7 @@ public class BaseController extends Controller
 
     protected static final String PARAM_GAME_ID = "gameId";
     protected static final String PARAM_MAP_ID = "mapId";
+    protected static final String PARAM_PLAYER_ID = "playerId";
 
     protected Response process(ControllerImplementation controller) throws Exception
     {
@@ -78,7 +80,7 @@ public class BaseController extends Controller
         {
             return new ConflictException(e);
         }
-        catch (AccountNotFoundException | MapNotFoundException | GameNotFoundException e)
+        catch (AccountNotFoundException | MapNotFoundException | GameNotFoundException | PlayerNotFoundException e)
         {
             return new NotFoundException(e);
         }
