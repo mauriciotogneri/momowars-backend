@@ -3,34 +3,18 @@ package com.mauriciotogneri.momowars.logger;
 import com.mauriciotogneri.jerry.http.HttpRequest;
 import com.mauriciotogneri.jerry.http.HttpResponse;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ConsoleLogger
 {
-    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-
-    static
-    {
-        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-    }
+    private static final Logger logger = LoggerFactory.getLogger("");
 
     public static void logRequest(HttpRequest httpRequest)
     {
         try
         {
-            StringBuilder builder = new StringBuilder();
-
-            builder.append(String.format(
-                    "<<< %s%n",
-                    dateFormat.format(new Date())));
-
-            builder.append(httpRequest.toString());
-            builder.append(String.format("%n%n"));
-
-            log(builder.toString());
+            logger.info(String.format("%n%s%n", httpRequest.toString()));
         }
         catch (Exception e)
         {
@@ -42,26 +26,11 @@ public class ConsoleLogger
     {
         try
         {
-            StringBuilder builder = new StringBuilder();
-
-            builder.append(String.format(
-                    ">>> %s%n",
-                    dateFormat.format(new Date())));
-
-            builder.append(response.toString());
-            builder.append(String.format("%n%n"));
-
-            log(builder.toString());
+            logger.info(String.format("%n%s%n", response.toString()));
         }
         catch (Exception e)
         {
             ErrorLogger.log(e);
         }
-    }
-
-    private static void log(String text)
-    {
-        System.out.print(text);
-        System.out.flush();
     }
 }
