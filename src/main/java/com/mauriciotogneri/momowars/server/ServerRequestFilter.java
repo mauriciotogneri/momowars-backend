@@ -4,6 +4,7 @@ import com.mauriciotogneri.jerry.http.HttpRequest;
 import com.mauriciotogneri.momowars.logger.ConsoleLogger;
 import com.mauriciotogneri.momowars.logger.DatabaseLogger;
 import com.mauriciotogneri.momowars.logger.ErrorLogger;
+import com.mauriciotogneri.momowars.security.IpLimitation;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -22,16 +23,21 @@ public class ServerRequestFilter implements ContainerRequestFilter
     public static final String PROPERTY_TIME_START = "time.start";
     public static final String PROPERTY_LOG_ID = "log.id";
 
+    private final IpLimitation ipLimitation = new IpLimitation();
+
     @Override
     public void filter(ContainerRequestContext request)
     {
         try
         {
+            String ip = servletRequest.getRemoteAddr();
+            ipLimitation.check(request, ip);
+
             request.setProperty(PROPERTY_TIME_START, System.currentTimeMillis());
 
             HttpRequest httpRequest = new HttpRequest(request);
             ConsoleLogger.logRequest(httpRequest);
-            long logId = DatabaseLogger.logRequest(servletRequest.getRemoteAddr(), httpRequest);
+            long logId = DatabaseLogger.logRequest(ip, httpRequest);
             request.setProperty(PROPERTY_LOG_ID, logId);
         }
         catch (Exception e)
