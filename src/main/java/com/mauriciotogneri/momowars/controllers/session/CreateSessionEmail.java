@@ -20,7 +20,7 @@ import static javax.ws.rs.core.Response.Status.CREATED;
 public class CreateSessionEmail extends BaseController
 {
     @POST
-    @Path("v1/session")
+    @Path("v1/session/email")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response controller(Entity sessionRequest) throws Exception
     {
