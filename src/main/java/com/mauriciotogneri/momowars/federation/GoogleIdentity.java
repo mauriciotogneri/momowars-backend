@@ -29,7 +29,7 @@ public class GoogleIdentity implements FederationEntityProvider
 
             if (response.isValid(CLIENT_ID))
             {
-                return Optional.of(new FederationEntity(response.email, response.name(), response.picture));
+                return Optional.of(new FederationEntity(response.email, response.name(), response.picture, response.email_verified));
             }
             else
             {
@@ -80,7 +80,7 @@ public class GoogleIdentity implements FederationEntityProvider
 
         public boolean isValid(String clientId)
         {
-            return email_verified && Strings.equals(aud, clientId);
+            return Strings.equals(aud, clientId);
         }
     }
 }

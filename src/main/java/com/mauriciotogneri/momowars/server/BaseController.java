@@ -16,7 +16,7 @@ import com.mauriciotogneri.momowars.exceptions.GameNotOpenException;
 import com.mauriciotogneri.momowars.exceptions.InvalidCredentialsException;
 import com.mauriciotogneri.momowars.exceptions.InvalidGameException;
 import com.mauriciotogneri.momowars.exceptions.InvalidParametersException;
-import com.mauriciotogneri.momowars.exceptions.InvalidSessionTokenException;
+import com.mauriciotogneri.momowars.exceptions.InvalidTokenException;
 import com.mauriciotogneri.momowars.exceptions.MapNotFoundException;
 import com.mauriciotogneri.momowars.exceptions.PlayerAlreadyJoinedException;
 import com.mauriciotogneri.momowars.exceptions.PlayerNotFoundException;
@@ -84,7 +84,7 @@ public class BaseController extends Controller
         {
             return new NotFoundException(e);
         }
-        catch (InvalidCredentialsException | InvalidSessionTokenException e)
+        catch (InvalidCredentialsException | InvalidTokenException e)
         {
             return new UnauthorizedException(e);
         }

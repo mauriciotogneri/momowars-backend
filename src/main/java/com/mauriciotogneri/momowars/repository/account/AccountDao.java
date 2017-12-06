@@ -11,7 +11,7 @@ import com.mauriciotogneri.momowars.exceptions.AccountAlreadyExistsException;
 import com.mauriciotogneri.momowars.exceptions.AccountNotFoundException;
 import com.mauriciotogneri.momowars.exceptions.ApiException;
 import com.mauriciotogneri.momowars.exceptions.InvalidCredentialsException;
-import com.mauriciotogneri.momowars.exceptions.InvalidSessionTokenException;
+import com.mauriciotogneri.momowars.exceptions.InvalidTokenException;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.util.Hash;
 
@@ -40,7 +40,7 @@ public class AccountDao
         }
         else
         {
-            throw new InvalidSessionTokenException();
+            throw new InvalidTokenException();
         }
     }
 
