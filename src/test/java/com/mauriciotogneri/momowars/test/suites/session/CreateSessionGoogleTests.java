@@ -12,36 +12,25 @@ import static com.mauriciotogneri.stewie.types.StatusCode.CREATED;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class CreateSessionTests extends BaseTest
+public class CreateSessionGoogleTests extends BaseTest
 {
     @Test
     public void test1NoParameters() throws Exception
     {
-        sessionService.createSession(BAD_REQUEST, null, null);
+        sessionService.createSessionGoogle(BAD_REQUEST, null);
     }
 
     @Test
-    public void test2InvalidEmail() throws Exception
+    public void test2InvalidToken() throws Exception
     {
-        TestAccount account = testAccount();
-
-        sessionService.createSession(UNAUTHORIZED, "x" + account.email, account.password);
-    }
-
-    @Test
-    public void test3InvalidPassword() throws Exception
-    {
-        TestAccount account = testAccount();
-
-        sessionService.createSession(UNAUTHORIZED, account.email, account.password + "x");
+        sessionService.createSessionGoogle(UNAUTHORIZED, "xxx");
     }
 
     @Test
     public void test4Valid() throws Exception
     {
-        TestAccount account = testAccount();
-
-        String sessionToken = sessionService.createSession(CREATED, account.email, account.password);
+        // TODO: add valid token
+        String sessionToken = sessionService.createSessionGoogle(CREATED, "");
         Assert.assertNotNull(sessionToken);
     }
 }

@@ -5,7 +5,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        CreateSessionTests.class
+        CreateSessionEmailTests.class,
+        CreateSessionGoogleTests.class
 })
 public class SessionSuite
 {

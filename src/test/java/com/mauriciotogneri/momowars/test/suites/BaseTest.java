@@ -55,7 +55,7 @@ public class BaseTest
 
         Account account = accountService.createAccount(CREATED, email, password, nickname);
 
-        String sessionToken = sessionService.createSession(CREATED, email, password);
+        String sessionToken = sessionService.createSessionEmail(CREATED, email, password);
 
         return new TestAccount(account, password, sessionToken);
     }

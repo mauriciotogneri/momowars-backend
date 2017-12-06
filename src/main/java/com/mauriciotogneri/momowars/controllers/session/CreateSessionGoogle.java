@@ -17,7 +17,7 @@ import javax.ws.rs.ext.Provider;
 import static javax.ws.rs.core.Response.Status.CREATED;
 
 @Path("api")
-public class CreateSession extends BaseController
+public class CreateSessionGoogle extends BaseController
 {
     @POST
     @Path("v1/session")
@@ -31,7 +31,7 @@ public class CreateSession extends BaseController
     {
         checkIfNotEmpty(entity);
 
-        String sessionToken = SessionService.createSession(connection, entity.email, entity.password);
+        String sessionToken = SessionService.createSessionGoogle(connection, entity.token);
 
         return Response
                 .status(CREATED)
@@ -43,8 +43,7 @@ public class CreateSession extends BaseController
     @Consumes(MediaType.APPLICATION_JSON)
     public static class Entity extends EntityProvider<Entity> implements EntityObject
     {
-        private String email;
-        private String password;
+        private String token;
 
         public Entity()
         {
@@ -54,7 +53,7 @@ public class CreateSession extends BaseController
         @Override
         public boolean isValid()
         {
-            return Strings.isNotEmpty(email) && Strings.isNotEmpty(password);
+            return Strings.isNotEmpty(token);
         }
     }
 }

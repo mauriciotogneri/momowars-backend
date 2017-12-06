@@ -1,8 +1,6 @@
 package com.mauriciotogneri.momowars.api.endpoints.sessions;
 
-import com.mauriciotogneri.jsonschema.annotations.Format;
-import com.mauriciotogneri.jsonschema.annotations.MaxLength;
-import com.mauriciotogneri.momowars.api.endpoints.sessions.CreateSession.DataParameter;
+import com.mauriciotogneri.momowars.api.endpoints.sessions.CreateSessionEmail.DataParameter;
 import com.mauriciotogneri.stewie.annotations.EndPoint;
 import com.mauriciotogneri.stewie.annotations.Parameters;
 import com.mauriciotogneri.stewie.annotations.Response;
@@ -14,9 +12,9 @@ import static com.mauriciotogneri.stewie.types.StatusCode.CREATED;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 
 @EndPoint(
-        path = "/v1/session",
+        path = "/v1/session/google",
         method = POST,
-        description = "Creates a new session"
+        description = "Creates a new session with a Google token"
 )
 @Parameters(
         data = DataParameter.class
@@ -32,17 +30,13 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
         ),
         @Response(
                 code = UNAUTHORIZED,
-                description = "Invalid email or password"
+                description = "Invalid token"
         )
 })
-public interface CreateSession
+public interface CreateSessionGoogle
 {
     class DataParameter
     {
-        @Format("email")
-        @MaxLength(50)
-        public String email;
-
-        public String password;
+        public String token;
     }
 }
