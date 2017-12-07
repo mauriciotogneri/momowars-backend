@@ -1,3 +1,3 @@
 UPDATE log
-	SET response_status = ?, response_headers = ?, response_entity = ?, duration = ?
+	SET response_status = ?, response_headers = ?, duration = ?
 	WHERE (id = ?)

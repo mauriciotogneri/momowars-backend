@@ -5,8 +5,6 @@ CREATE TABLE log (
 	request_method VARCHAR(7) NOT NULL,
 	request_path TEXT NOT NULL,
 	request_headers TEXT,
-	request_entity TEXT,
 	response_status INTEGER,
 	response_headers TEXT,
-	response_entity TEXT,
 	duration INTEGER);

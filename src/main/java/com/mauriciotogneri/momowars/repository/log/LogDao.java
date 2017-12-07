@@ -27,8 +27,7 @@ public class LogDao
                 ip,
                 request.method(),
                 request.path(),
-                request.headers().toString(),
-                request.entity()
+                request.headers().toString()
         );
     }
 
@@ -39,7 +38,6 @@ public class LogDao
         query.execute(
                 response.status(),
                 response.headers().toString(),
-                response.entity(),
                 duration,
                 id
         );
