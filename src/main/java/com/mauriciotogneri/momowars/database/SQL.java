@@ -6,12 +6,13 @@ public class SQL
     {
         public static final String CREATE = "queries/account/create.sql";
         public static final String SELECT_BY_ID = "queries/account/select_by_id.sql";
-        public static final String SELECT_BY_CREDENTIALS = "queries/account/select_by_credentials.sql";
+        public static final String SELECT_BY_EMAIL = "queries/account/select_by_email.sql";
         public static final String SELECT_BY_SESSION_TOKEN = "queries/account/select_by_session_token.sql";
         public static final String SELECT_GAMES = "queries/account/select_games.sql";
         public static final String UPDATE_SESSION_TOKEN = "queries/account/update_session_token.sql";
-        public static final String UPDATE_PASSWORD = "queries/account/update_password.sql";
         public static final String UPDATE_NICKNAME = "queries/account/update_nickname.sql";
+        public static final String UPDATE_PASSWORD = "queries/account/update_password.sql";
+        public static final String UPDATE_PICTURE = "queries/account/update_picture.sql";
         public static final String JOIN_GAME = "queries/account/join_game.sql";
     }
 

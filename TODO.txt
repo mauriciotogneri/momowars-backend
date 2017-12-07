@@ -1,0 +1,17 @@
+Salt passwords
+hash = hash_function(salt + password
+
+Validate account by email
+	email_verified
+	email_confirmation_token VARCHAR NULL UNIQUE
+	registration_time (to remove accounts if they haven't been verified in 72 hours)
+
+Create end point to confirm email /v1/account/confirm
+
+Password reset
+	password_reminder_token VARCHAR NULL UNIQUE
+	password_reminder_expire
+	
+Create end point to reset password /v1/account/reset
+
+Add column "last_login_time"

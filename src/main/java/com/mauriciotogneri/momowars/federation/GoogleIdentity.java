@@ -10,7 +10,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class GoogleIdentity implements FederationEntityProvider
+public class GoogleIdentity implements FederationIdentityProvider
 {
     private final String token;
     private static final String CLIENT_ID = "320342709224-uun9uafeffdlr89hbodlnqnck0iimja9.apps.googleusercontent.com";
@@ -21,7 +21,7 @@ public class GoogleIdentity implements FederationEntityProvider
     }
 
     @Override
-    public Optional<FederationEntity> entity()
+    public Optional<FederationIdentity> identity()
     {
         try
         {
@@ -29,7 +29,7 @@ public class GoogleIdentity implements FederationEntityProvider
 
             if (response.isValid(CLIENT_ID))
             {
-                return Optional.of(new FederationEntity(response.email, response.name(), response.picture, response.email_verified));
+                return Optional.of(new FederationIdentity(response.email, response.name(), response.picture, response.email_verified));
             }
             else
             {

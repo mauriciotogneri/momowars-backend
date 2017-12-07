@@ -13,7 +13,7 @@ public class AccountService
     public static Account createAccount(DatabaseConnection connection,
                                         String email,
                                         String nickname,
-                                        String password) throws ApiException
+                                        String password) throws DatabaseException, ApiException
     {
         if (!EmailValidator.isValid(email))
         {
@@ -22,10 +22,13 @@ public class AccountService
 
         AccountDao accountDao = new AccountDao(connection);
 
-        return accountDao.create(email,
-                                 nickname,
-                                 password,
-                                 SessionService.newSessionToken());
+        Account account = accountDao.create(email,
+                                            nickname,
+                                            SessionService.newSessionToken());
+
+        accountDao.updatePassword(account.id(), password);
+
+        return account;
     }
 
     public static Account getAccount(DatabaseConnection connection,

@@ -5,6 +5,7 @@ import com.mauriciotogneri.inquiry.QueryResult;
 import com.mauriciotogneri.inquiry.queries.InsertQuery;
 import com.mauriciotogneri.inquiry.queries.SelectQuery;
 import com.mauriciotogneri.inquiry.queries.UpdateQuery;
+import com.mauriciotogneri.javautils.Strings;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.AccountQueries;
 import com.mauriciotogneri.momowars.exceptions.AccountAlreadyExistsException;
@@ -46,8 +47,32 @@ public class AccountDao
 
     public Account byCredentials(String email, String password) throws DatabaseException, ApiException
     {
-        SelectQuery<AccountRow> query = connection.selectQuery(AccountQueries.SELECT_BY_CREDENTIALS, AccountRow.class);
-        QueryResult<AccountRow> result = query.execute(email, Hash.of(password));
+        SelectQuery<AccountRow> query = connection.selectQuery(AccountQueries.SELECT_BY_EMAIL, AccountRow.class);
+        QueryResult<AccountRow> result = query.execute(email);
+
+        if (result.hasElements())
+        {
+            AccountRow row = result.first();
+
+            if (Strings.equals(row.password, Hash.of(password)))
+            {
+                return row.account(accountGames(row.id));
+            }
+            else
+            {
+                throw new InvalidCredentialsException();
+            }
+        }
+        else
+        {
+            throw new AccountNotFoundException();
+        }
+    }
+
+    public Account byEmail(String email) throws DatabaseException, ApiException
+    {
+        SelectQuery<AccountRow> query = connection.selectQuery(AccountQueries.SELECT_BY_EMAIL, AccountRow.class);
+        QueryResult<AccountRow> result = query.execute(email);
 
         if (result.hasElements())
         {
@@ -57,7 +82,7 @@ public class AccountDao
         }
         else
         {
-            throw new InvalidCredentialsException();
+            throw new AccountNotFoundException();
         }
     }
 
@@ -97,6 +122,18 @@ public class AccountDao
         }
     }
 
+    public void updatePicture(Long id, String picture) throws DatabaseException
+    {
+        UpdateQuery query = connection.updateQuery(AccountQueries.UPDATE_PICTURE);
+
+        int rowsAffected = query.execute(picture, id);
+
+        if (rowsAffected != 1)
+        {
+            throw new DatabaseException();
+        }
+    }
+
     public Account getAccount(Long id) throws DatabaseException, ApiException
     {
         SelectQuery<AccountRow> query = connection.selectQuery(AccountQueries.SELECT_BY_ID, AccountRow.class);
@@ -114,7 +151,7 @@ public class AccountDao
         }
     }
 
-    public Account create(String email, String nickname, String password, String sessionToken) throws ApiException
+    public Account create(String email, String nickname, String sessionToken) throws ApiException
     {
         InsertQuery query = connection.insertQuery(AccountQueries.CREATE);
 
@@ -123,7 +160,6 @@ public class AccountDao
             long accountId = query.execute(
                     email,
                     nickname,
-                    Hash.of(password),
                     sessionToken
             );
 

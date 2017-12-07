@@ -3,8 +3,9 @@ package com.mauriciotogneri.momowars.services;
 import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.jerry.exceptions.client.UnauthorizedException;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
+import com.mauriciotogneri.momowars.exceptions.AccountNotFoundException;
 import com.mauriciotogneri.momowars.exceptions.ApiException;
-import com.mauriciotogneri.momowars.federation.FederationEntity;
+import com.mauriciotogneri.momowars.federation.FederationIdentity;
 import com.mauriciotogneri.momowars.federation.GoogleIdentity;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.repository.account.AccountDao;
@@ -33,17 +34,29 @@ public class SessionService
                                              String token) throws DatabaseException, ApiException
     {
         GoogleIdentity googleIdentity = new GoogleIdentity(token);
-        Optional<FederationEntity> entity = googleIdentity.entity();
+        Optional<FederationIdentity> federationIdentity = googleIdentity.identity();
 
-        if (entity.isPresent())
+        if (federationIdentity.isPresent())
         {
-            // TODO:
+            FederationIdentity identity = federationIdentity.get();
+
             AccountDao accountDao = new AccountDao(connection);
-            Account account = accountDao.byCredentials("", "");
 
             String sessionToken = newSessionToken();
 
-            accountDao.updateSessionToken(account.id(), sessionToken);
+            try
+            {
+                Account account = accountDao.byEmail(identity.email());
+
+                accountDao.updateNickname(account.id(), identity.name());
+                accountDao.updatePicture(account.id(), identity.picture());
+                accountDao.updateSessionToken(account.id(), sessionToken);
+            }
+            catch (AccountNotFoundException e)
+            {
+                Account account = accountDao.create(identity.email(), identity.name(), sessionToken);
+                accountDao.updatePicture(account.id(), identity.picture());
+            }
 
             return sessionToken;
         }
