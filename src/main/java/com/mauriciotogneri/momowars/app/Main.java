@@ -48,7 +48,7 @@ public class Main
 
         return jerry.create(new JerryConfig(
                 port,
-                "localhost",
+                "0.0.0.0",
                 new Application(),
                 publicContext()
         ));
