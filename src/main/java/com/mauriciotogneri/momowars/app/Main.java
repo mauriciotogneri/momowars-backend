@@ -1,14 +1,17 @@
 package com.mauriciotogneri.momowars.app;
 
 import com.mauriciotogneri.jerry.Jerry;
-import com.mauriciotogneri.jerry.JerryConfig;
+import com.mauriciotogneri.jerry.config.JerryConfig;
 import com.mauriciotogneri.momowars.database.Database;
 import com.mauriciotogneri.momowars.server.Application;
 
-import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandler;
+import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
+import org.glassfish.jersey.servlet.ServletContainer;
 
 public class Main
 {
@@ -44,17 +47,15 @@ public class Main
 
     public Server server()
     {
-        Jerry jerry = new Jerry();
+        JerryConfig.Builder config = new JerryConfig.Builder();
+        config.port(port);
+        config.host("0.0.0.0");
+        config.handlers(handlers());
 
-        return jerry.create(new JerryConfig(
-                port,
-                "0.0.0.0",
-                new Application(),
-                publicContext()
-        ));
+        return new Jerry().create(config.build());
     }
 
-    private Handler[] publicContext()
+    private HandlerList handlers()
     {
         String publicDir = getClass().getClassLoader().getResource("public").toExternalForm();
 
@@ -65,7 +66,12 @@ public class Main
         ContextHandler contextHandler = new ContextHandler(".");
         contextHandler.setHandler(resourceHandler);
 
-        return new Handler[] {contextHandler};
+        ServletHolder servlet = new ServletHolder(new ServletContainer(new Application()));
+        ServletContextHandler servletContext = new ServletContextHandler();
+        servletContext.setContextPath("/");
+        servletContext.addServlet(servlet, "/*");
+
+        return new HandlerList(contextHandler, servletContext);
     }
 
     public static void main(String[] args) throws Exception
