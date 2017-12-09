@@ -15,3 +15,5 @@ Password reset
 Create end point to reset password /v1/account/reset
 
 Add column "last_login_time"
+
+If a player doesn't play for 3 turns, the game will not wait until he moves

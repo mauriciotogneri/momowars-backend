@@ -5,7 +5,10 @@ import com.mauriciotogneri.jerry.JerryConfig;
 import com.mauriciotogneri.momowars.database.Database;
 import com.mauriciotogneri.momowars.server.Application;
 
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.ContextHandler;
+import org.eclipse.jetty.server.handler.ResourceHandler;
 
 public class Main
 {
@@ -46,8 +49,23 @@ public class Main
         return jerry.create(new JerryConfig(
                 port,
                 "localhost",
-                new Application()
+                new Application(),
+                publicContext()
         ));
+    }
+
+    private Handler[] publicContext()
+    {
+        String publicDir = getClass().getClassLoader().getResource("public").toExternalForm();
+
+        ResourceHandler resourceHandler = new ResourceHandler();
+        resourceHandler.setDirectoriesListed(true);
+        resourceHandler.setResourceBase(publicDir);
+
+        ContextHandler contextHandler = new ContextHandler(".");
+        contextHandler.setHandler(resourceHandler);
+
+        return new Handler[] {contextHandler};
     }
 
     public static void main(String[] args) throws Exception
