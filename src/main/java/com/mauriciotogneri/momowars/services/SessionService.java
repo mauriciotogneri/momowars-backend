@@ -1,10 +1,10 @@
 package com.mauriciotogneri.momowars.services;
 
 import com.mauriciotogneri.inquiry.DatabaseException;
-import com.mauriciotogneri.jerry.exceptions.client.UnauthorizedException;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.exceptions.AccountNotFoundException;
 import com.mauriciotogneri.momowars.exceptions.ApiException;
+import com.mauriciotogneri.momowars.exceptions.InvalidTokenException;
 import com.mauriciotogneri.momowars.federation.FederationIdentity;
 import com.mauriciotogneri.momowars.federation.GoogleIdentity;
 import com.mauriciotogneri.momowars.model.Account;
@@ -67,7 +67,7 @@ public class SessionService
         }
         else
         {
-            throw new UnauthorizedException();
+            throw new InvalidTokenException();
         }
     }
 
