@@ -8,42 +8,48 @@ import com.mauriciotogneri.momowars.model.Map;
 import com.mauriciotogneri.momowars.notifications.GameStarted;
 import com.mauriciotogneri.momowars.notifications.Notification;
 import com.mauriciotogneri.momowars.repository.game.GameDao;
+import com.mauriciotogneri.momowars.repository.map.MapDao;
 import com.mauriciotogneri.momowars.types.GameStatus;
 
 import java.util.List;
 
 public class GameService
 {
-    public static Game createGame(DatabaseConnection connection,
-                                  Integer maxPlayers,
-                                  Long mapId,
-                                  Long forAccountId) throws DatabaseException, ApiException
+    private final DatabaseConnection connection;
+
+    public GameService(DatabaseConnection connection)
     {
-        Map map = MapService.getMap(connection, mapId);
+        this.connection = connection;
+    }
+
+    public Game createGame(Integer maxPlayers,
+                           Long mapId,
+                           Long forAccountId) throws DatabaseException, ApiException
+    {
+        MapDao mapDao = new MapDao(connection);
+        Map map = mapDao.getMap(mapId);
 
         GameDao gameDao = new GameDao(connection);
 
         return gameDao.create(maxPlayers, map, forAccountId);
     }
 
-    public static List<Game> getOpenGames(DatabaseConnection connection) throws DatabaseException, ApiException
+    public List<Game> getOpenGames() throws DatabaseException, ApiException
     {
         GameDao gameDao = new GameDao(connection);
 
         return gameDao.getOpenGames();
     }
 
-    public static Game getGame(DatabaseConnection connection,
-                               Long gameId,
-                               Long forAccountId) throws DatabaseException, ApiException
+    public Game getGame(Long gameId,
+                        Long forAccountId) throws DatabaseException, ApiException
     {
         GameDao gameDao = new GameDao(connection);
 
         return gameDao.getGame(gameId, forAccountId);
     }
 
-    public static void startGame(DatabaseConnection connection,
-                                 Long gameId) throws DatabaseException
+    public void startGame(Long gameId) throws DatabaseException
     {
         GameDao gameDao = new GameDao(connection);
         gameDao.updateStatus(gameId, GameStatus.PLAYING);

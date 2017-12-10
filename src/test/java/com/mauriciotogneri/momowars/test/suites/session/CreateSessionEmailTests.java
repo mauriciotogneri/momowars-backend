@@ -9,6 +9,7 @@ import org.junit.runners.MethodSorters;
 
 import static com.mauriciotogneri.stewie.types.StatusCode.BAD_REQUEST;
 import static com.mauriciotogneri.stewie.types.StatusCode.CREATED;
+import static com.mauriciotogneri.stewie.types.StatusCode.NOT_FOUND;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -25,7 +26,7 @@ public class CreateSessionEmailTests extends BaseTest
     {
         TestAccount account = testAccount();
 
-        sessionService.createSessionEmail(UNAUTHORIZED, "x" + account.email, account.password);
+        sessionService.createSessionEmail(NOT_FOUND, "x" + account.email, account.password);
     }
 
     @Test

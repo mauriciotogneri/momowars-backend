@@ -1,9 +1,7 @@
 package com.mauriciotogneri.momowars.controllers.map;
 
-import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.model.Map;
 import com.mauriciotogneri.momowars.server.BaseController;
-import com.mauriciotogneri.momowars.services.MapService;
 
 import java.util.List;
 
@@ -24,15 +22,15 @@ public class GetMaps extends BaseController
     @Produces(MediaType.APPLICATION_JSON)
     public Response controller(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken) throws Exception
     {
-        return process(connection -> controller(connection, sessionToken));
+        return process(() -> response(sessionToken));
     }
 
-    private Response controller(DatabaseConnection connection, String sessionToken) throws Exception
+    private Response response(String sessionToken) throws Exception
     {
         checkIfNotEmpty(sessionToken);
-        validateSessionToken(connection, sessionToken);
+        validateSessionToken(sessionToken);
 
-        List<Map> maps = MapService.getMaps(connection);
+        List<Map> maps = mapService.getMaps();
 
         return response(OK, maps);
     }

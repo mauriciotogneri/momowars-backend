@@ -16,7 +16,7 @@ public class IpLimitation
             60, TimeUnit.SECONDS // expiration time
     );
 
-    private static final int REQUESTS_LIMIT = 10;
+    private static final int REQUESTS_LIMIT = 1000;
 
     public void check(ContainerRequestContext request, String ip)
     {

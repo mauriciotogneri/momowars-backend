@@ -1,9 +1,7 @@
 package com.mauriciotogneri.momowars.controllers.account;
 
-import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.server.BaseController;
-import com.mauriciotogneri.momowars.services.AccountService;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -22,14 +20,14 @@ public class GetAccount extends BaseController
     @Produces(MediaType.APPLICATION_JSON)
     public Response controller(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken) throws Exception
     {
-        return process(connection -> controller(connection, sessionToken));
+        return process(() -> response(sessionToken));
     }
 
-    private Response controller(DatabaseConnection connection, String sessionToken) throws Exception
+    private Response response(String sessionToken) throws Exception
     {
         checkIfNotEmpty(sessionToken);
 
-        Account account = AccountService.getAccount(connection, sessionToken);
+        Account account = accountService.getAccount(sessionToken);
 
         return response(OK, account);
     }

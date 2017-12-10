@@ -2,7 +2,6 @@ package com.mauriciotogneri.momowars.controllers.player;
 
 import com.mauriciotogneri.jerry.controller.EntityProvider;
 import com.mauriciotogneri.jerry.controller.EntityProvider.EntityObject;
-import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.exceptions.GameFinishedException;
 import com.mauriciotogneri.momowars.exceptions.GameFullException;
 import com.mauriciotogneri.momowars.exceptions.GamePlayingException;
@@ -10,8 +9,6 @@ import com.mauriciotogneri.momowars.exceptions.PlayerAlreadyJoinedException;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.Game;
 import com.mauriciotogneri.momowars.server.BaseController;
-import com.mauriciotogneri.momowars.services.GameService;
-import com.mauriciotogneri.momowars.services.PlayerService;
 
 import java.util.Objects;
 
@@ -35,22 +32,22 @@ public class JoinGame extends BaseController
     public Response controller(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken,
                                Entity entity) throws Exception
     {
-        return process(connection -> controller(connection, sessionToken, entity));
+        return process(() -> response(sessionToken, entity));
     }
 
-    private Response controller(DatabaseConnection connection, String sessionToken, Entity entity) throws Exception
+    private Response response(String sessionToken, Entity entity) throws Exception
     {
         checkIfNotEmpty(sessionToken);
         checkIfNotEmpty(entity);
 
-        Account account = validateSessionToken(connection, sessionToken);
+        Account account = validateSessionToken(sessionToken);
 
         if (account.hasGame(entity.gameId))
         {
             throw new PlayerAlreadyJoinedException();
         }
 
-        Game loadedGame = GameService.getGame(connection, entity.gameId, account.id());
+        Game loadedGame = gameService.getGame(entity.gameId, account.id());
 
         if (loadedGame.isPlaying())
         {
@@ -65,14 +62,14 @@ public class JoinGame extends BaseController
             throw new GameFullException();
         }
 
-        PlayerService.create(connection, account.id(), loadedGame.id());
+        playerService.create(account.id(), loadedGame.id());
 
         if (loadedGame.playersMissing() == 1)
         {
-            GameService.startGame(connection, loadedGame.id());
+            gameService.startGame(loadedGame.id());
         }
 
-        Game game = GameService.getGame(connection, loadedGame.id(), account.id());
+        Game game = gameService.getGame(loadedGame.id(), account.id());
 
         return response(CREATED, game);
     }

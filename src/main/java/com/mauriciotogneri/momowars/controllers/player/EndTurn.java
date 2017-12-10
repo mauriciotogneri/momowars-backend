@@ -1,9 +1,7 @@
 package com.mauriciotogneri.momowars.controllers.player;
 
-import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.server.BaseController;
-import com.mauriciotogneri.momowars.services.PlayerService;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.HeaderParam;
@@ -24,17 +22,17 @@ public class EndTurn extends BaseController
     public Response controller(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken,
                                @PathParam(PARAM_PLAYER_ID) Long playerId) throws Exception
     {
-        return process(connection -> controller(connection, sessionToken, playerId));
+        return process(() -> response(sessionToken, playerId));
     }
 
-    private Response controller(DatabaseConnection connection, String sessionToken, Long playerId) throws Exception
+    private Response response(String sessionToken, Long playerId) throws Exception
     {
         checkIfNotEmpty(sessionToken);
         checkIfNotEmpty(playerId);
 
-        Account account = validateSessionToken(connection, sessionToken);
+        Account account = validateSessionToken(sessionToken);
 
-        PlayerService.endTurn(connection, playerId, account.id());
+        playerService.endTurn(playerId, account.id());
 
         return response(NO_CONTENT);
     }

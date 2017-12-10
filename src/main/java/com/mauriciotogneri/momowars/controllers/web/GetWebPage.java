@@ -1,6 +1,5 @@
 package com.mauriciotogneri.momowars.controllers.web;
 
-import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.server.BaseController;
 import com.mauriciotogneri.momowars.templates.ExampleTemplate;
 
@@ -18,10 +17,10 @@ public class GetWebPage extends BaseController
     @Produces(MediaType.APPLICATION_JSON)
     public Response controller() throws Exception
     {
-        return process(this::controller);
+        return process(this::response);
     }
 
-    private Response controller(DatabaseConnection connection) throws Exception
+    private Response response() throws Exception
     {
         ExampleTemplate template = new ExampleTemplate("It works!");
 

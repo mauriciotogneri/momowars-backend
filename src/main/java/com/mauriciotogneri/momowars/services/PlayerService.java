@@ -7,27 +7,31 @@ import com.mauriciotogneri.momowars.repository.player.PlayerDao;
 
 public class PlayerService
 {
-    public static void create(DatabaseConnection connection,
-                              Long accountId,
-                              Long gameId) throws DatabaseException
+    private final DatabaseConnection connection;
+
+    public PlayerService(DatabaseConnection connection)
+    {
+        this.connection = connection;
+    }
+
+    public void create(Long accountId,
+                       Long gameId) throws DatabaseException
     {
         PlayerDao playerDao = new PlayerDao(connection);
 
         playerDao.create(accountId, gameId);
     }
 
-    public static void endTurn(DatabaseConnection connection,
-                               Long playerId,
-                               Long accountId) throws DatabaseException, ApiException
+    public void endTurn(Long playerId,
+                        Long accountId) throws DatabaseException, ApiException
     {
         PlayerDao playerDao = new PlayerDao(connection);
 
         playerDao.endTurn(playerId, accountId);
     }
 
-    public static void leaveGame(DatabaseConnection connection,
-                                 Long playerId,
-                                 Long accountId) throws DatabaseException, ApiException
+    public void leaveGame(Long playerId,
+                          Long accountId) throws DatabaseException, ApiException
     {
         PlayerDao playerDao = new PlayerDao(connection);
 

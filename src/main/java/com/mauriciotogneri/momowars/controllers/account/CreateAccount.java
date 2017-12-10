@@ -3,10 +3,8 @@ package com.mauriciotogneri.momowars.controllers.account;
 import com.mauriciotogneri.javautils.Strings;
 import com.mauriciotogneri.jerry.controller.EntityProvider;
 import com.mauriciotogneri.jerry.controller.EntityProvider.EntityObject;
-import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.server.BaseController;
-import com.mauriciotogneri.momowars.services.AccountService;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -27,14 +25,14 @@ public class CreateAccount extends BaseController
     @Produces(MediaType.APPLICATION_JSON)
     public Response controller(Entity accountRequest) throws Exception
     {
-        return process(connection -> controller(connection, accountRequest));
+        return process(() -> response(accountRequest));
     }
 
-    private Response controller(DatabaseConnection connection, Entity entity) throws Exception
+    private Response response(Entity entity) throws Exception
     {
         checkIfNotEmpty(entity);
 
-        Account account = AccountService.createAccount(connection, entity.email, entity.nickname, entity.password);
+        Account account = accountService.createAccount(entity.email, entity.nickname, entity.password);
 
         return response(CREATED, account);
     }

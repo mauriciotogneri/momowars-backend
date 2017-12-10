@@ -16,9 +16,15 @@ import java.util.UUID;
 
 public class SessionService
 {
-    public static String createSessionEmail(DatabaseConnection connection,
-                                            String email,
-                                            String password) throws DatabaseException, ApiException
+    private final DatabaseConnection connection;
+
+    public SessionService(DatabaseConnection connection)
+    {
+        this.connection = connection;
+    }
+
+    public String createSessionEmail(String email,
+                                     String password) throws DatabaseException, ApiException
     {
         AccountDao accountDao = new AccountDao(connection);
         Account account = accountDao.byCredentials(email, password);
@@ -30,8 +36,7 @@ public class SessionService
         return sessionToken;
     }
 
-    public static String createSessionGoogle(DatabaseConnection connection,
-                                             String token) throws DatabaseException, ApiException
+    public String createSessionGoogle(String token) throws DatabaseException, ApiException
     {
         GoogleIdentity googleIdentity = new GoogleIdentity(token);
         Optional<FederationIdentity> federationIdentity = googleIdentity.identity();

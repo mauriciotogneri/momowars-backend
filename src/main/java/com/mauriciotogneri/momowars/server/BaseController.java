@@ -23,7 +23,11 @@ import com.mauriciotogneri.momowars.exceptions.PlayerAlreadyJoinedException;
 import com.mauriciotogneri.momowars.exceptions.PlayerNotFoundException;
 import com.mauriciotogneri.momowars.logger.ErrorLogger;
 import com.mauriciotogneri.momowars.model.Account;
-import com.mauriciotogneri.momowars.repository.account.AccountDao;
+import com.mauriciotogneri.momowars.services.AccountService;
+import com.mauriciotogneri.momowars.services.GameService;
+import com.mauriciotogneri.momowars.services.MapService;
+import com.mauriciotogneri.momowars.services.PlayerService;
+import com.mauriciotogneri.momowars.services.SessionService;
 import com.mauriciotogneri.momowars.templates.BaseTemplate;
 
 import javax.ws.rs.NotFoundException;
@@ -38,6 +42,12 @@ public class BaseController extends Controller
     protected static final String PARAM_MAP_ID = "mapId";
     protected static final String PARAM_PLAYER_ID = "playerId";
 
+    protected AccountService accountService;
+    protected GameService gameService;
+    protected MapService mapService;
+    protected PlayerService playerService;
+    protected SessionService sessionService;
+
     protected Response process(ControllerImplementation controller) throws Exception
     {
         try
@@ -46,7 +56,13 @@ public class BaseController extends Controller
 
             try
             {
-                Response response = controller.response(connection);
+                accountService = new AccountService(connection);
+                gameService = new GameService(connection);
+                mapService = new MapService(connection);
+                playerService = new PlayerService(connection);
+                sessionService = new SessionService(connection);
+
+                Response response = controller.response();
 
                 connection.commit();
 
@@ -111,11 +127,9 @@ public class BaseController extends Controller
         }
     }
 
-    protected Account validateSessionToken(DatabaseConnection connection, String sessionToken) throws DatabaseException, ApiException
+    protected Account validateSessionToken(String sessionToken) throws DatabaseException, ApiException
     {
-        AccountDao accountDao = new AccountDao(connection);
-
-        return accountDao.bySessionToken(sessionToken);
+        return accountService.getAccount(sessionToken);
     }
 
     protected Response htmlResponse(BaseTemplate template) throws Exception
@@ -129,6 +143,6 @@ public class BaseController extends Controller
 
     public interface ControllerImplementation
     {
-        Response response(DatabaseConnection connection) throws Exception;
+        Response response() throws Exception;
     }
 }

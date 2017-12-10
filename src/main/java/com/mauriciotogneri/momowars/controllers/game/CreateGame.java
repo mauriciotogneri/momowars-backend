@@ -2,12 +2,9 @@ package com.mauriciotogneri.momowars.controllers.game;
 
 import com.mauriciotogneri.jerry.controller.EntityProvider;
 import com.mauriciotogneri.jerry.controller.EntityProvider.EntityObject;
-import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.Game;
 import com.mauriciotogneri.momowars.server.BaseController;
-import com.mauriciotogneri.momowars.services.GameService;
-import com.mauriciotogneri.momowars.services.PlayerService;
 
 import java.util.Objects;
 
@@ -31,21 +28,21 @@ public class CreateGame extends BaseController
     public Response controller(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken,
                                Entity entity) throws Exception
     {
-        return process(connection -> controller(connection, sessionToken, entity));
+        return process(() -> response(sessionToken, entity));
     }
 
-    private Response controller(DatabaseConnection connection, String sessionToken, Entity entity) throws Exception
+    private Response response(String sessionToken, Entity entity) throws Exception
     {
         checkIfNotEmpty(sessionToken);
         checkIfNotEmpty(entity);
 
-        Account account = validateSessionToken(connection, sessionToken);
+        Account account = validateSessionToken(sessionToken);
 
-        Game newGame = GameService.createGame(connection, entity.maxPlayers, entity.mapId, account.id());
+        Game newGame = gameService.createGame(entity.maxPlayers, entity.mapId, account.id());
 
-        PlayerService.create(connection, account.id(), newGame.id());
+        playerService.create(account.id(), newGame.id());
 
-        Game game = GameService.getGame(connection, newGame.id(), account.id());
+        Game game = gameService.getGame(newGame.id(), account.id());
 
         return response(CREATED, game);
     }

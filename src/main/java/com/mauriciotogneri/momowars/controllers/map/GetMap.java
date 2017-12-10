@@ -1,9 +1,7 @@
 package com.mauriciotogneri.momowars.controllers.map;
 
-import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.model.Map;
 import com.mauriciotogneri.momowars.server.BaseController;
-import com.mauriciotogneri.momowars.services.MapService;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -24,16 +22,16 @@ public class GetMap extends BaseController
     public Response controller(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken,
                                @PathParam(PARAM_MAP_ID) Long mapId) throws Exception
     {
-        return process(connection -> controller(connection, sessionToken, mapId));
+        return process(() -> response(sessionToken, mapId));
     }
 
-    private Response controller(DatabaseConnection connection, String sessionToken, Long mapId) throws Exception
+    private Response response(String sessionToken, Long mapId) throws Exception
     {
         checkIfNotEmpty(sessionToken);
         checkIfNotEmpty(mapId);
-        validateSessionToken(connection, sessionToken);
+        validateSessionToken(sessionToken);
 
-        Map map = MapService.getMap(connection, mapId);
+        Map map = mapService.getMap(mapId);
 
         return response(OK, map);
     }

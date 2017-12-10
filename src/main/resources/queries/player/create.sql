@@ -1,4 +1,4 @@
 INSERT
 	INTO player
-	(account, resources, status)
-    VALUES (?, ?, 'WAITING')
+	(game, account, resources, status)
+    VALUES (?, ?, ?, 'WAITING')

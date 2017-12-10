@@ -1,9 +1,7 @@
 package com.mauriciotogneri.momowars.controllers.game;
 
-import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.model.Game;
 import com.mauriciotogneri.momowars.server.BaseController;
-import com.mauriciotogneri.momowars.services.GameService;
 
 import java.util.List;
 
@@ -24,15 +22,15 @@ public class GetOpenGames extends BaseController
     @Produces(MediaType.APPLICATION_JSON)
     public Response controller(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken) throws Exception
     {
-        return process(connection -> controller(connection, sessionToken));
+        return process(() -> response(sessionToken));
     }
 
-    private Response controller(DatabaseConnection connection, String sessionToken) throws Exception
+    private Response response(String sessionToken) throws Exception
     {
         checkIfNotEmpty(sessionToken);
-        validateSessionToken(connection, sessionToken);
+        validateSessionToken(sessionToken);
 
-        List<Game> games = GameService.getOpenGames(connection);
+        List<Game> games = gameService.getOpenGames();
 
         return response(OK, games);
     }

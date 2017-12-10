@@ -19,7 +19,7 @@ public class CreateGameTests extends BaseTest
     @Test
     public void test1InvalidSession() throws Exception
     {
-        gameService.createGame(UNAUTHORIZED, 0L, 0, INVALID_SESSION_TOKEN);
+        gameService.createGame(UNAUTHORIZED, 0L, 2, INVALID_SESSION_TOKEN);
     }
 
     @Test
