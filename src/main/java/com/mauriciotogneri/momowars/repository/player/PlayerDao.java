@@ -28,16 +28,10 @@ public class PlayerDao
     {
         InsertQuery createPlayerQuery = connection.insertQuery(PlayerQueries.CREATE);
 
-        long playerId = createPlayerQuery.execute(
+        createPlayerQuery.execute(
+                gameId,
                 accountId,
                 Constants.INITIAL_RESOURCES
-        );
-
-        InsertQuery joinGameQuery = connection.insertQuery(PlayerQueries.JOIN_GAME);
-
-        joinGameQuery.execute(
-                gameId,
-                playerId
         );
     }
 

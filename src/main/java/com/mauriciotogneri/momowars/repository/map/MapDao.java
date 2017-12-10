@@ -56,7 +56,6 @@ public class MapDao
         }
     }
 
-    // TODO: add units and queues
     public Map getMapFull(Long mapId) throws DatabaseException, ApiException
     {
         CellDao cellDao = new CellDao(connection);

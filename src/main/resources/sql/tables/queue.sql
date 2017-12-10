@@ -2,4 +2,5 @@ CREATE TABLE queue (
 	id SERIAL PRIMARY KEY,
 	type UNIT_TYPE NOT NULL,
 	quantity INTEGER NOT NULL CHECK (quantity > 0),
+	player INTEGER NOT NULL REFERENCES player(id),
 	cell INTEGER NOT NULL REFERENCES cell(id));

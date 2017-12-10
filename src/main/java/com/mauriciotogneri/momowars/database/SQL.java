@@ -27,7 +27,6 @@ public class SQL
     public class PlayerQueries
     {
         public static final String CREATE = "queries/player/create.sql";
-        public static final String JOIN_GAME = "queries/player/join_game.sql";
         public static final String SELECT_BY_ID = "queries/player/select_by_id.sql";
         public static final String SELECT_BY_GAME = "queries/player/select_by_game.sql";
         public static final String UPDATE_TURN = "queries/player/update_turn.sql";

@@ -6,9 +6,11 @@ import com.mauriciotogneri.inquiry.queries.SelectQuery;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.CellQueries;
 import com.mauriciotogneri.momowars.model.Cell;
+import com.mauriciotogneri.momowars.repository.queue.QueueDao;
+import com.mauriciotogneri.momowars.repository.unit.UnitDao;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CellDao
 {
@@ -21,9 +23,22 @@ public class CellDao
 
     public List<Cell> byMap(Long mapId) throws DatabaseException
     {
+        UnitDao unitDao = new UnitDao(connection);
+        QueueDao queueDao = new QueueDao(connection);
+
         SelectQuery<CellRow> query = connection.selectQuery(CellQueries.SELECT_BY_MAP, CellRow.class);
         QueryResult<CellRow> result = query.execute(mapId);
 
-        return result.stream().map(CellRow::cell).collect(Collectors.toList());
+        List<Cell> cells = new ArrayList<>();
+
+        for (CellRow row : result)
+        {
+            cells.add(row.cell(
+                    unitDao.byCell(row.id),
+                    queueDao.byCell(row.id)
+            ));
+        }
+
+        return cells;
     }
 }
