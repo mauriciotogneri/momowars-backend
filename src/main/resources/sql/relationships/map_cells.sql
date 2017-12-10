@@ -1,4 +1,0 @@
-CREATE TABLE map_cells (
-	map INTEGER NOT NULL REFERENCES map(id),
-	cell INTEGER NOT NULL REFERENCES cell(id),
-	PRIMARY KEY(map, cell));

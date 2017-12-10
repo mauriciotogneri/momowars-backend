@@ -7,6 +7,7 @@ public class CellRow
 {
     public Long id;
     public CellType type;
+    public Long map;
     public Integer x;
     public Integer y;
 

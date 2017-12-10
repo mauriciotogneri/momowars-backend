@@ -35,9 +35,8 @@ public class DatabaseHelper
     private static void populateDatabase(DatabaseConnection connection) throws Exception
     {
         connection.executeQuery("sql/data/account.sql");
-        connection.executeQuery("sql/data/cell.sql");
         connection.executeQuery("sql/data/map.sql");
-        connection.executeQuery("sql/data/map_cells.sql");
+        connection.executeQuery("sql/data/cell.sql");
         connection.executeQuery("sql/data/game.sql");
         connection.executeQuery("sql/data/player.sql");
         connection.executeQuery("sql/data/account_games.sql");
