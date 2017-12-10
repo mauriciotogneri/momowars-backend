@@ -9,12 +9,9 @@ import com.mauriciotogneri.momowars.exceptions.GamePlayingException;
 import com.mauriciotogneri.momowars.exceptions.PlayerAlreadyJoinedException;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.Game;
-import com.mauriciotogneri.momowars.notifications.GameStarted;
-import com.mauriciotogneri.momowars.notifications.Notification;
 import com.mauriciotogneri.momowars.server.BaseController;
 import com.mauriciotogneri.momowars.services.GameService;
 import com.mauriciotogneri.momowars.services.PlayerService;
-import com.mauriciotogneri.momowars.types.GameStatus;
 
 import java.util.Objects;
 
@@ -72,10 +69,7 @@ public class JoinGame extends BaseController
 
         if (loadedGame.playersMissing() == 1)
         {
-            GameService.updateStatus(connection, loadedGame.id(), GameStatus.PLAYING);
-
-            Notification notification = new GameStarted(loadedGame.id());
-            notification.send();
+            GameService.startGame(connection, loadedGame.id());
         }
 
         Game game = GameService.getGame(connection, loadedGame.id(), account.id());

@@ -11,7 +11,9 @@ import com.mauriciotogneri.stewie.annotations.Responses;
 import com.mauriciotogneri.stewie.types.MimeType;
 
 import static com.mauriciotogneri.stewie.types.Method.POST;
+import static com.mauriciotogneri.stewie.types.StatusCode.BAD_REQUEST;
 import static com.mauriciotogneri.stewie.types.StatusCode.CREATED;
+import static com.mauriciotogneri.stewie.types.StatusCode.NOT_FOUND;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 
 @EndPoint(
@@ -31,9 +33,17 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
                 type = Game.class
         ),
         @Response(
+                code = BAD_REQUEST,
+                description = "Parameters missing or invalid"
+        ),
+        @Response(
                 code = UNAUTHORIZED,
                 description = "Session token not valid"
-        )
+        ),
+        @Response(
+                code = NOT_FOUND,
+                description = "The map for the given id doesn't exist"
+        ),
 })
 public interface CreateGame
 {

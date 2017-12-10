@@ -3,9 +3,10 @@ package com.mauriciotogneri.momowars.services;
 import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.exceptions.ApiException;
-import com.mauriciotogneri.momowars.exceptions.InvalidParametersException;
 import com.mauriciotogneri.momowars.model.Game;
 import com.mauriciotogneri.momowars.model.Map;
+import com.mauriciotogneri.momowars.notifications.GameStarted;
+import com.mauriciotogneri.momowars.notifications.Notification;
 import com.mauriciotogneri.momowars.repository.game.GameDao;
 import com.mauriciotogneri.momowars.types.GameStatus;
 
@@ -18,11 +19,6 @@ public class GameService
                                   Long mapId,
                                   Long forAccountId) throws DatabaseException, ApiException
     {
-        if (maxPlayers < 2)
-        {
-            throw new InvalidParametersException();
-        }
-
         Map map = MapService.getMap(connection, mapId);
 
         GameDao gameDao = new GameDao(connection);
@@ -46,11 +42,13 @@ public class GameService
         return gameDao.getGame(gameId, forAccountId);
     }
 
-    public static void updateStatus(DatabaseConnection connection,
-                                    Long gameId,
-                                    GameStatus status) throws DatabaseException
+    public static void startGame(DatabaseConnection connection,
+                                 Long gameId) throws DatabaseException
     {
         GameDao gameDao = new GameDao(connection);
-        gameDao.updateStatus(gameId, status);
+        gameDao.updateStatus(gameId, GameStatus.PLAYING);
+
+        Notification notification = new GameStarted(gameId);
+        notification.send();
     }
 }

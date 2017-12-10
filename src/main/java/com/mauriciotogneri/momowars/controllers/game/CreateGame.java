@@ -44,7 +44,6 @@ public class CreateGame extends BaseController
         Game newGame = GameService.createGame(connection, entity.maxPlayers, entity.mapId, account.id());
 
         PlayerService.create(connection, account.id(), newGame.id());
-        // TODO: start game if now is full
 
         Game game = GameService.getGame(connection, newGame.id(), account.id());
 
@@ -66,7 +65,7 @@ public class CreateGame extends BaseController
         @Override
         public boolean isValid()
         {
-            return Objects.nonNull(mapId) && Objects.nonNull(maxPlayers);
+            return Objects.nonNull(mapId) && Objects.nonNull(maxPlayers) && (maxPlayers >= 2);
         }
     }
 }

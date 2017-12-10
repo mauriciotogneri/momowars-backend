@@ -10,6 +10,7 @@ import com.mauriciotogneri.stewie.annotations.Responses;
 import static com.mauriciotogneri.stewie.types.Method.DELETE;
 import static com.mauriciotogneri.stewie.types.StatusCode.BAD_REQUEST;
 import static com.mauriciotogneri.stewie.types.StatusCode.NO_CONTENT;
+import static com.mauriciotogneri.stewie.types.StatusCode.PRECONDITION_FAILED;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 
 @EndPoint(
@@ -35,7 +36,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
                 description = "Session token not provided"
         ),
         @Response(
-                code = 412,
+                code = PRECONDITION_FAILED,
                 description = "Not allowed to end the turn on the given game"
         )
 })
