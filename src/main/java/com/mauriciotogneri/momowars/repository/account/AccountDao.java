@@ -173,16 +173,6 @@ public class AccountDao
         }
     }
 
-    public void joinGame(Long accountId, Long gameId) throws DatabaseException
-    {
-        InsertQuery query = connection.insertQuery(AccountQueries.JOIN_GAME);
-
-        query.execute(
-                accountId,
-                gameId
-        );
-    }
-
     private AccountGames accountGames(Long accountId) throws DatabaseException
     {
         List<Long> open = new ArrayList<>();

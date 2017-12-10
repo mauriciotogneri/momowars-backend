@@ -12,7 +12,6 @@ import com.mauriciotogneri.momowars.model.Game;
 import com.mauriciotogneri.momowars.notifications.GameStarted;
 import com.mauriciotogneri.momowars.notifications.Notification;
 import com.mauriciotogneri.momowars.server.BaseController;
-import com.mauriciotogneri.momowars.services.AccountService;
 import com.mauriciotogneri.momowars.services.GameService;
 import com.mauriciotogneri.momowars.services.PlayerService;
 import com.mauriciotogneri.momowars.types.GameStatus;
@@ -69,7 +68,6 @@ public class JoinGame extends BaseController
             throw new GameFullException();
         }
 
-        AccountService.joinGame(connection, account.id(), loadedGame.id());
         PlayerService.create(connection, account.id(), loadedGame.id());
 
         if (loadedGame.playersMissing() == 1)

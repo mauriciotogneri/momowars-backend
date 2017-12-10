@@ -39,7 +39,6 @@ public class DatabaseHelper
         connection.executeQuery("sql/data/cell.sql");
         connection.executeQuery("sql/data/game.sql");
         connection.executeQuery("sql/data/player.sql");
-        connection.executeQuery("sql/data/account_games.sql");
         connection.commit();
     }
 }

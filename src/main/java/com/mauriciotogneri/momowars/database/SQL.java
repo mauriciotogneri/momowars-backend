@@ -13,7 +13,6 @@ public class SQL
         public static final String UPDATE_NICKNAME = "queries/account/update_nickname.sql";
         public static final String UPDATE_PASSWORD = "queries/account/update_password.sql";
         public static final String UPDATE_PICTURE = "queries/account/update_picture.sql";
-        public static final String JOIN_GAME = "queries/account/join_game.sql";
     }
 
     public class GameQueries

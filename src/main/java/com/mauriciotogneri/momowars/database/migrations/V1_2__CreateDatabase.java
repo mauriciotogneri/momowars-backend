@@ -29,7 +29,5 @@ public class V1_2__CreateDatabase implements JdbcMigration
         databaseConnection.executeQuery("sql/tables/error.sql");
 
         databaseConnection.executeQuery("sql/indices/account_session.sql");
-
-        databaseConnection.executeQuery("sql/relationships/account_games.sql");
     }
 }

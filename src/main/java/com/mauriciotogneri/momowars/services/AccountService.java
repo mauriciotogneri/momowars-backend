@@ -60,13 +60,4 @@ public class AccountService
 
         return accountDao.getAccount(account.id());
     }
-
-    public static void joinGame(DatabaseConnection connection,
-                                Long accountId,
-                                Long gameId) throws DatabaseException
-    {
-        AccountDao accountDao = new AccountDao(connection);
-
-        accountDao.joinGame(accountId, gameId);
-    }
 }

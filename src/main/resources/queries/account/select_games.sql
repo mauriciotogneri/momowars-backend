@@ -1,4 +1,4 @@
 SELECT game.*
-	FROM account_games
-	INNER JOIN game ON account_games.game = game.id
-	WHERE (account = ?)
+	FROM player
+	INNER JOIN game ON player.game = game.id
+	WHERE (player.account = ?)

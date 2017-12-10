@@ -31,6 +31,6 @@ public class PlayerService
     {
         PlayerDao playerDao = new PlayerDao(connection);
 
-        playerDao.endTurn(playerId, accountId);
+        playerDao.leaveGame(playerId, accountId);
     }
 }
