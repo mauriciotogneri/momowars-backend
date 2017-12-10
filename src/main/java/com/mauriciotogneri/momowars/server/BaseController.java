@@ -10,9 +10,10 @@ import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.exceptions.AccountAlreadyExistsException;
 import com.mauriciotogneri.momowars.exceptions.AccountNotFoundException;
 import com.mauriciotogneri.momowars.exceptions.ApiException;
+import com.mauriciotogneri.momowars.exceptions.GameFinishedException;
 import com.mauriciotogneri.momowars.exceptions.GameFullException;
 import com.mauriciotogneri.momowars.exceptions.GameNotFoundException;
-import com.mauriciotogneri.momowars.exceptions.GameNotOpenException;
+import com.mauriciotogneri.momowars.exceptions.GamePlayingException;
 import com.mauriciotogneri.momowars.exceptions.InvalidCredentialsException;
 import com.mauriciotogneri.momowars.exceptions.InvalidGameException;
 import com.mauriciotogneri.momowars.exceptions.InvalidParametersException;
@@ -78,7 +79,7 @@ public class BaseController extends Controller
         {
             return new BadRequestException(e);
         }
-        catch (AccountAlreadyExistsException | PlayerAlreadyJoinedException | GameNotOpenException | GameFullException e)
+        catch (AccountAlreadyExistsException | PlayerAlreadyJoinedException | GamePlayingException | GameFinishedException | GameFullException e)
         {
             return new ConflictException(e);
         }

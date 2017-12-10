@@ -7,6 +7,7 @@ import com.mauriciotogneri.momowars.exceptions.InvalidParametersException;
 import com.mauriciotogneri.momowars.model.Game;
 import com.mauriciotogneri.momowars.model.Map;
 import com.mauriciotogneri.momowars.repository.game.GameDao;
+import com.mauriciotogneri.momowars.types.GameStatus;
 
 import java.util.List;
 
@@ -37,11 +38,19 @@ public class GameService
     }
 
     public static Game getGame(DatabaseConnection connection,
-                               Long id,
+                               Long gameId,
                                Long forAccountId) throws DatabaseException, ApiException
     {
         GameDao gameDao = new GameDao(connection);
 
-        return gameDao.getGame(id, forAccountId);
+        return gameDao.getGame(gameId, forAccountId);
+    }
+
+    public static void updateStatus(DatabaseConnection connection,
+                                    Long gameId,
+                                    GameStatus status) throws DatabaseException
+    {
+        GameDao gameDao = new GameDao(connection);
+        gameDao.updateStatus(gameId, status);
     }
 }

@@ -1,8 +1,7 @@
 package com.mauriciotogneri.momowars.repository.account;
 
 import com.mauriciotogneri.momowars.model.Account;
-
-import java.util.List;
+import com.mauriciotogneri.momowars.model.AccountGames;
 
 public class AccountRow
 {
@@ -12,7 +11,7 @@ public class AccountRow
     public String password;
     public String session;
 
-    public Account account(List<Long> games)
+    public Account account(AccountGames games)
     {
         return new Account(id, email, nickname, games);
     }

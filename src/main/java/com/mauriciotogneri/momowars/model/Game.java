@@ -26,13 +26,23 @@ public class Game
         return id;
     }
 
+    public int playersMissing()
+    {
+        return maxPlayers - players.size();
+    }
+
     public boolean isFull()
     {
         return (players.size() == maxPlayers);
     }
 
-    public boolean isOpen()
+    public boolean isPlaying()
     {
-        return (status == GameStatus.OPEN);
+        return (status == GameStatus.PLAYING) || (status == GameStatus.CALCULATING);
+    }
+
+    public boolean isFinished()
+    {
+        return (status == GameStatus.FINISHED);
     }
 }

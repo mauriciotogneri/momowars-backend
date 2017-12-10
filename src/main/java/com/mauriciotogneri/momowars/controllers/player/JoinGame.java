@@ -3,15 +3,19 @@ package com.mauriciotogneri.momowars.controllers.player;
 import com.mauriciotogneri.jerry.controller.EntityProvider;
 import com.mauriciotogneri.jerry.controller.EntityProvider.EntityObject;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
+import com.mauriciotogneri.momowars.exceptions.GameFinishedException;
 import com.mauriciotogneri.momowars.exceptions.GameFullException;
-import com.mauriciotogneri.momowars.exceptions.GameNotOpenException;
+import com.mauriciotogneri.momowars.exceptions.GamePlayingException;
 import com.mauriciotogneri.momowars.exceptions.PlayerAlreadyJoinedException;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.Game;
+import com.mauriciotogneri.momowars.notifications.GameStarted;
+import com.mauriciotogneri.momowars.notifications.Notification;
 import com.mauriciotogneri.momowars.server.BaseController;
 import com.mauriciotogneri.momowars.services.AccountService;
 import com.mauriciotogneri.momowars.services.GameService;
 import com.mauriciotogneri.momowars.services.PlayerService;
+import com.mauriciotogneri.momowars.types.GameStatus;
 
 import java.util.Objects;
 
@@ -52,9 +56,13 @@ public class JoinGame extends BaseController
 
         Game loadedGame = GameService.getGame(connection, entity.gameId, account.id());
 
-        if (!loadedGame.isOpen())
+        if (loadedGame.isPlaying())
         {
-            throw new GameNotOpenException();
+            throw new GamePlayingException();
+        }
+        else if (loadedGame.isFinished())
+        {
+            throw new GameFinishedException();
         }
         else if (loadedGame.isFull())
         {
@@ -64,7 +72,13 @@ public class JoinGame extends BaseController
         AccountService.joinGame(connection, account.id(), loadedGame.id());
         PlayerService.create(connection, account.id(), loadedGame.id());
 
-        // TODO: if game is full, change its state to PLAYING
+        if (loadedGame.playersMissing() == 1)
+        {
+            GameService.updateStatus(connection, loadedGame.id(), GameStatus.PLAYING);
+
+            Notification notification = new GameStarted(loadedGame.id());
+            notification.send();
+        }
 
         Game game = GameService.getGame(connection, loadedGame.id(), account.id());
 

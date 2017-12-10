@@ -31,7 +31,7 @@ public class LogDao
         );
     }
 
-    public void addResponse(Long id, HttpResponse response, int duration) throws DatabaseException
+    public void addResponse(Long logId, HttpResponse response, int duration) throws DatabaseException
     {
         UpdateQuery query = connection.updateQuery(LogQueries.UPDATE);
 
@@ -39,7 +39,7 @@ public class LogDao
                 response.status(),
                 response.headers().toString(),
                 duration,
-                id
+                logId
         );
     }
 }

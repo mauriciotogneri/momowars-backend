@@ -18,4 +18,19 @@ public class GameRow
     {
         return new Game(id, status, maxPlayers, map, players);
     }
+
+    public boolean isOpen()
+    {
+        return (status == GameStatus.OPEN);
+    }
+
+    public boolean isPlaying()
+    {
+        return (status == GameStatus.PLAYING);
+    }
+
+    public boolean isFinished()
+    {
+        return (status == GameStatus.FINISHED);
+    }
 }

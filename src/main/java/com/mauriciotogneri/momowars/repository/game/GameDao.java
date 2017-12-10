@@ -4,6 +4,7 @@ import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.inquiry.QueryResult;
 import com.mauriciotogneri.inquiry.queries.InsertQuery;
 import com.mauriciotogneri.inquiry.queries.SelectQuery;
+import com.mauriciotogneri.inquiry.queries.UpdateQuery;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.GameQueries;
 import com.mauriciotogneri.momowars.exceptions.ApiException;
@@ -12,6 +13,7 @@ import com.mauriciotogneri.momowars.model.Game;
 import com.mauriciotogneri.momowars.model.Map;
 import com.mauriciotogneri.momowars.repository.map.MapDao;
 import com.mauriciotogneri.momowars.repository.player.PlayerDao;
+import com.mauriciotogneri.momowars.types.GameStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,13 +60,13 @@ public class GameDao
         return games;
     }
 
-    public Game getGame(Long id, Long forAccountId) throws DatabaseException, ApiException
+    public Game getGame(Long gameId, Long forAccountId) throws DatabaseException, ApiException
     {
         MapDao mapDao = new MapDao(connection);
         PlayerDao playerDao = new PlayerDao(connection);
 
         SelectQuery<GameRow> query = connection.selectQuery(GameQueries.SELECT_BY_ID, GameRow.class);
-        QueryResult<GameRow> result = query.execute(id);
+        QueryResult<GameRow> result = query.execute(gameId);
 
         if (result.hasElements())
         {
@@ -78,6 +80,18 @@ public class GameDao
         else
         {
             throw new GameNotFoundException();
+        }
+    }
+
+    public void updateStatus(Long gameId, GameStatus status) throws DatabaseException
+    {
+        UpdateQuery query = connection.updateQuery(GameQueries.UPDATE_STATUS);
+
+        int rowsAffected = query.execute(status, gameId);
+
+        if (rowsAffected != 1)
+        {
+            throw new DatabaseException();
         }
     }
 }

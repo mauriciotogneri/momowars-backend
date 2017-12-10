@@ -21,6 +21,7 @@ public class SQL
         public static final String CREATE = "queries/game/create.sql";
         public static final String SELECT_OPEN = "queries/game/select_open.sql";
         public static final String SELECT_BY_ID = "queries/game/select_by_id.sql";
+        public static final String UPDATE_STATUS = "queries/game/update_status.sql";
     }
 
     public class PlayerQueries

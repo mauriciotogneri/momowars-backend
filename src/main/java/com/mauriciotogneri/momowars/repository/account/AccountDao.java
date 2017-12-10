@@ -14,6 +14,8 @@ import com.mauriciotogneri.momowars.exceptions.ApiException;
 import com.mauriciotogneri.momowars.exceptions.InvalidCredentialsException;
 import com.mauriciotogneri.momowars.exceptions.InvalidTokenException;
 import com.mauriciotogneri.momowars.model.Account;
+import com.mauriciotogneri.momowars.model.AccountGames;
+import com.mauriciotogneri.momowars.repository.game.GameRow;
 import com.mauriciotogneri.momowars.util.Hash;
 
 import java.util.ArrayList;
@@ -86,11 +88,11 @@ public class AccountDao
         }
     }
 
-    public void updateSessionToken(Long id, String sessionToken) throws DatabaseException
+    public void updateSessionToken(Long accountId, String sessionToken) throws DatabaseException
     {
         UpdateQuery query = connection.updateQuery(AccountQueries.UPDATE_SESSION_TOKEN);
 
-        int rowsAffected = query.execute(sessionToken, id);
+        int rowsAffected = query.execute(sessionToken, accountId);
 
         if (rowsAffected != 1)
         {
@@ -98,11 +100,11 @@ public class AccountDao
         }
     }
 
-    public void updatePassword(Long id, String password) throws DatabaseException
+    public void updatePassword(Long accountId, String password) throws DatabaseException
     {
         UpdateQuery query = connection.updateQuery(AccountQueries.UPDATE_PASSWORD);
 
-        int rowsAffected = query.execute(Hash.of(password), id);
+        int rowsAffected = query.execute(Hash.of(password), accountId);
 
         if (rowsAffected != 1)
         {
@@ -110,11 +112,11 @@ public class AccountDao
         }
     }
 
-    public void updateNickname(Long id, String nickname) throws DatabaseException
+    public void updateNickname(Long accountId, String nickname) throws DatabaseException
     {
         UpdateQuery query = connection.updateQuery(AccountQueries.UPDATE_NICKNAME);
 
-        int rowsAffected = query.execute(nickname, id);
+        int rowsAffected = query.execute(nickname, accountId);
 
         if (rowsAffected != 1)
         {
@@ -122,11 +124,11 @@ public class AccountDao
         }
     }
 
-    public void updatePicture(Long id, String picture) throws DatabaseException
+    public void updatePicture(Long accountId, String picture) throws DatabaseException
     {
         UpdateQuery query = connection.updateQuery(AccountQueries.UPDATE_PICTURE);
 
-        int rowsAffected = query.execute(picture, id);
+        int rowsAffected = query.execute(picture, accountId);
 
         if (rowsAffected != 1)
         {
@@ -134,10 +136,10 @@ public class AccountDao
         }
     }
 
-    public Account getAccount(Long id) throws DatabaseException, ApiException
+    public Account getAccount(Long accountId) throws DatabaseException, ApiException
     {
         SelectQuery<AccountRow> query = connection.selectQuery(AccountQueries.SELECT_BY_ID, AccountRow.class);
-        QueryResult<AccountRow> result = query.execute(id);
+        QueryResult<AccountRow> result = query.execute(accountId);
 
         if (result.hasElements())
         {
@@ -181,18 +183,31 @@ public class AccountDao
         );
     }
 
-    private List<Long> accountGames(Long id) throws DatabaseException
+    private AccountGames accountGames(Long accountId) throws DatabaseException
     {
-        SelectQuery<AccountGamesRow> query = connection.selectQuery(AccountQueries.SELECT_GAMES, AccountGamesRow.class);
-        QueryResult<AccountGamesRow> result = query.execute(id);
+        List<Long> open = new ArrayList<>();
+        List<Long> playing = new ArrayList<>();
+        List<Long> finished = new ArrayList<>();
 
-        List<Long> games = new ArrayList<>();
+        SelectQuery<GameRow> query = connection.selectQuery(AccountQueries.SELECT_GAMES, GameRow.class);
+        QueryResult<GameRow> result = query.execute(accountId);
 
-        for (AccountGamesRow row : result)
+        for (GameRow row : result)
         {
-            games.add(row.game);
+            if (row.isOpen())
+            {
+                open.add(row.id);
+            }
+            else if (row.isPlaying())
+            {
+                playing.add(row.id);
+            }
+            else if (row.isFinished())
+            {
+                finished.add(row.id);
+            }
         }
 
-        return games;
+        return new AccountGames(open, playing, finished);
     }
 }
