@@ -1,6 +1,6 @@
 package com.mauriciotogneri.momowars.tasks;
 
-public class GameUpdater implements Runnable
+public class GameUpdater extends Task
 {
     private final Long gameId;
 

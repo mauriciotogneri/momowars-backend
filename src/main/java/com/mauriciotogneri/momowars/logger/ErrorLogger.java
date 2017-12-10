@@ -4,8 +4,8 @@ import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.email.Email;
 import com.mauriciotogneri.momowars.repository.error.ErrorDao;
 import com.mauriciotogneri.momowars.tasks.SendEmailTask;
+import com.mauriciotogneri.momowars.tasks.Task;
 import com.mauriciotogneri.momowars.util.Now;
-import com.mauriciotogneri.momowars.util.TaskPool;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -59,6 +59,7 @@ public class ErrorLogger
                 String.format("Momowars error: %s", Now.timestamp()),
                 String.format("<pre>%s</pre>", stacktrace));
 
-        TaskPool.submit(new SendEmailTask(email));
+        Task task = new SendEmailTask(email);
+        task.submit();
     }
 }

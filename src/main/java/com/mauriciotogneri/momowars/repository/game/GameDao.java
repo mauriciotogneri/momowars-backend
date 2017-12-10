@@ -2,6 +2,7 @@ package com.mauriciotogneri.momowars.repository.game;
 
 import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.inquiry.QueryResult;
+import com.mauriciotogneri.inquiry.queries.DeleteQuery;
 import com.mauriciotogneri.inquiry.queries.InsertQuery;
 import com.mauriciotogneri.inquiry.queries.SelectQuery;
 import com.mauriciotogneri.inquiry.queries.UpdateQuery;
@@ -11,6 +12,7 @@ import com.mauriciotogneri.momowars.exceptions.ApiException;
 import com.mauriciotogneri.momowars.exceptions.GameNotFoundException;
 import com.mauriciotogneri.momowars.model.Game;
 import com.mauriciotogneri.momowars.model.Map;
+import com.mauriciotogneri.momowars.model.Player;
 import com.mauriciotogneri.momowars.repository.map.MapDao;
 import com.mauriciotogneri.momowars.repository.player.PlayerDao;
 import com.mauriciotogneri.momowars.types.GameStatus;
@@ -88,6 +90,35 @@ public class GameDao
         UpdateQuery query = connection.updateQuery(GameQueries.UPDATE_STATUS);
 
         int rowsAffected = query.execute(status, gameId);
+
+        if (rowsAffected != 1)
+        {
+            throw new DatabaseException();
+        }
+    }
+
+    public boolean isUpdatable(Long gameId) throws DatabaseException
+    {
+        PlayerDao playerDao = new PlayerDao(connection);
+
+        List<Player> players = playerDao.getPlayers(gameId, null);
+
+        for (Player player : players)
+        {
+            if (player.isPlaying())
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public void delete(Long playerId) throws DatabaseException
+    {
+        DeleteQuery deleteQuery = connection.deleteQuery(GameQueries.DELETE);
+
+        int rowsAffected = deleteQuery.execute(playerId);
 
         if (rowsAffected != 1)
         {

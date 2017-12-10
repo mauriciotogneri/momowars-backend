@@ -24,4 +24,29 @@ public class Player
         this.resources = null;
         this.status = status;
     }
+
+    public boolean isPlaying()
+    {
+        return (status == PlayerStatus.PLAYING);
+    }
+
+    public boolean isWaiting()
+    {
+        return (status == PlayerStatus.WAITING);
+    }
+
+    public boolean isVictorious()
+    {
+        return (status == PlayerStatus.VICTORIOUS);
+    }
+
+    public boolean isDefeated()
+    {
+        return (status == PlayerStatus.DEFEATED);
+    }
+
+    public boolean isSurrendered()
+    {
+        return (status == PlayerStatus.SURRENDERED);
+    }
 }

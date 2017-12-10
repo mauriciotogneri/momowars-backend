@@ -21,6 +21,7 @@ public class SQL
         public static final String SELECT_OPEN = "queries/game/select_open.sql";
         public static final String SELECT_BY_ID = "queries/game/select_by_id.sql";
         public static final String UPDATE_STATUS = "queries/game/update_status.sql";
+        public static final String DELETE = "queries/game/delete.sql";
     }
 
     public class PlayerQueries
@@ -28,7 +29,18 @@ public class SQL
         public static final String CREATE = "queries/player/create.sql";
         public static final String SELECT_BY_ID = "queries/player/select_by_id.sql";
         public static final String SELECT_BY_GAME = "queries/player/select_by_game.sql";
-        public static final String UPDATE_TURN = "queries/player/update_turn.sql";
+        public static final String END_TURN = "queries/player/update_status.sql";
+        public static final String DELETE = "queries/player/delete.sql";
+    }
+
+    public class UnitQueries
+    {
+        public static final String DELETE = "queries/unit/delete.sql";
+    }
+
+    public class QueueQueries
+    {
+        public static final String DELETE = "queries/queue/delete.sql";
     }
 
     public class MapQueries

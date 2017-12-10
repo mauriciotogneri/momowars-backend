@@ -2,7 +2,7 @@ package com.mauriciotogneri.momowars.tasks;
 
 import com.mauriciotogneri.momowars.email.Email;
 
-public class SendEmailTask implements Runnable
+public class SendEmailTask extends Task
 {
     private final Email email;
 

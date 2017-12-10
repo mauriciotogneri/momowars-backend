@@ -1,3 +1,3 @@
 UPDATE player
-	SET status = 'WAITING'
+	SET status = ?
 	WHERE (id = ?)

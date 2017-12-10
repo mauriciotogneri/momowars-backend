@@ -31,9 +31,19 @@ public class Game
         return maxPlayers - players.size();
     }
 
+    public int playesJoined()
+    {
+        return players.size();
+    }
+
     public boolean isFull()
     {
         return (players.size() == maxPlayers);
+    }
+
+    public boolean isOpen()
+    {
+        return (status == GameStatus.OPEN);
     }
 
     public boolean isPlaying()

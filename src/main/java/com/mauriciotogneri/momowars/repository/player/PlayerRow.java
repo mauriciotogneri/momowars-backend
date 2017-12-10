@@ -23,4 +23,9 @@ public class PlayerRow
             return new Player(nickname, status);
         }
     }
+
+    public Player player()
+    {
+        return new Player(id, nickname, resources, status);
+    }
 }

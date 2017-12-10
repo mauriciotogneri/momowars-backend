@@ -2,15 +2,24 @@ package com.mauriciotogneri.momowars.repository.player;
 
 import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.inquiry.QueryResult;
+import com.mauriciotogneri.inquiry.queries.DeleteQuery;
 import com.mauriciotogneri.inquiry.queries.InsertQuery;
 import com.mauriciotogneri.inquiry.queries.SelectQuery;
 import com.mauriciotogneri.inquiry.queries.UpdateQuery;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.PlayerQueries;
 import com.mauriciotogneri.momowars.exceptions.ApiException;
+import com.mauriciotogneri.momowars.exceptions.GameFinishedException;
 import com.mauriciotogneri.momowars.exceptions.PlayerNotFoundException;
 import com.mauriciotogneri.momowars.model.Constants;
+import com.mauriciotogneri.momowars.model.Game;
 import com.mauriciotogneri.momowars.model.Player;
+import com.mauriciotogneri.momowars.repository.game.GameDao;
+import com.mauriciotogneri.momowars.repository.queue.QueueDao;
+import com.mauriciotogneri.momowars.repository.unit.UnitDao;
+import com.mauriciotogneri.momowars.tasks.GameUpdater;
+import com.mauriciotogneri.momowars.tasks.Task;
+import com.mauriciotogneri.momowars.types.PlayerStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +59,7 @@ public class PlayerDao
         return players;
     }
 
-    public void endTurn(Long playerId, Long accountId) throws DatabaseException, ApiException
+    public PlayerRow getPlayer(Long playerId, Long accountId) throws DatabaseException, ApiException
     {
         SelectQuery<PlayerRow> query = connection.selectQuery(PlayerQueries.SELECT_BY_ID, PlayerRow.class);
         QueryResult<PlayerRow> result = query.execute(playerId);
@@ -64,14 +73,7 @@ public class PlayerDao
                 throw new PlayerNotFoundException();
             }
 
-            UpdateQuery updateQuery = connection.updateQuery(PlayerQueries.UPDATE_TURN);
-
-            int rowsAffected = updateQuery.execute(playerId);
-
-            if (rowsAffected != 1)
-            {
-                throw new DatabaseException();
-            }
+            return row;
         }
         else
         {
@@ -79,16 +81,79 @@ public class PlayerDao
         }
     }
 
+    public void updateStatus(Long playerId, PlayerStatus status) throws DatabaseException
+    {
+        UpdateQuery updateQuery = connection.updateQuery(PlayerQueries.END_TURN);
+
+        int rowsAffected = updateQuery.execute(status, playerId);
+
+        if (rowsAffected != 1)
+        {
+            throw new DatabaseException();
+        }
+    }
+
+    public void endTurn(Long playerId, Long accountId) throws DatabaseException, ApiException
+    {
+        PlayerRow row = getPlayer(playerId, accountId);
+        updateStatus(playerId, PlayerStatus.WAITING);
+
+        GameDao gameDao = new GameDao(connection);
+
+        if (gameDao.isUpdatable(row.gameId))
+        {
+            Task task = new GameUpdater(row.gameId);
+            task.submit();
+        }
+    }
+
     public void leaveGame(Long playerId, Long accountId) throws DatabaseException, ApiException
     {
-        // TODO
-        // if game is still open =>
-        //      remove player
-        //      remove game from account
-        // if game is running =>
-        //      mark player as surrendered
-        //      remove all units and queues
-        //      remove game from account
-        //      if he was the last one to move, update the game
+        PlayerRow row = getPlayer(playerId, accountId);
+
+        GameDao gameDao = new GameDao(connection);
+        Game game = gameDao.getGame(row.gameId, accountId);
+
+        if (game.isFinished())
+        {
+            throw new GameFinishedException();
+        }
+        else if (game.isPlaying())
+        {
+            updateStatus(playerId, PlayerStatus.SURRENDERED);
+
+            UnitDao unitDao = new UnitDao(connection);
+            unitDao.delete(playerId);
+
+            QueueDao queueDao = new QueueDao(connection);
+            queueDao.delete(playerId);
+
+            if (gameDao.isUpdatable(row.gameId))
+            {
+                Task task = new GameUpdater(row.gameId);
+                task.submit();
+            }
+        }
+        else if (game.isOpen())
+        {
+            delete(playerId);
+
+            if (game.playesJoined() == 1)
+            {
+                gameDao.delete(game.id());
+            }
+        }
+    }
+
+    public void delete(Long playerId) throws DatabaseException
+    {
+        DeleteQuery deleteQuery = connection.deleteQuery(PlayerQueries.DELETE);
+
+        int rowsAffected = deleteQuery.execute(playerId);
+
+        if (rowsAffected != 1)
+        {
+            throw new DatabaseException();
+        }
     }
 }
