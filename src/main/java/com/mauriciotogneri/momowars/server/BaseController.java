@@ -23,9 +23,11 @@ import com.mauriciotogneri.momowars.exceptions.PlayerNotFoundException;
 import com.mauriciotogneri.momowars.logger.ErrorLogger;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.repository.account.AccountDao;
+import com.mauriciotogneri.momowars.templates.BaseTemplate;
 
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 public class BaseController extends Controller
 {
@@ -113,6 +115,15 @@ public class BaseController extends Controller
         AccountDao accountDao = new AccountDao(connection);
 
         return accountDao.bySessionToken(sessionToken);
+    }
+
+    protected Response htmlResponse(BaseTemplate template) throws Exception
+    {
+        return Response
+                .status(Status.OK)
+                .header("Content-Type", "text/html; charset=utf-8")
+                .entity(template.render())
+                .build();
     }
 
     public interface ControllerImplementation
