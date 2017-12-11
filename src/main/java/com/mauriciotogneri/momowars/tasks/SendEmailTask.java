@@ -1,5 +1,6 @@
 package com.mauriciotogneri.momowars.tasks;
 
+import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.email.Email;
 
 public class SendEmailTask extends Task
@@ -12,7 +13,7 @@ public class SendEmailTask extends Task
     }
 
     @Override
-    public void run()
+    public void process(DatabaseConnection connection) throws Exception
     {
         try
         {
