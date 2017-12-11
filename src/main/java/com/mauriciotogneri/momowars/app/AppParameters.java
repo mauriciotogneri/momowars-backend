@@ -7,6 +7,7 @@ public class AppParameters
     public static final int CONNECTION_POOL_SIZE = integer("CONNECTION_POOL_SIZE");
     public static final String GMAIL_USERNAME = string("GMAIL_USERNAME");
     public static final String GMAIL_PASSWORD = string("GMAIL_PASSWORD");
+    public static final int REQUESTS_PER_MINUTE = integer("REQUESTS_PER_MINUTE");
 
     private static String string(String name)
     {

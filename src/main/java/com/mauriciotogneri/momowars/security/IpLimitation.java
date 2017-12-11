@@ -1,10 +1,8 @@
 package com.mauriciotogneri.momowars.security;
 
-import com.mauriciotogneri.momowars.logger.ConsoleLogger;
+import com.mauriciotogneri.momowars.app.AppParameters;
 import com.mauriciotogneri.momowars.util.MemoryCache;
 
-import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -19,54 +17,28 @@ public class IpLimitation
             60, TimeUnit.SECONDS // expiration time
     );
 
-    private static final int REQUESTS_LIMIT = 10;
+    private static final int REQUESTS_LIMIT = AppParameters.REQUESTS_PER_MINUTE;
 
     public void check(ContainerRequestContext request, String ip)
     {
-        ConsoleLogger.info("IP: " + ip);
+        Optional<Integer> count = cache.get(ip);
 
-        //if (!isLocalhost(ip))
-        //{
-            Optional<Integer> count = cache.get(ip);
+        if (count.isPresent())
+        {
+            int value = count.get();
 
-            if (count.isPresent())
+            if (value < REQUESTS_LIMIT)
             {
-                int value = count.get();
-
-                if (value < REQUESTS_LIMIT)
-                {
-                    cache.put(ip, value + 1);
-                }
-                else
-                {
-                    request.abortWith(Response.status(Status.TOO_MANY_REQUESTS).build());
-                }
+                cache.put(ip, value + 1);
             }
             else
             {
-                cache.put(ip, 1);
+                request.abortWith(Response.status(Status.TOO_MANY_REQUESTS).build());
             }
-        //}
-    }
-
-    private boolean isLocalhost(String ip)
-    {
-        try
-        {
-            InetAddress address = InetAddress.getByName(ip);
-
-            // check if the address is a valid special local or loop back
-            if (address.isAnyLocalAddress() || address.isLoopbackAddress() || address.isSiteLocalAddress())
-            {
-                return true;
-            }
-
-            // check if the address is defined on any interface
-            return (NetworkInterface.getByInetAddress(address) != null);
         }
-        catch (Exception e)
+        else
         {
-            return false;
+            cache.put(ip, 1);
         }
     }
 }
