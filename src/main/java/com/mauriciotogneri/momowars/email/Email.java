@@ -1,5 +1,7 @@
 package com.mauriciotogneri.momowars.email;
 
+import com.mauriciotogneri.momowars.app.AppParameters;
+
 import java.io.IOException;
 import java.util.Properties;
 
@@ -50,7 +52,8 @@ public class Email
         {
             protected PasswordAuthentication getPasswordAuthentication()
             {
-                return new PasswordAuthentication(System.getenv("GMAIL_USERNAME"), System.getenv("GMAIL_PASSWORD"));
+                return new PasswordAuthentication(AppParameters.GMAIL_USERNAME,
+                                                  AppParameters.GMAIL_PASSWORD);
             }
         });
     }

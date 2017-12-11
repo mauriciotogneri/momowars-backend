@@ -1,5 +1,6 @@
 package com.mauriciotogneri.momowars.test.endpoints;
 
+import com.mauriciotogneri.momowars.app.AppParameters;
 import com.mauriciotogneri.stewie.annotations.EndPoint;
 import com.mauriciotogneri.stewie.annotations.Response;
 import com.mauriciotogneri.stewie.annotations.Responses;
@@ -17,7 +18,7 @@ public class EndPointDefinition
         Responses responses = clazz.getAnnotation(Responses.class);
         Response response = responses.value()[0];
 
-        this.path = String.format("http://localhost:%s/api", System.getenv("PORT")) + endPoint.path();
+        this.path = String.format("http://localhost:%s/api", AppParameters.PORT) + endPoint.path();
         this.method = endPoint.method();
         this.code = response.code();
         this.type = response.type();

@@ -1,5 +1,6 @@
 package com.mauriciotogneri.momowars.test.suites;
 
+import com.mauriciotogneri.momowars.app.AppParameters;
 import com.mauriciotogneri.momowars.app.Main;
 import com.mauriciotogneri.momowars.test.suites.account.AccountSuite;
 import com.mauriciotogneri.momowars.test.suites.game.GameSuite;
@@ -28,11 +29,9 @@ public class TestSuite
     @BeforeClass
     public static void startServer() throws Exception
     {
-        int port = Integer.valueOf(System.getenv("PORT"));
-        String databaseUrl = System.getenv("JDBC_DATABASE_URL");
-        int connectionPoolSize = Integer.valueOf(System.getenv("CONNECTION_POOL_SIZE"));
-
-        Main main = new Main(port, databaseUrl, connectionPoolSize);
+        Main main = new Main(AppParameters.PORT,
+                             AppParameters.DATABASE_URL,
+                             AppParameters.CONNECTION_POOL_SIZE);
 
         DatabaseHelper.initialize(Main.database);
 

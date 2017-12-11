@@ -1,5 +1,6 @@
 package com.mauriciotogneri.momowars.test.suites;
 
+import com.mauriciotogneri.momowars.app.AppParameters;
 import com.mauriciotogneri.momowars.database.Database;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 
@@ -7,10 +8,8 @@ public class DatabaseHelper
 {
     public static void main(String[] args) throws Exception
     {
-        String databaseUrl = System.getenv("JDBC_DATABASE_URL");
-        int connectionPoolSize = Integer.valueOf(System.getenv("CONNECTION_POOL_SIZE"));
-
-        Database database = new Database(databaseUrl, connectionPoolSize);
+        Database database = new Database(AppParameters.DATABASE_URL,
+                                         AppParameters.CONNECTION_POOL_SIZE);
         initialize(database);
     }
 
