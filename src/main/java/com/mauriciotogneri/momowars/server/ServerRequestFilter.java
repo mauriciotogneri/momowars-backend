@@ -1,5 +1,6 @@
 package com.mauriciotogneri.momowars.server;
 
+import com.mauriciotogneri.javautils.Strings;
 import com.mauriciotogneri.jerry.http.HttpRequest;
 import com.mauriciotogneri.momowars.logger.ConsoleLogger;
 import com.mauriciotogneri.momowars.logger.DatabaseLogger;
@@ -30,7 +31,7 @@ public class ServerRequestFilter implements ContainerRequestFilter
     {
         try
         {
-            String ip = servletRequest.getRemoteAddr();
+            String ip = ip(request);
             ipLimitation.check(request, ip);
 
             request.setProperty(PROPERTY_TIME_START, System.currentTimeMillis());
@@ -44,5 +45,17 @@ public class ServerRequestFilter implements ContainerRequestFilter
         {
             ErrorLogger.log(e);
         }
+    }
+
+    private String ip(ContainerRequestContext request)
+    {
+        String ip = request.getHeaderString("X-Forwarded-For");
+
+        if (Strings.isEmpty(ip))
+        {
+            ip = servletRequest.getRemoteAddr();
+        }
+
+        return ip;
     }
 }
