@@ -98,7 +98,7 @@
             "description": "Session token not valid"
           },
           "409": {
-            "description": "The player is already in the game. The game is not open. The game is full"
+            "description": "The player is already in the game. The game is playing. The game is closed. The game is full."
           }
         }
       }
@@ -241,8 +241,14 @@
             },
             "description": "Successful operation"
           },
+          "400": {
+            "description": "Parameters missing or invalid"
+          },
           "401": {
             "description": "Session token not valid"
+          },
+          "404": {
+            "description": "The map for the given id doesn't exist"
           }
         }
       },
@@ -393,36 +399,6 @@
         }
       }
     },
-    "/v1/session": {
-      "post": {
-        "tags": [
-          "Sessions"
-        ],
-        "summary": "CreateSession",
-        "description": "Creates a new session",
-        "parameters": [
-          {
-            "name": "data",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/com.mauriciotogneri.momowars.api.endpoints.sessions.CreateSession.DataParameter"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Successful operation"
-          },
-          "400": {
-            "description": "Parameters missing or invalid"
-          },
-          "401": {
-            "description": "Invalid email or password"
-          }
-        }
-      }
-    },
     "/v1/games/{gameId}/players/{playerId}/cells/{cellId}/queue": {
       "put": {
         "tags": [
@@ -511,6 +487,66 @@
         }
       }
     },
+    "/v1/session/email": {
+      "post": {
+        "tags": [
+          "Sessions"
+        ],
+        "summary": "CreateSessionEmail",
+        "description": "Creates a new session with email and password",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/com.mauriciotogneri.momowars.api.endpoints.sessions.CreateSessionEmail.DataParameter"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Parameters missing or invalid"
+          },
+          "401": {
+            "description": "Invalid email or password"
+          }
+        }
+      }
+    },
+    "/v1/session/google": {
+      "post": {
+        "tags": [
+          "Sessions"
+        ],
+        "summary": "CreateSessionGoogle",
+        "description": "Creates a new session with a Google token",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/com.mauriciotogneri.momowars.api.endpoints.sessions.CreateSessionEmail.DataParameter"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Parameters missing or invalid"
+          },
+          "401": {
+            "description": "Invalid token"
+          }
+        }
+      }
+    },
     "/v1/games/{gameId}/players/{playerId}/cells/{cellId}/units/{unitId}/move": {
       "put": {
         "tags": [
@@ -570,12 +606,117 @@
     }
   },
   "definitions": {
+    "com.mauriciotogneri.momowars.api.endpoints.sessions.CreateSessionEmail.DataParameter": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "maxLength": 50
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "email",
+        "password"
+      ]
+    },
+    "com.mauriciotogneri.momowars.api.endpoints.games.CreateGame.DataParameter": {
+      "type": "object",
+      "properties": {
+        "mapId": {
+          "type": "integer"
+        },
+        "maxPlayers": {
+          "type": "integer",
+          "minimum": 2
+        }
+      },
+      "required": [
+        "mapId",
+        "maxPlayers"
+      ]
+    },
+    "com.mauriciotogneri.momowars.api.endpoints.players.JoinGame.DataParameter": {
+      "type": "object",
+      "properties": {
+        "gameId": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "gameId"
+      ]
+    },
+    "com.mauriciotogneri.momowars.api.model.accounts.AccountGames": {
+      "type": "object",
+      "properties": {
+        "open": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "playing": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "finished": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      },
+      "required": [
+        "open",
+        "playing",
+        "finished"
+      ]
+    },
+    "com.mauriciotogneri.momowars.api.model.games.Cell": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "BASE",
+            "GRASS",
+            "EARTH",
+            "MOUNTAIN",
+            "FOREST",
+            "DESERT",
+            "CONCRETE",
+            "WATER",
+            "ICE"
+          ]
+        },
+        "x": {
+          "type": "integer"
+        },
+        "y": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "x",
+        "y"
+      ]
+    },
     "com.mauriciotogneri.momowars.api.endpoints.accounts.UpdateAccount.DataParameter": {
       "type": "object",
       "properties": {
         "password": {
-          "type": "string",
-          "maxLength": 50
+          "type": "string"
         },
         "nickname": {
           "type": "string",
@@ -629,22 +770,6 @@
         "nickname"
       ]
     },
-    "com.mauriciotogneri.momowars.api.endpoints.games.CreateGame.DataParameter": {
-      "type": "object",
-      "properties": {
-        "mapId": {
-          "type": "integer"
-        },
-        "maxPlayers": {
-          "type": "integer",
-          "minimum": 2
-        }
-      },
-      "required": [
-        "mapId",
-        "maxPlayers"
-      ]
-    },
     "com.mauriciotogneri.momowars.api.model.games.Map": {
       "type": "object",
       "properties": {
@@ -676,17 +801,6 @@
         "width",
         "height",
         "cells"
-      ]
-    },
-    "com.mauriciotogneri.momowars.api.endpoints.players.JoinGame.DataParameter": {
-      "type": "object",
-      "properties": {
-        "gameId": {
-          "type": "integer"
-        }
-      },
-      "required": [
-        "gameId"
       ]
     },
     "com.mauriciotogneri.momowars.api.model.games.Player": {
@@ -727,67 +841,13 @@
           "type": "string"
         },
         "games": {
-          "type": "array",
-          "items": {
-            "type": "integer"
-          }
+          "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.accounts.AccountGames"
         }
       },
       "required": [
         "email",
         "nickname",
         "games"
-      ]
-    },
-    "com.mauriciotogneri.momowars.api.endpoints.sessions.CreateSession.DataParameter": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string",
-          "format": "email",
-          "maxLength": 50
-        },
-        "password": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "email",
-        "password"
-      ]
-    },
-    "com.mauriciotogneri.momowars.api.model.games.Cell": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer"
-        },
-        "type": {
-          "type": "string",
-          "enum": [
-            "BASE",
-            "GRASS",
-            "EARTH",
-            "MOUNTAIN",
-            "FOREST",
-            "DESERT",
-            "CONCRETE",
-            "WATER",
-            "ICE"
-          ]
-        },
-        "x": {
-          "type": "integer"
-        },
-        "y": {
-          "type": "integer"
-        }
-      },
-      "required": [
-        "id",
-        "type",
-        "x",
-        "y"
       ]
     },
     "com.mauriciotogneri.momowars.api.endpoints.units.RecruitUnits.DataParameter": {

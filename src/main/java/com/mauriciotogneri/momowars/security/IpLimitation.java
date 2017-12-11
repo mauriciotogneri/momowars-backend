@@ -2,6 +2,8 @@ package com.mauriciotogneri.momowars.security;
 
 import com.mauriciotogneri.momowars.util.MemoryCache;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -16,28 +18,52 @@ public class IpLimitation
             60, TimeUnit.SECONDS // expiration time
     );
 
-    private static final int REQUESTS_LIMIT = 1000;
+    private static final int REQUESTS_LIMIT = 60;
 
     public void check(ContainerRequestContext request, String ip)
     {
-        Optional<Integer> count = cache.get(ip);
-
-        if (count.isPresent())
+        if (!isLocalhost(ip))
         {
-            int value = count.get();
+            Optional<Integer> count = cache.get(ip);
 
-            if (value < REQUESTS_LIMIT)
+            if (count.isPresent())
             {
-                cache.put(ip, value + 1);
+                int value = count.get();
+
+                if (value < REQUESTS_LIMIT)
+                {
+                    cache.put(ip, value + 1);
+                }
+                else
+                {
+                    request.abortWith(Response.status(Status.TOO_MANY_REQUESTS).build());
+                }
             }
             else
             {
-                request.abortWith(Response.status(Status.TOO_MANY_REQUESTS).build());
+                cache.put(ip, 1);
             }
         }
-        else
+    }
+
+    private boolean isLocalhost(String ip)
+    {
+        try
         {
-            cache.put(ip, 1);
+            InetAddress address = InetAddress.getByName(ip);
+
+            // check if the address is a valid special local or loop back
+            if (address.isAnyLocalAddress() || address.isLoopbackAddress() || address.isSiteLocalAddress())
+            {
+                return true;
+            }
+
+            // check if the address is defined on any interface
+            return (NetworkInterface.getByInetAddress(address) != null);
+        }
+        catch (Exception e)
+        {
+            return false;
         }
     }
 }
