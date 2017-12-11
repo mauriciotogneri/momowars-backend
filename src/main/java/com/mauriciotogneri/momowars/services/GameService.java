@@ -5,10 +5,10 @@ import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.exceptions.ApiException;
 import com.mauriciotogneri.momowars.model.Game;
 import com.mauriciotogneri.momowars.model.Map;
-import com.mauriciotogneri.momowars.notifications.GameStarted;
-import com.mauriciotogneri.momowars.notifications.Notification;
 import com.mauriciotogneri.momowars.repository.game.GameDao;
 import com.mauriciotogneri.momowars.repository.map.MapDao;
+import com.mauriciotogneri.momowars.tasks.GameStartedTask;
+import com.mauriciotogneri.momowars.tasks.Task;
 import com.mauriciotogneri.momowars.types.GameStatus;
 
 import java.util.List;
@@ -54,7 +54,7 @@ public class GameService
         GameDao gameDao = new GameDao(connection);
         gameDao.updateStatus(gameId, GameStatus.PLAYING);
 
-        Notification notification = new GameStarted(gameId);
-        notification.send();
+        Task task = new GameStartedTask(gameId);
+        task.submit();
     }
 }

@@ -20,6 +20,11 @@ public class Account
         return id;
     }
 
+    public String email()
+    {
+        return email;
+    }
+
     public String nickname()
     {
         return nickname;

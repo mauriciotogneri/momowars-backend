@@ -2,11 +2,11 @@ package com.mauriciotogneri.momowars.tasks;
 
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 
-public class GameUpdater extends Task
+public class GameUpdaterTask extends Task
 {
     private final Long gameId;
 
-    public GameUpdater(Long gameId)
+    public GameUpdaterTask(Long gameId)
     {
         this.gameId = gameId;
     }

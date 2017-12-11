@@ -75,4 +75,9 @@ public class Email
             throw new IOException(e);
         }
     }
+
+    public static Email create(String to, String subject, String content)
+    {
+        return new Email("notifications@momowars.com", to, subject, content);
+    }
 }

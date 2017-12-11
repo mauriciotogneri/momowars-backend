@@ -17,7 +17,7 @@ import com.mauriciotogneri.momowars.model.Player;
 import com.mauriciotogneri.momowars.repository.game.GameDao;
 import com.mauriciotogneri.momowars.repository.queue.QueueDao;
 import com.mauriciotogneri.momowars.repository.unit.UnitDao;
-import com.mauriciotogneri.momowars.tasks.GameUpdater;
+import com.mauriciotogneri.momowars.tasks.GameUpdaterTask;
 import com.mauriciotogneri.momowars.tasks.Task;
 import com.mauriciotogneri.momowars.types.PlayerStatus;
 
@@ -102,7 +102,7 @@ public class PlayerDao
 
         if (gameDao.isUpdatable(row.gameId))
         {
-            Task task = new GameUpdater(row.gameId);
+            Task task = new GameUpdaterTask(row.gameId);
             task.submit();
         }
     }
@@ -130,7 +130,7 @@ public class PlayerDao
 
             if (gameDao.isUpdatable(row.gameId))
             {
-                Task task = new GameUpdater(row.gameId);
+                Task task = new GameUpdaterTask(row.gameId);
                 task.submit();
             }
         }

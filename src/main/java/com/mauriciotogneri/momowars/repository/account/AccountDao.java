@@ -88,6 +88,25 @@ public class AccountDao
         }
     }
 
+    public List<Account> byGame(Long gameId) throws DatabaseException
+    {
+        SelectQuery<AccountRow> query = connection.selectQuery(AccountQueries.SELECT_BY_GAME, AccountRow.class);
+        QueryResult<AccountRow> result = query.execute(gameId);
+
+        List<Account> accounts = new ArrayList<>();
+
+        for (AccountRow account : result)
+        {
+            accounts.add(account.account(new AccountGames(
+                    new ArrayList<>(),
+                    new ArrayList<>(),
+                    new ArrayList<>()
+            )));
+        }
+
+        return accounts;
+    }
+
     public void updateSessionToken(Long accountId, String sessionToken) throws DatabaseException
     {
         UpdateQuery query = connection.updateQuery(AccountQueries.UPDATE_SESSION_TOKEN);
