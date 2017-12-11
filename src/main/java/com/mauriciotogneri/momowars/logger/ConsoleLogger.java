@@ -33,4 +33,9 @@ public class ConsoleLogger
             ErrorLogger.log(e);
         }
     }
+
+    public static void info(String log)
+    {
+        logger.info(log);
+    }
 }

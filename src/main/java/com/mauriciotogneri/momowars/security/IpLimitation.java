@@ -1,5 +1,6 @@
 package com.mauriciotogneri.momowars.security;
 
+import com.mauriciotogneri.momowars.logger.ConsoleLogger;
 import com.mauriciotogneri.momowars.util.MemoryCache;
 
 import java.net.InetAddress;
@@ -18,12 +19,14 @@ public class IpLimitation
             60, TimeUnit.SECONDS // expiration time
     );
 
-    private static final int REQUESTS_LIMIT = 60;
+    private static final int REQUESTS_LIMIT = 10;
 
     public void check(ContainerRequestContext request, String ip)
     {
-        if (!isLocalhost(ip))
-        {
+        ConsoleLogger.info("IP: " + ip);
+
+        //if (!isLocalhost(ip))
+        //{
             Optional<Integer> count = cache.get(ip);
 
             if (count.isPresent())
@@ -43,7 +46,7 @@ public class IpLimitation
             {
                 cache.put(ip, 1);
             }
-        }
+        //}
     }
 
     private boolean isLocalhost(String ip)
