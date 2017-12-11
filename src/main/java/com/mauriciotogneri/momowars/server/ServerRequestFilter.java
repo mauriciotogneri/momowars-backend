@@ -2,6 +2,7 @@ package com.mauriciotogneri.momowars.server;
 
 import com.mauriciotogneri.javautils.Strings;
 import com.mauriciotogneri.jerry.http.HttpRequest;
+import com.mauriciotogneri.momowars.app.AppParameters;
 import com.mauriciotogneri.momowars.logger.ConsoleLogger;
 import com.mauriciotogneri.momowars.logger.DatabaseLogger;
 import com.mauriciotogneri.momowars.logger.ErrorLogger;
@@ -24,7 +25,7 @@ public class ServerRequestFilter implements ContainerRequestFilter
     public static final String PROPERTY_TIME_START = "time.start";
     public static final String PROPERTY_LOG_ID = "log.id";
 
-    private final IpLimitation ipLimitation = new IpLimitation();
+    private final IpLimitation ipLimitation = new IpLimitation(AppParameters.REQUESTS_PER_MINUTE);
 
     @Override
     public void filter(ContainerRequestContext request)

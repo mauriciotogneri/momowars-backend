@@ -1,6 +1,5 @@
 package com.mauriciotogneri.momowars.security;
 
-import com.mauriciotogneri.momowars.app.AppParameters;
 import com.mauriciotogneri.momowars.util.MemoryCache;
 
 import java.util.Optional;
@@ -12,12 +11,16 @@ import javax.ws.rs.core.Response.Status;
 
 public class IpLimitation
 {
+    private final int requestLimit;
     private final MemoryCache<String, Integer> cache = new MemoryCache<>(
             10, TimeUnit.SECONDS, // cleanup time
             60, TimeUnit.SECONDS // expiration time
     );
 
-    private static final int REQUESTS_LIMIT = AppParameters.REQUESTS_PER_MINUTE;
+    public IpLimitation(int requestLimit)
+    {
+        this.requestLimit = requestLimit;
+    }
 
     public void check(ContainerRequestContext request, String ip)
     {
@@ -27,7 +30,7 @@ public class IpLimitation
         {
             int value = count.get();
 
-            if (value < REQUESTS_LIMIT)
+            if (value < requestLimit)
             {
                 cache.put(ip, value + 1);
             }
