@@ -9,6 +9,7 @@ import com.mauriciotogneri.stewie.annotations.Responses;
 
 import static com.mauriciotogneri.stewie.types.Method.DELETE;
 import static com.mauriciotogneri.stewie.types.StatusCode.FORBIDDEN;
+import static com.mauriciotogneri.stewie.types.StatusCode.NOT_FOUND;
 import static com.mauriciotogneri.stewie.types.StatusCode.NO_CONTENT;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 
@@ -29,6 +30,10 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
         @Response(
                 code = UNAUTHORIZED,
                 description = "Session token not valid"
+        ),
+        @Response(
+                code = NOT_FOUND,
+                description = "Player not found"
         ),
         @Response(
                 code = FORBIDDEN,

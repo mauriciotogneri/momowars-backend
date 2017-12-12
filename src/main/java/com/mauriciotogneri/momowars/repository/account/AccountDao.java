@@ -67,7 +67,7 @@ public class AccountDao
         }
         else
         {
-            throw new AccountNotFoundException();
+            throw new InvalidCredentialsException();
         }
     }
 

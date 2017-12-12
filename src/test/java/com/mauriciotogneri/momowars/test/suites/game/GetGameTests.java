@@ -1,5 +1,6 @@
 package com.mauriciotogneri.momowars.test.suites.game;
 
+import com.mauriciotogneri.momowars.api.endpoints.games.GetGame;
 import com.mauriciotogneri.momowars.api.model.games.Game;
 import com.mauriciotogneri.momowars.api.model.games.Map;
 import com.mauriciotogneri.momowars.test.suites.BaseTest;
@@ -14,7 +15,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.OK;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class GetGameTests extends BaseTest
+public class GetGameTests extends BaseTest implements GetGame
 {
     @Test
     public void test1InvalidSession() throws Exception
@@ -23,7 +24,7 @@ public class GetGameTests extends BaseTest
     }
 
     @Test
-    public void test2InvalidParameters() throws Exception
+    public void test2NotAllowed() throws Exception
     {
         TestAccount testAccount = testAccountLogged();
 

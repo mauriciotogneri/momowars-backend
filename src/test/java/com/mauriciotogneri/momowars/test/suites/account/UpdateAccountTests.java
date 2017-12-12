@@ -1,5 +1,6 @@
 package com.mauriciotogneri.momowars.test.suites.account;
 
+import com.mauriciotogneri.momowars.api.endpoints.accounts.UpdateAccount;
 import com.mauriciotogneri.momowars.api.model.accounts.Account;
 import com.mauriciotogneri.momowars.test.suites.BaseTest;
 
@@ -13,7 +14,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.OK;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class UpdateAccountTests extends BaseTest
+public class UpdateAccountTests extends BaseTest implements UpdateAccount
 {
     @Test
     public void test1InvalidSession() throws Exception

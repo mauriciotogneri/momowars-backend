@@ -1,5 +1,6 @@
 package com.mauriciotogneri.momowars.test.suites.player;
 
+import com.mauriciotogneri.momowars.api.endpoints.players.JoinGame;
 import com.mauriciotogneri.momowars.api.model.games.Game;
 import com.mauriciotogneri.momowars.api.model.games.Map;
 import com.mauriciotogneri.momowars.test.suites.BaseTest;
@@ -15,7 +16,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.OK;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class JoinGameTests extends BaseTest
+public class JoinGameTests extends BaseTest implements JoinGame
 {
     @Test
     public void test1InvalidSession() throws Exception

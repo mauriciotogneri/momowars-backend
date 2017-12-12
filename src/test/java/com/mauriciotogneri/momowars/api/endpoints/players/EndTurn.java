@@ -9,6 +9,7 @@ import com.mauriciotogneri.stewie.annotations.Responses;
 
 import static com.mauriciotogneri.stewie.types.Method.DELETE;
 import static com.mauriciotogneri.stewie.types.StatusCode.BAD_REQUEST;
+import static com.mauriciotogneri.stewie.types.StatusCode.NOT_FOUND;
 import static com.mauriciotogneri.stewie.types.StatusCode.NO_CONTENT;
 import static com.mauriciotogneri.stewie.types.StatusCode.PRECONDITION_FAILED;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
@@ -33,7 +34,11 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
         ),
         @Response(
                 code = BAD_REQUEST,
-                description = "Session token not provided"
+                description = "Parameters missing or invalid"
+        ),
+        @Response(
+                code = NOT_FOUND,
+                description = "Player not found"
         ),
         @Response(
                 code = PRECONDITION_FAILED,

@@ -1,5 +1,6 @@
 package com.mauriciotogneri.momowars.test.suites.player;
 
+import com.mauriciotogneri.momowars.api.endpoints.players.EndTurn;
 import com.mauriciotogneri.momowars.test.suites.BaseTest;
 
 import org.junit.FixMethodOrder;
@@ -10,7 +11,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.NOT_FOUND;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class EndTurnTests extends BaseTest
+public class EndTurnTests extends BaseTest implements EndTurn
 {
     @Test
     public void test1InvalidSession() throws Exception

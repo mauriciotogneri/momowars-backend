@@ -1,5 +1,6 @@
 package com.mauriciotogneri.momowars.test.suites.game;
 
+import com.mauriciotogneri.momowars.api.endpoints.games.CreateGame;
 import com.mauriciotogneri.momowars.api.model.games.Map;
 import com.mauriciotogneri.momowars.test.suites.BaseTest;
 
@@ -9,12 +10,11 @@ import org.junit.runners.MethodSorters;
 
 import static com.mauriciotogneri.stewie.types.StatusCode.BAD_REQUEST;
 import static com.mauriciotogneri.stewie.types.StatusCode.CREATED;
-import static com.mauriciotogneri.stewie.types.StatusCode.NOT_FOUND;
 import static com.mauriciotogneri.stewie.types.StatusCode.OK;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class CreateGameTests extends BaseTest
+public class CreateGameTests extends BaseTest implements CreateGame
 {
     @Test
     public void test1InvalidSession() throws Exception
@@ -27,7 +27,7 @@ public class CreateGameTests extends BaseTest
     {
         TestAccount testAccount = testAccountLogged();
 
-        gameService.createGame(NOT_FOUND, 0L, 6, testAccount.sessionToken);
+        gameService.createGame(BAD_REQUEST, 0L, 6, testAccount.sessionToken);
     }
 
     @Test

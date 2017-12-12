@@ -10,6 +10,7 @@ import com.mauriciotogneri.stewie.annotations.Responses;
 import com.mauriciotogneri.stewie.types.MimeType;
 
 import static com.mauriciotogneri.stewie.types.Method.GET;
+import static com.mauriciotogneri.stewie.types.StatusCode.NOT_FOUND;
 import static com.mauriciotogneri.stewie.types.StatusCode.OK;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 
@@ -32,6 +33,10 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
         @Response(
                 code = UNAUTHORIZED,
                 description = "Session token not valid"
+        ),
+        @Response(
+                code = NOT_FOUND,
+                description = "Invalid map id"
         )
 })
 public interface GetMap

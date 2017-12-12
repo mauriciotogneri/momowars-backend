@@ -1,5 +1,6 @@
 package com.mauriciotogneri.momowars.test.suites.map;
 
+import com.mauriciotogneri.momowars.api.endpoints.maps.GetMaps;
 import com.mauriciotogneri.momowars.test.suites.BaseTest;
 
 import org.junit.FixMethodOrder;
@@ -10,7 +11,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.OK;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class GetMapsTests extends BaseTest
+public class GetMapsTests extends BaseTest implements GetMaps
 {
     @Test
     public void test1InvalidSession() throws Exception

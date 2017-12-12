@@ -2,6 +2,8 @@ package com.mauriciotogneri.momowars.controllers.game;
 
 import com.mauriciotogneri.jerry.controller.EntityProvider;
 import com.mauriciotogneri.jerry.controller.EntityProvider.EntityObject;
+import com.mauriciotogneri.momowars.exceptions.InvalidParametersException;
+import com.mauriciotogneri.momowars.exceptions.MapNotFoundException;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.Game;
 import com.mauriciotogneri.momowars.server.BaseController;
@@ -38,13 +40,20 @@ public class CreateGame extends BaseController
 
         Account account = validateSessionToken(sessionToken);
 
-        Game newGame = gameService.createGame(entity.maxPlayers, entity.mapId, account.id());
+        try
+        {
+            Game newGame = gameService.createGame(entity.maxPlayers, entity.mapId, account.id());
 
-        playerService.create(account.id(), newGame.id());
+            playerService.create(account.id(), newGame.id());
 
-        Game game = gameService.getGame(newGame.id(), account.id());
+            Game game = gameService.getGame(newGame.id(), account.id());
 
-        return response(CREATED, game);
+            return response(CREATED, game);
+        }
+        catch (MapNotFoundException e)
+        {
+            throw new InvalidParametersException(e);
+        }
     }
 
     @Provider
