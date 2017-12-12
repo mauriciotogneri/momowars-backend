@@ -25,7 +25,11 @@ public class GameStartedTask extends Task
         for (Account account : accounts)
         {
             String content = String.format("The game <b>%s</b> has started.", gameId);
-            Email email = Email.create(account.email(), "A game has started!", content);
+            Email email = new Email(Email.DEFAULT_ADDRESS,
+                                    Email.DEFAULT_ALIAS,
+                                    account.email(),
+                                    "A game has started!",
+                                    content);
 
             Task task = new SendEmailTask(email);
             task.submit();

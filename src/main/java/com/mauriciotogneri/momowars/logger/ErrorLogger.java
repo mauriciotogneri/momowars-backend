@@ -54,7 +54,8 @@ public class ErrorLogger
     private static void sendAlert(String stacktrace)
     {
         Email email = new Email(
-                "error@momowars.com",
+                Email.DEFAULT_ADDRESS,
+                Email.DEFAULT_ALIAS,
                 "mauricio.togneri@gmail.com",
                 String.format("Momowars error: %s", Now.timestamp()),
                 String.format("<pre>%s</pre>", stacktrace));

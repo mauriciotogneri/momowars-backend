@@ -1,5 +1,6 @@
 package com.mauriciotogneri.momowars.email;
 
+import com.mauriciotogneri.javautils.Strings;
 import com.mauriciotogneri.momowars.app.AppParameters;
 
 import java.io.IOException;
@@ -16,15 +17,20 @@ import javax.mail.internet.MimeMessage;
 public class Email
 {
     private final String from;
+    private final String alias;
     private final String to;
     private final String subject;
     private final String content;
 
     private static Session session;
 
-    public Email(String from, String to, String subject, String content)
+    public static final String DEFAULT_ADDRESS = "momowarsgame@gmail.com";
+    public static final String DEFAULT_ALIAS = "MomoWars";
+
+    public Email(String from, String alias, String to, String subject, String content)
     {
         this.from = from;
+        this.alias = alias;
         this.to = to;
         this.subject = subject;
         this.content = content;
@@ -58,26 +64,29 @@ public class Email
         });
     }
 
-    public void send() throws IOException
+    private boolean isEnabled()
     {
-        try
-        {
-            MimeMessage mimeMessage = new MimeMessage(session());
-            mimeMessage.setFrom(new InternetAddress(from));
-            mimeMessage.addRecipient(RecipientType.TO, new InternetAddress(to));
-            mimeMessage.setSubject(subject);
-            mimeMessage.setContent(content, "text/html");
-
-            Transport.send(mimeMessage);
-        }
-        catch (Exception e)
-        {
-            throw new IOException(e);
-        }
+        return Strings.isNotEmpty(AppParameters.GMAIL_USERNAME) && Strings.isNotEmpty(AppParameters.GMAIL_PASSWORD);
     }
 
-    public static Email create(String to, String subject, String content)
+    public void send() throws IOException
     {
-        return new Email("notifications@momowars.com", to, subject, content);
+        if (isEnabled())
+        {
+            try
+            {
+                MimeMessage mimeMessage = new MimeMessage(session());
+                mimeMessage.setFrom(new InternetAddress(from, alias));
+                mimeMessage.addRecipient(RecipientType.TO, new InternetAddress(to));
+                mimeMessage.setSubject(subject);
+                mimeMessage.setContent(content, "text/html");
+
+                Transport.send(mimeMessage);
+            }
+            catch (Exception e)
+            {
+                throw new IOException(e);
+            }
+        }
     }
 }
