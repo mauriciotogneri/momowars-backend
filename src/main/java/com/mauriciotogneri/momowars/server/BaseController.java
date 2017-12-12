@@ -10,6 +10,7 @@ import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.exceptions.AccountAlreadyExistsException;
 import com.mauriciotogneri.momowars.exceptions.AccountNotFoundException;
 import com.mauriciotogneri.momowars.exceptions.ApiException;
+import com.mauriciotogneri.momowars.exceptions.BadParametersException;
 import com.mauriciotogneri.momowars.exceptions.GameFinishedException;
 import com.mauriciotogneri.momowars.exceptions.GameFullException;
 import com.mauriciotogneri.momowars.exceptions.GameNotFoundException;
@@ -31,6 +32,7 @@ import com.mauriciotogneri.momowars.services.SessionService;
 import com.mauriciotogneri.momowars.templates.BaseTemplate;
 
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -91,11 +93,11 @@ public class BaseController extends Controller
         {
             throw exception;
         }
-        catch (InvalidParametersException e)
+        catch (BadParametersException e)
         {
             return new BadRequestException(e);
         }
-        catch (AccountAlreadyExistsException | PlayerAlreadyJoinedException | GamePlayingException | GameFinishedException | GameFullException e)
+        catch (AccountAlreadyExistsException e)
         {
             return new ConflictException(e);
         }
@@ -110,6 +112,10 @@ public class BaseController extends Controller
         catch (InvalidGameException e)
         {
             return new ForbiddenException(e);
+        }
+        catch (InvalidParametersException | PlayerAlreadyJoinedException | GamePlayingException | GameFinishedException | GameFullException e)
+        {
+            return new WebApplicationException(Response.status(422).build());
         }
         catch (Exception e)
         {

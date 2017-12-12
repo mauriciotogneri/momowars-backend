@@ -4,7 +4,9 @@ import com.mauriciotogneri.jerry.controller.EntityProvider;
 import com.mauriciotogneri.jerry.controller.EntityProvider.EntityObject;
 import com.mauriciotogneri.momowars.exceptions.GameFinishedException;
 import com.mauriciotogneri.momowars.exceptions.GameFullException;
+import com.mauriciotogneri.momowars.exceptions.GameNotFoundException;
 import com.mauriciotogneri.momowars.exceptions.GamePlayingException;
+import com.mauriciotogneri.momowars.exceptions.InvalidParametersException;
 import com.mauriciotogneri.momowars.exceptions.PlayerAlreadyJoinedException;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.Game;
@@ -47,31 +49,38 @@ public class JoinGame extends BaseController
             throw new PlayerAlreadyJoinedException();
         }
 
-        Game loadedGame = gameService.getGame(entity.gameId, account.id());
-
-        if (loadedGame.isPlaying())
+        try
         {
-            throw new GamePlayingException();
+            Game loadedGame = gameService.getGame(entity.gameId, account.id());
+
+            if (loadedGame.isPlaying())
+            {
+                throw new GamePlayingException();
+            }
+            else if (loadedGame.isFinished())
+            {
+                throw new GameFinishedException();
+            }
+            else if (loadedGame.isFull())
+            {
+                throw new GameFullException();
+            }
+
+            playerService.create(account.id(), loadedGame.id());
+
+            if (loadedGame.playersMissing() == 1)
+            {
+                gameService.startGame(loadedGame.id());
+            }
+
+            Game game = gameService.getGame(loadedGame.id(), account.id());
+
+            return response(CREATED, game);
         }
-        else if (loadedGame.isFinished())
+        catch (GameNotFoundException e)
         {
-            throw new GameFinishedException();
+            throw new InvalidParametersException(e);
         }
-        else if (loadedGame.isFull())
-        {
-            throw new GameFullException();
-        }
-
-        playerService.create(account.id(), loadedGame.id());
-
-        if (loadedGame.playersMissing() == 1)
-        {
-            gameService.startGame(loadedGame.id());
-        }
-
-        Game game = gameService.getGame(loadedGame.id(), account.id());
-
-        return response(CREATED, game);
     }
 
     @Provider

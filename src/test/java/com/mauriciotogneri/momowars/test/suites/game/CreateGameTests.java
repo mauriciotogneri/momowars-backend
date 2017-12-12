@@ -12,6 +12,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.BAD_REQUEST;
 import static com.mauriciotogneri.stewie.types.StatusCode.CREATED;
 import static com.mauriciotogneri.stewie.types.StatusCode.OK;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
+import static com.mauriciotogneri.stewie.types.StatusCode.UNPROCESSABLE_ENTITY;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CreateGameTests extends BaseTest implements CreateGame
@@ -23,15 +24,33 @@ public class CreateGameTests extends BaseTest implements CreateGame
     }
 
     @Test
-    public void test2InvalidMap() throws Exception
+    public void test2InvalidMapParameter() throws Exception
     {
         TestAccount testAccount = testAccountLogged();
 
-        gameService.createGame(BAD_REQUEST, 0L, 6, testAccount.sessionToken);
+        gameService.createGame(BAD_REQUEST, null, 6, testAccount.sessionToken);
     }
 
     @Test
-    public void test3InvalidPlayers() throws Exception
+    public void test3InvalidMap() throws Exception
+    {
+        TestAccount testAccount = testAccountLogged();
+
+        gameService.createGame(UNPROCESSABLE_ENTITY, 0L, 6, testAccount.sessionToken);
+    }
+
+    @Test
+    public void test4InvalidPlayersParameterMissing() throws Exception
+    {
+        TestAccount testAccount = testAccountLogged();
+
+        Map[] maps = mapService.getMaps(OK, testAccount.sessionToken);
+
+        gameService.createGame(BAD_REQUEST, maps[0].id, null, testAccount.sessionToken);
+    }
+
+    @Test
+    public void test5InvalidPlayersParameterTooSmall() throws Exception
     {
         TestAccount testAccount = testAccountLogged();
 
@@ -41,7 +60,7 @@ public class CreateGameTests extends BaseTest implements CreateGame
     }
 
     @Test
-    public void test4Valid() throws Exception
+    public void test6Valid() throws Exception
     {
         TestAccount testAccount = testAccountLogged();
 

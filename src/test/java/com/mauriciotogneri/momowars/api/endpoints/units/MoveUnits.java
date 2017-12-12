@@ -10,9 +10,9 @@ import com.mauriciotogneri.stewie.annotations.Responses;
 
 import static com.mauriciotogneri.stewie.types.Method.PUT;
 import static com.mauriciotogneri.stewie.types.StatusCode.BAD_REQUEST;
-import static com.mauriciotogneri.stewie.types.StatusCode.NOT_FOUND;
 import static com.mauriciotogneri.stewie.types.StatusCode.NO_CONTENT;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
+import static com.mauriciotogneri.stewie.types.StatusCode.UNPROCESSABLE_ENTITY;
 
 @EndPoint(
         path = "/v1/games/{gameId}/players/{playerId}/cells/{cellId}/units/{unitId}/move",
@@ -37,7 +37,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
                 description = "Session token not valid"
         ),
         @Response(
-                code = NOT_FOUND,
+                code = UNPROCESSABLE_ENTITY,
                 description = "Invalid gameId, cellId or unitId"
         )
 })

@@ -11,8 +11,8 @@ import static com.mauriciotogneri.stewie.types.Method.DELETE;
 import static com.mauriciotogneri.stewie.types.StatusCode.BAD_REQUEST;
 import static com.mauriciotogneri.stewie.types.StatusCode.NOT_FOUND;
 import static com.mauriciotogneri.stewie.types.StatusCode.NO_CONTENT;
-import static com.mauriciotogneri.stewie.types.StatusCode.PRECONDITION_FAILED;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
+import static com.mauriciotogneri.stewie.types.StatusCode.UNPROCESSABLE_ENTITY;
 
 @EndPoint(
         path = "/v1/players/{playerId}/turn",
@@ -41,7 +41,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
                 description = "Player not found"
         ),
         @Response(
-                code = PRECONDITION_FAILED,
+                code = UNPROCESSABLE_ENTITY,
                 description = "Not allowed to end the turn on the given game"
         )
 })

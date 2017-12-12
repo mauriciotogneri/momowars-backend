@@ -10,9 +10,10 @@ import com.mauriciotogneri.stewie.annotations.Responses;
 import com.mauriciotogneri.stewie.types.MimeType;
 
 import static com.mauriciotogneri.stewie.types.Method.POST;
-import static com.mauriciotogneri.stewie.types.StatusCode.CONFLICT;
+import static com.mauriciotogneri.stewie.types.StatusCode.BAD_REQUEST;
 import static com.mauriciotogneri.stewie.types.StatusCode.CREATED;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
+import static com.mauriciotogneri.stewie.types.StatusCode.UNPROCESSABLE_ENTITY;
 
 @EndPoint(
         path = "/v1/players",
@@ -35,8 +36,16 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
                 description = "Session token not valid"
         ),
         @Response(
-                code = CONFLICT,
-                description = "The player is already in the game. The game is playing. The game is closed. The game is full."
+                code = BAD_REQUEST,
+                description = "Parameters missing or invalid"
+        ),
+        @Response(
+                code = UNPROCESSABLE_ENTITY,
+                description = "Either: the game doesn't exist" +
+                        " or the player is already in the game" +
+                        " or the game is playing" +
+                        " or the game is finished" +
+                        " or the game is full."
         )
 })
 public interface JoinGame

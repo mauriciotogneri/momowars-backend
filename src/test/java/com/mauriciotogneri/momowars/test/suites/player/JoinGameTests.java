@@ -9,11 +9,11 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import static com.mauriciotogneri.stewie.types.StatusCode.CONFLICT;
+import static com.mauriciotogneri.stewie.types.StatusCode.BAD_REQUEST;
 import static com.mauriciotogneri.stewie.types.StatusCode.CREATED;
-import static com.mauriciotogneri.stewie.types.StatusCode.NOT_FOUND;
 import static com.mauriciotogneri.stewie.types.StatusCode.OK;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
+import static com.mauriciotogneri.stewie.types.StatusCode.UNPROCESSABLE_ENTITY;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class JoinGameTests extends BaseTest implements JoinGame
@@ -25,23 +25,55 @@ public class JoinGameTests extends BaseTest implements JoinGame
     }
 
     @Test
-    public void test2InvalidGameId() throws Exception
+    public void test2InvalidGameIdParameter() throws Exception
     {
         TestAccount testAccount = testAccountLogged();
 
-        playerService.joinGame(NOT_FOUND, testAccount.sessionToken, 0L);
+        playerService.joinGame(BAD_REQUEST, testAccount.sessionToken, null);
     }
 
     @Test
-    public void test3GameAlreadyJoined() throws Exception
+    public void test3GameDoesntExist() throws Exception
     {
         TestAccount testAccount = testAccountLogged();
 
-        playerService.joinGame(CONFLICT, testAccount.sessionToken, 1L);
+        playerService.joinGame(UNPROCESSABLE_ENTITY, testAccount.sessionToken, 0L);
     }
 
     @Test
-    public void test4Valid() throws Exception
+    public void test4PlayerAlreadyJoined() throws Exception
+    {
+        TestAccount testAccount = testAccountLogged();
+
+        playerService.joinGame(UNPROCESSABLE_ENTITY, testAccount.sessionToken, 1L);
+    }
+
+    @Test
+    public void test5GameIsPlaying() throws Exception
+    {
+        /*TestAccount testAccount = testAccountLogged();
+
+        playerService.joinGame(UNPROCESSABLE_ENTITY, testAccount.sessionToken, 1L);*/
+    }
+
+    @Test
+    public void test6GameIsFinished() throws Exception
+    {
+        /*TestAccount testAccount = testAccountLogged();
+
+        playerService.joinGame(UNPROCESSABLE_ENTITY, testAccount.sessionToken, 1L);*/
+    }
+
+    @Test
+    public void test7GameIsFull() throws Exception
+    {
+        /*TestAccount testAccount = testAccountLogged();
+
+        playerService.joinGame(UNPROCESSABLE_ENTITY, testAccount.sessionToken, 1L);*/
+    }
+
+    @Test
+    public void test8Valid() throws Exception
     {
         TestAccount testAccount1 = testAccountLogged();
         Map[] maps = mapService.getMaps(OK, testAccount1.sessionToken);
