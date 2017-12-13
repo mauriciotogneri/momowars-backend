@@ -9,8 +9,8 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import static com.mauriciotogneri.stewie.types.StatusCode.BAD_REQUEST;
 import static com.mauriciotogneri.stewie.types.StatusCode.CREATED;
+import static com.mauriciotogneri.stewie.types.StatusCode.NOT_FOUND;
 import static com.mauriciotogneri.stewie.types.StatusCode.OK;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNPROCESSABLE_ENTITY;
@@ -29,19 +29,11 @@ public class JoinGameTests extends BaseTest implements JoinGame
     {
         TestAccount testAccount = testAccountLogged();
 
-        playerService.joinGame(BAD_REQUEST, testAccount.sessionToken, null);
+        playerService.joinGame(NOT_FOUND, testAccount.sessionToken, 0L);
     }
 
     @Test
-    public void test3GameDoesntExist() throws Exception
-    {
-        TestAccount testAccount = testAccountLogged();
-
-        playerService.joinGame(UNPROCESSABLE_ENTITY, testAccount.sessionToken, 0L);
-    }
-
-    @Test
-    public void test4PlayerAlreadyJoined() throws Exception
+    public void test3PlayerAlreadyJoined() throws Exception
     {
         TestAccount testAccount = testAccountLogged();
 
@@ -49,7 +41,7 @@ public class JoinGameTests extends BaseTest implements JoinGame
     }
 
     @Test
-    public void test5GameIsPlaying() throws Exception
+    public void test4GameIsPlaying() throws Exception
     {
         TestAccount testAccount = testAccountLogged();
 
@@ -57,7 +49,7 @@ public class JoinGameTests extends BaseTest implements JoinGame
     }
 
     @Test
-    public void test6GameIsFinished() throws Exception
+    public void test5GameIsFinished() throws Exception
     {
         TestAccount testAccount = testAccountLogged();
 
@@ -65,7 +57,7 @@ public class JoinGameTests extends BaseTest implements JoinGame
     }
 
     @Test
-    public void test8Valid() throws Exception
+    public void test6Valid() throws Exception
     {
         TestAccount testAccount1 = testAccountLogged();
         Map[] maps = mapService.getMaps(OK, testAccount1.sessionToken);
