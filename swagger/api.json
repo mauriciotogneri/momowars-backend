@@ -94,11 +94,14 @@
             },
             "description": "Successful operation"
           },
+          "400": {
+            "description": "Parameters missing or invalid"
+          },
+          "422": {
+            "description": "Either: the game doesn't exist or the player is already in the game or the game is playing or the game is finished."
+          },
           "401": {
             "description": "Session token not valid"
-          },
-          "409": {
-            "description": "The player is already in the game. The game is playing. The game is closed. The game is full."
           }
         }
       }
@@ -244,11 +247,11 @@
           "400": {
             "description": "Parameters missing or invalid"
           },
+          "422": {
+            "description": "The map id doesn't correspond to a valid map"
+          },
           "401": {
             "description": "Session token not valid"
-          },
-          "404": {
-            "description": "The map for the given id doesn't exist"
           }
         }
       },
@@ -316,9 +319,6 @@
             },
             "description": "Successful operation"
           },
-          "400": {
-            "description": "Session token not provided"
-          },
           "401": {
             "description": "Session token not valid"
           },
@@ -351,16 +351,19 @@
         ],
         "responses": {
           "400": {
-            "description": "Session token not provided"
+            "description": "Parameters missing or invalid"
+          },
+          "422": {
+            "description": "Not allowed to end the turn on the given game"
           },
           "401": {
             "description": "Session token not valid"
           },
-          "412": {
-            "description": "Not allowed to end the turn on the given game"
-          },
           "204": {
             "description": "Successful operation"
+          },
+          "404": {
+            "description": "Player not found"
           }
         }
       }
@@ -371,7 +374,7 @@
           "Players"
         ],
         "summary": "LeaveGame",
-        "description": "Leaves the given game",
+        "description": "Leaves the current player's game",
         "parameters": [
           {
             "name": "Session-Token",
@@ -387,14 +390,17 @@
           }
         ],
         "responses": {
+          "400": {
+            "description": "Parameters missing or invalid"
+          },
+          "422": {
+            "description": "Player already left the game or the game is finished"
+          },
           "401": {
             "description": "Session token not valid"
           },
           "204": {
             "description": "Successful operation"
-          },
-          "403": {
-            "description": "Not allowed to leave the given game"
           }
         }
       }
@@ -438,14 +444,14 @@
           "400": {
             "description": "Parameters missing or invalid"
           },
+          "422": {
+            "description": "Invalid gameId or cellId"
+          },
           "401": {
             "description": "Session token not valid"
           },
           "204": {
             "description": "Successful operation"
-          },
-          "404": {
-            "description": "Invalid gameId or cellId"
           }
         }
       }
@@ -483,6 +489,9 @@
           },
           "401": {
             "description": "Session token not valid"
+          },
+          "404": {
+            "description": "Invalid map id"
           }
         }
       }
@@ -592,14 +601,14 @@
           "400": {
             "description": "Parameters missing or invalid"
           },
+          "422": {
+            "description": "Invalid gameId, cellId or unitId"
+          },
           "401": {
             "description": "Session token not valid"
           },
           "204": {
             "description": "Successful operation"
-          },
-          "404": {
-            "description": "Invalid gameId, cellId or unitId"
           }
         }
       }
