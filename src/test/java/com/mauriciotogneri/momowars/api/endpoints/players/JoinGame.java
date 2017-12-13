@@ -44,8 +44,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNPROCESSABLE_ENTITY;
                 description = "Either: the game doesn't exist" +
                         " or the player is already in the game" +
                         " or the game is playing" +
-                        " or the game is finished" +
-                        " or the game is full."
+                        " or the game is finished."
         )
 })
 public interface JoinGame

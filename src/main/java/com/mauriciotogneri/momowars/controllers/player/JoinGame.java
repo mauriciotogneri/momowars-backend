@@ -3,7 +3,6 @@ package com.mauriciotogneri.momowars.controllers.player;
 import com.mauriciotogneri.jerry.controller.EntityProvider;
 import com.mauriciotogneri.jerry.controller.EntityProvider.EntityObject;
 import com.mauriciotogneri.momowars.exceptions.GameFinishedException;
-import com.mauriciotogneri.momowars.exceptions.GameFullException;
 import com.mauriciotogneri.momowars.exceptions.GameNotFoundException;
 import com.mauriciotogneri.momowars.exceptions.GamePlayingException;
 import com.mauriciotogneri.momowars.exceptions.InvalidParametersException;
@@ -60,10 +59,6 @@ public class JoinGame extends BaseController
             else if (loadedGame.isFinished())
             {
                 throw new GameFinishedException();
-            }
-            else if (loadedGame.isFull())
-            {
-                throw new GameFullException();
             }
 
             playerService.create(account.id(), loadedGame.id());

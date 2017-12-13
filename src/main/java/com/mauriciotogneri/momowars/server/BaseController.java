@@ -12,7 +12,6 @@ import com.mauriciotogneri.momowars.exceptions.AccountNotFoundException;
 import com.mauriciotogneri.momowars.exceptions.ApiException;
 import com.mauriciotogneri.momowars.exceptions.BadParametersException;
 import com.mauriciotogneri.momowars.exceptions.GameFinishedException;
-import com.mauriciotogneri.momowars.exceptions.GameFullException;
 import com.mauriciotogneri.momowars.exceptions.GameNotFoundException;
 import com.mauriciotogneri.momowars.exceptions.GamePlayingException;
 import com.mauriciotogneri.momowars.exceptions.InvalidCredentialsException;
@@ -113,7 +112,7 @@ public class BaseController extends Controller
         {
             return new ForbiddenException(e);
         }
-        catch (InvalidParametersException | PlayerAlreadyJoinedException | GamePlayingException | GameFinishedException | GameFullException e)
+        catch (InvalidParametersException | PlayerAlreadyJoinedException | GamePlayingException | GameFinishedException e)
         {
             return new WebApplicationException(Response.status(422).build());
         }

@@ -51,25 +51,17 @@ public class JoinGameTests extends BaseTest implements JoinGame
     @Test
     public void test5GameIsPlaying() throws Exception
     {
-        /*TestAccount testAccount = testAccountLogged();
+        TestAccount testAccount = testAccountLogged();
 
-        playerService.joinGame(UNPROCESSABLE_ENTITY, testAccount.sessionToken, 1L);*/
+        playerService.joinGame(UNPROCESSABLE_ENTITY, testAccount.sessionToken, 2L);
     }
 
     @Test
     public void test6GameIsFinished() throws Exception
     {
-        /*TestAccount testAccount = testAccountLogged();
+        TestAccount testAccount = testAccountLogged();
 
-        playerService.joinGame(UNPROCESSABLE_ENTITY, testAccount.sessionToken, 1L);*/
-    }
-
-    @Test
-    public void test7GameIsFull() throws Exception
-    {
-        /*TestAccount testAccount = testAccountLogged();
-
-        playerService.joinGame(UNPROCESSABLE_ENTITY, testAccount.sessionToken, 1L);*/
+        playerService.joinGame(UNPROCESSABLE_ENTITY, testAccount.sessionToken, 3L);
     }
 
     @Test
