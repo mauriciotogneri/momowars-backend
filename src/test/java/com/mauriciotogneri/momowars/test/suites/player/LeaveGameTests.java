@@ -28,17 +28,20 @@ public class LeaveGameTests extends BaseTest implements LeaveGame
     }
 
     @Test
-    public void test3InvalidGameId() throws Exception
+    public void test3GameAlreadyFinished() throws Exception
     {
         // TODO
         /*TestAccount testAccount = testAccountLogged();
 
-        playerService.leaveGame(FORBIDDEN, testAccount.sessionToken, 0L);*/
+        playerService.leaveGame(UNPROCESSABLE_ENTITY, testAccount.sessionToken, 3L);*/
     }
 
     @Test
     public void test4Valid() throws Exception
     {
         // TODO
+        /*TestAccount testAccount = testAccountLogged();
+
+        playerService.leaveGame(NO_CONTENT, testAccount.sessionToken, 1L);*/
     }
 }

@@ -8,15 +8,15 @@ import com.mauriciotogneri.stewie.annotations.Response;
 import com.mauriciotogneri.stewie.annotations.Responses;
 
 import static com.mauriciotogneri.stewie.types.Method.DELETE;
-import static com.mauriciotogneri.stewie.types.StatusCode.FORBIDDEN;
-import static com.mauriciotogneri.stewie.types.StatusCode.NOT_FOUND;
+import static com.mauriciotogneri.stewie.types.StatusCode.BAD_REQUEST;
 import static com.mauriciotogneri.stewie.types.StatusCode.NO_CONTENT;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
+import static com.mauriciotogneri.stewie.types.StatusCode.UNPROCESSABLE_ENTITY;
 
 @EndPoint(
         path = "/v1/players/{playerId}",
         method = DELETE,
-        description = "Leaves the given game"
+        description = "Leaves the current player's game"
 )
 @Parameters(
         header = SessionToken.class,
@@ -32,12 +32,12 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
                 description = "Session token not valid"
         ),
         @Response(
-                code = NOT_FOUND,
-                description = "Player not found"
+                code = BAD_REQUEST,
+                description = "Parameters missing or invalid"
         ),
         @Response(
-                code = FORBIDDEN,
-                description = "Not allowed to leave the given game"
+                code = UNPROCESSABLE_ENTITY,
+                description = "Player already left the game or the game is finished"
         )
 })
 public interface LeaveGame

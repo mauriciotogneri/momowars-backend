@@ -10,6 +10,7 @@ import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.PlayerQueries;
 import com.mauriciotogneri.momowars.exceptions.ApiException;
 import com.mauriciotogneri.momowars.exceptions.GameFinishedException;
+import com.mauriciotogneri.momowars.exceptions.PlayerAlreadyLeftException;
 import com.mauriciotogneri.momowars.exceptions.PlayerNotFoundException;
 import com.mauriciotogneri.momowars.model.Constants;
 import com.mauriciotogneri.momowars.model.Game;
@@ -110,6 +111,11 @@ public class PlayerDao
     public void leaveGame(Long playerId, Long accountId) throws DatabaseException, ApiException
     {
         PlayerRow row = getPlayer(playerId, accountId);
+
+        if ((row.status == PlayerStatus.VICTORIOUS) || (row.status == PlayerStatus.DEFEATED) || (row.status == PlayerStatus.SURRENDERED))
+        {
+            throw new PlayerAlreadyLeftException();
+        }
 
         GameDao gameDao = new GameDao(connection);
         Game game = gameDao.getGame(row.gameId, accountId);

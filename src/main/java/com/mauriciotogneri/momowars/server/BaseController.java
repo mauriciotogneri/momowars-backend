@@ -20,6 +20,7 @@ import com.mauriciotogneri.momowars.exceptions.InvalidParametersException;
 import com.mauriciotogneri.momowars.exceptions.InvalidTokenException;
 import com.mauriciotogneri.momowars.exceptions.MapNotFoundException;
 import com.mauriciotogneri.momowars.exceptions.PlayerAlreadyJoinedException;
+import com.mauriciotogneri.momowars.exceptions.PlayerAlreadyLeftException;
 import com.mauriciotogneri.momowars.exceptions.PlayerNotFoundException;
 import com.mauriciotogneri.momowars.logger.ErrorLogger;
 import com.mauriciotogneri.momowars.model.Account;
@@ -112,7 +113,7 @@ public class BaseController extends Controller
         {
             return new ForbiddenException(e);
         }
-        catch (InvalidParametersException | PlayerAlreadyJoinedException | GamePlayingException | GameFinishedException e)
+        catch (InvalidParametersException | PlayerAlreadyJoinedException | PlayerAlreadyLeftException | GamePlayingException | GameFinishedException e)
         {
             return new WebApplicationException(Response.status(422).build());
         }
