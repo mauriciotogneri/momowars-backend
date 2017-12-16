@@ -1,19 +1,17 @@
-package com.mauriciotogneri.momowars.test.endpoints.players;
+package com.mauriciotogneri.momowars.test.endpoints.match;
 
 import com.mauriciotogneri.apivalidator.api.ApiRequest;
 import com.mauriciotogneri.apivalidator.api.ApiResult;
 import com.mauriciotogneri.apivalidator.parameters.path.PathParameters;
-import com.mauriciotogneri.momowars.api.endpoints.matches.JoinMatch;
+import com.mauriciotogneri.momowars.api.endpoints.matches.GetMatch;
 import com.mauriciotogneri.momowars.test.endpoints.BaseEndPoint;
 import com.mauriciotogneri.momowars.test.endpoints.EndPointDefinition;
 
-import okhttp3.RequestBody;
-
-public class JoinMatchEndPoint extends BaseEndPoint implements JoinMatch
+public class GetMatchEndPoint extends BaseEndPoint implements GetMatch
 {
-    public JoinMatchEndPoint()
+    public GetMatchEndPoint()
     {
-        super(new EndPointDefinition(JoinMatch.class));
+        super(new EndPointDefinition(GetMatch.class));
     }
 
     public ApiResult execute(String sessionToken, Long matchId) throws Exception
@@ -24,7 +22,6 @@ public class JoinMatchEndPoint extends BaseEndPoint implements JoinMatch
         ApiRequest.Builder builder = request();
         builder.header(HEADER_SESSION_TOKEN, sessionToken);
         builder.path(new PathParameters(path), PATH_FORMAT);
-        builder.body(RequestBody.create(null, new byte[] {}));
         builder.response(jsonResponse());
 
         return process(builder);

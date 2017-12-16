@@ -1,4 +1,4 @@
-package com.mauriciotogneri.momowars.test.endpoints.matches;
+package com.mauriciotogneri.momowars.test.endpoints.match;
 
 import com.mauriciotogneri.apivalidator.api.ApiRequest;
 import com.mauriciotogneri.apivalidator.api.ApiResult;

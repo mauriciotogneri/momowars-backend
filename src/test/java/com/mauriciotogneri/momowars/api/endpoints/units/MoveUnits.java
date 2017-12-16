@@ -2,7 +2,7 @@ package com.mauriciotogneri.momowars.api.endpoints.units;
 
 import com.mauriciotogneri.momowars.api.endpoints.units.MoveUnits.DataParameter;
 import com.mauriciotogneri.momowars.api.endpoints.units.MoveUnits.PathParameter;
-import com.mauriciotogneri.momowars.api.model.headers.SessionToken;
+import com.mauriciotogneri.momowars.api.model.SessionToken;
 import com.mauriciotogneri.momowars.types.MovementType;
 import com.mauriciotogneri.stewie.annotations.EndPoint;
 import com.mauriciotogneri.stewie.annotations.Parameters;

@@ -1,6 +1,6 @@
 package com.mauriciotogneri.momowars.test.suites;
 
-import com.mauriciotogneri.momowars.api.model.accounts.Account;
+import com.mauriciotogneri.momowars.api.model.Account;
 import com.mauriciotogneri.momowars.test.services.AccountServiceTest;
 import com.mauriciotogneri.momowars.test.services.MapServiceTest;
 import com.mauriciotogneri.momowars.test.services.MatchServiceTest;

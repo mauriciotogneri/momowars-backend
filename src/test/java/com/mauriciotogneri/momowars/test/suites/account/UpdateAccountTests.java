@@ -1,7 +1,7 @@
 package com.mauriciotogneri.momowars.test.suites.account;
 
 import com.mauriciotogneri.momowars.api.endpoints.accounts.UpdateAccount;
-import com.mauriciotogneri.momowars.api.model.accounts.Account;
+import com.mauriciotogneri.momowars.api.model.Account;
 import com.mauriciotogneri.momowars.test.suites.BaseTest;
 
 import org.junit.Assert;

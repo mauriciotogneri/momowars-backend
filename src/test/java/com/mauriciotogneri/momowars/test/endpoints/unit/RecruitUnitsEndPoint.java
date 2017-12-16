@@ -1,31 +1,31 @@
-package com.mauriciotogneri.momowars.test.endpoints.units;
+package com.mauriciotogneri.momowars.test.endpoints.unit;
 
 import com.mauriciotogneri.apivalidator.api.ApiRequest;
 import com.mauriciotogneri.apivalidator.api.ApiResult;
 import com.mauriciotogneri.apivalidator.parameters.body.JsonBodyParameter;
 import com.mauriciotogneri.apivalidator.parameters.path.PathParameters;
-import com.mauriciotogneri.momowars.api.endpoints.units.MoveUnits;
+import com.mauriciotogneri.momowars.api.endpoints.units.RecruitUnits;
 import com.mauriciotogneri.momowars.test.endpoints.BaseEndPoint;
 import com.mauriciotogneri.momowars.test.endpoints.EndPointDefinition;
-import com.mauriciotogneri.momowars.types.MovementType;
+import com.mauriciotogneri.momowars.types.UnitType;
 
-public class MoveUnitsEndPoint extends BaseEndPoint implements MoveUnits
+public class RecruitUnitsEndPoint extends BaseEndPoint implements RecruitUnits
 {
-    public MoveUnitsEndPoint()
+    public RecruitUnitsEndPoint()
     {
-        super(new EndPointDefinition(MoveUnits.class));
+        super(new EndPointDefinition(RecruitUnits.class));
     }
 
-    public ApiResult execute(String sessionToken, Long matchId, Long playerId, Long cellId, Long unitId, MovementType movement) throws Exception
+    public ApiResult execute(String sessionToken, Long matchId, Long playerId, Long cellId, UnitType type, Integer quantity) throws Exception
     {
         PathParameter path = new PathParameter();
         path.matchId = matchId;
         path.playerId = playerId;
         path.cellId = cellId;
-        path.unitId = unitId;
 
         DataParameter data = new DataParameter();
-        data.movement = movement;
+        data.type = type;
+        data.quantity = quantity;
 
         ApiRequest.Builder builder = request();
         builder.header(HEADER_SESSION_TOKEN, sessionToken);

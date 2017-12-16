@@ -1,16 +1,16 @@
-package com.mauriciotogneri.momowars.test.endpoints.maps;
+package com.mauriciotogneri.momowars.test.endpoints.match;
 
 import com.mauriciotogneri.apivalidator.api.ApiRequest;
 import com.mauriciotogneri.apivalidator.api.ApiResult;
-import com.mauriciotogneri.momowars.api.endpoints.maps.GetMaps;
+import com.mauriciotogneri.momowars.api.endpoints.matches.GetOpenMatches;
 import com.mauriciotogneri.momowars.test.endpoints.BaseEndPoint;
 import com.mauriciotogneri.momowars.test.endpoints.EndPointDefinition;
 
-public class GetMapsEndPoint extends BaseEndPoint implements GetMaps
+public class GetOpenMatchesEndPoint extends BaseEndPoint implements GetOpenMatches
 {
-    public GetMapsEndPoint()
+    public GetOpenMatchesEndPoint()
     {
-        super(new EndPointDefinition(GetMaps.class));
+        super(new EndPointDefinition(GetOpenMatches.class));
     }
 
     public ApiResult execute(String sessionToken) throws Exception

@@ -2,8 +2,8 @@ package com.mauriciotogneri.momowars.api.endpoints.matches;
 
 import com.mauriciotogneri.jsonschema.annotations.Minimum;
 import com.mauriciotogneri.momowars.api.endpoints.matches.CreateMatch.DataParameter;
-import com.mauriciotogneri.momowars.api.model.headers.SessionToken;
-import com.mauriciotogneri.momowars.api.model.matches.Match;
+import com.mauriciotogneri.momowars.api.model.Match;
+import com.mauriciotogneri.momowars.api.model.SessionToken;
 import com.mauriciotogneri.stewie.annotations.EndPoint;
 import com.mauriciotogneri.stewie.annotations.Parameters;
 import com.mauriciotogneri.stewie.annotations.Response;

@@ -1,10 +1,10 @@
 package com.mauriciotogneri.momowars.test.services;
 
 import com.mauriciotogneri.apivalidator.api.ApiResult;
-import com.mauriciotogneri.momowars.api.model.matches.Match;
-import com.mauriciotogneri.momowars.test.endpoints.matches.CreateMatchEndPoint;
-import com.mauriciotogneri.momowars.test.endpoints.matches.GetMatchEndPoint;
-import com.mauriciotogneri.momowars.test.endpoints.matches.GetOpenMatchesEndPoint;
+import com.mauriciotogneri.momowars.api.model.Match;
+import com.mauriciotogneri.momowars.test.endpoints.match.CreateMatchEndPoint;
+import com.mauriciotogneri.momowars.test.endpoints.match.GetMatchEndPoint;
+import com.mauriciotogneri.momowars.test.endpoints.match.GetOpenMatchesEndPoint;
 
 import static com.mauriciotogneri.stewie.types.StatusCode.CREATED;
 import static com.mauriciotogneri.stewie.types.StatusCode.OK;

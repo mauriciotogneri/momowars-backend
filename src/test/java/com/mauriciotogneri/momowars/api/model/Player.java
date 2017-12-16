@@ -1,4 +1,4 @@
-package com.mauriciotogneri.momowars.api.model.matches;
+package com.mauriciotogneri.momowars.api.model;
 
 import com.mauriciotogneri.jsonschema.annotations.Optional;
 import com.mauriciotogneri.momowars.types.PlayerStatus;

@@ -1,10 +1,10 @@
 package com.mauriciotogneri.momowars.test.services;
 
 import com.mauriciotogneri.apivalidator.api.ApiResult;
-import com.mauriciotogneri.momowars.api.model.accounts.Account;
-import com.mauriciotogneri.momowars.test.endpoints.accounts.CreateAccountEndPoint;
-import com.mauriciotogneri.momowars.test.endpoints.accounts.GetAccountEndPoint;
-import com.mauriciotogneri.momowars.test.endpoints.accounts.UpdateAccountEndPoint;
+import com.mauriciotogneri.momowars.api.model.Account;
+import com.mauriciotogneri.momowars.test.endpoints.account.CreateAccountEndPoint;
+import com.mauriciotogneri.momowars.test.endpoints.account.GetAccountEndPoint;
+import com.mauriciotogneri.momowars.test.endpoints.account.UpdateAccountEndPoint;
 
 import static com.mauriciotogneri.stewie.types.StatusCode.CREATED;
 import static com.mauriciotogneri.stewie.types.StatusCode.OK;

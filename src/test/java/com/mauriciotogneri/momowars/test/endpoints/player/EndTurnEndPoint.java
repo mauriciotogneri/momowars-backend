@@ -1,23 +1,23 @@
-package com.mauriciotogneri.momowars.test.endpoints.maps;
+package com.mauriciotogneri.momowars.test.endpoints.player;
 
 import com.mauriciotogneri.apivalidator.api.ApiRequest;
 import com.mauriciotogneri.apivalidator.api.ApiResult;
 import com.mauriciotogneri.apivalidator.parameters.path.PathParameters;
-import com.mauriciotogneri.momowars.api.endpoints.maps.GetMap;
+import com.mauriciotogneri.momowars.api.endpoints.players.EndTurn;
 import com.mauriciotogneri.momowars.test.endpoints.BaseEndPoint;
 import com.mauriciotogneri.momowars.test.endpoints.EndPointDefinition;
 
-public class GetMapEndPoint extends BaseEndPoint implements GetMap
+public class EndTurnEndPoint extends BaseEndPoint implements EndTurn
 {
-    public GetMapEndPoint()
+    public EndTurnEndPoint()
     {
-        super(new EndPointDefinition(GetMap.class));
+        super(new EndPointDefinition(EndTurn.class));
     }
 
-    public ApiResult execute(String sessionToken, Long mapId) throws Exception
+    public ApiResult execute(String sessionToken, Long playerId) throws Exception
     {
         PathParameter path = new PathParameter();
-        path.mapId = mapId;
+        path.playerId = playerId;
 
         ApiRequest.Builder builder = request();
         builder.header(HEADER_SESSION_TOKEN, sessionToken);

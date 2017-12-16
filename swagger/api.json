@@ -53,7 +53,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.matches.Map"
+                "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.Map"
               }
             },
             "description": "Successful operation"
@@ -93,7 +93,7 @@
         "responses": {
           "200": {
             "schema": {
-              "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.accounts.Account"
+              "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.Account"
             },
             "description": "Successful operation"
           },
@@ -127,7 +127,7 @@
         "responses": {
           "201": {
             "schema": {
-              "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.accounts.Account"
+              "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.Account"
             },
             "description": "Successful operation"
           },
@@ -159,7 +159,7 @@
         "responses": {
           "200": {
             "schema": {
-              "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.accounts.Account"
+              "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.Account"
             },
             "description": "Successful operation"
           },
@@ -273,7 +273,7 @@
         "responses": {
           "200": {
             "schema": {
-              "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.matches.Map"
+              "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.Map"
             },
             "description": "Successful operation"
           },
@@ -408,7 +408,7 @@
         "responses": {
           "201": {
             "schema": {
-              "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.matches.Match"
+              "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.Match"
             },
             "description": "Successful operation"
           },
@@ -445,7 +445,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.matches.Match"
+                "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.Match"
               }
             },
             "description": "Successful operation"
@@ -483,7 +483,7 @@
         "responses": {
           "201": {
             "schema": {
-              "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.matches.Match"
+              "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.Match"
             },
             "description": "Successful operation"
           },
@@ -613,7 +613,7 @@
         "responses": {
           "200": {
             "schema": {
-              "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.matches.Match"
+              "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.Match"
             },
             "description": "Successful operation"
           },
@@ -642,41 +642,6 @@
       "required": [
         "password",
         "nickname"
-      ]
-    },
-    "com.mauriciotogneri.momowars.api.model.matches.Match": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer"
-        },
-        "status": {
-          "type": "string",
-          "enum": [
-            "OPEN",
-            "PLAYING",
-            "CALCULATING",
-            "FINISHED"
-          ]
-        },
-        "map": {
-          "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.matches.Map"
-        },
-        "maxPlayers": {
-          "type": "integer"
-        },
-        "players": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.matches.Player"
-          }
-        }
-      },
-      "required": [
-        "id",
-        "status",
-        "map",
-        "maxPlayers"
       ]
     },
     "com.mauriciotogneri.momowars.api.endpoints.matches.CreateMatch.DataParameter": {
@@ -754,35 +719,41 @@
         "nickname"
       ]
     },
-    "com.mauriciotogneri.momowars.api.model.matches.Player": {
+    "com.mauriciotogneri.momowars.api.model.Cell": {
       "type": "object",
       "properties": {
         "id": {
           "type": "integer"
         },
-        "nickname": {
-          "type": "string"
-        },
-        "resources": {
-          "type": "integer"
-        },
-        "status": {
+        "type": {
           "type": "string",
           "enum": [
-            "PLAYING",
-            "WAITING",
-            "VICTORIOUS",
-            "DEFEATED",
-            "SURRENDERED"
+            "BASE",
+            "GRASS",
+            "EARTH",
+            "MOUNTAIN",
+            "FOREST",
+            "DESERT",
+            "CONCRETE",
+            "WATER",
+            "ICE"
           ]
+        },
+        "x": {
+          "type": "integer"
+        },
+        "y": {
+          "type": "integer"
         }
       },
       "required": [
-        "nickname",
-        "status"
+        "id",
+        "type",
+        "x",
+        "y"
       ]
     },
-    "com.mauriciotogneri.momowars.api.model.accounts.Account": {
+    "com.mauriciotogneri.momowars.api.model.Account": {
       "type": "object",
       "properties": {
         "email": {
@@ -792,7 +763,7 @@
           "type": "string"
         },
         "matches": {
-          "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.accounts.AccountMatches"
+          "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.AccountMatches"
         }
       },
       "required": [
@@ -801,7 +772,7 @@
         "matches"
       ]
     },
-    "com.mauriciotogneri.momowars.api.model.accounts.AccountMatches": {
+    "com.mauriciotogneri.momowars.api.model.AccountMatches": {
       "type": "object",
       "properties": {
         "open": {
@@ -853,7 +824,7 @@
         "quantity"
       ]
     },
-    "com.mauriciotogneri.momowars.api.model.matches.Map": {
+    "com.mauriciotogneri.momowars.api.model.Map": {
       "type": "object",
       "properties": {
         "id": {
@@ -873,7 +844,7 @@
         "cells": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.matches.Cell"
+            "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.Cell"
           },
           "minLength": 1
         }
@@ -886,38 +857,67 @@
         "cells"
       ]
     },
-    "com.mauriciotogneri.momowars.api.model.matches.Cell": {
+    "com.mauriciotogneri.momowars.api.model.Match": {
       "type": "object",
       "properties": {
         "id": {
           "type": "integer"
         },
-        "type": {
+        "status": {
           "type": "string",
           "enum": [
-            "BASE",
-            "GRASS",
-            "EARTH",
-            "MOUNTAIN",
-            "FOREST",
-            "DESERT",
-            "CONCRETE",
-            "WATER",
-            "ICE"
+            "OPEN",
+            "PLAYING",
+            "CALCULATING",
+            "FINISHED"
           ]
         },
-        "x": {
+        "map": {
+          "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.Map"
+        },
+        "maxPlayers": {
           "type": "integer"
         },
-        "y": {
-          "type": "integer"
+        "players": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/com.mauriciotogneri.momowars.api.model.Player"
+          }
         }
       },
       "required": [
         "id",
-        "type",
-        "x",
-        "y"
+        "status",
+        "map",
+        "maxPlayers"
+      ]
+    },
+    "com.mauriciotogneri.momowars.api.model.Player": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "resources": {
+          "type": "integer"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "PLAYING",
+            "WAITING",
+            "VICTORIOUS",
+            "DEFEATED",
+            "SURRENDERED"
+          ]
+        }
+      },
+      "required": [
+        "nickname",
+        "status"
       ]
     }
   }

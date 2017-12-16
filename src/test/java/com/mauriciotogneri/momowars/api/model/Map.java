@@ -1,4 +1,4 @@
-package com.mauriciotogneri.momowars.api.model.matches;
+package com.mauriciotogneri.momowars.api.model;
 
 import com.mauriciotogneri.jsonschema.annotations.MinLength;
 import com.mauriciotogneri.jsonschema.annotations.Minimum;

@@ -1,8 +1,8 @@
-package com.mauriciotogneri.momowars.test.suites.player;
+package com.mauriciotogneri.momowars.test.suites.match;
 
 import com.mauriciotogneri.momowars.api.endpoints.matches.JoinMatch;
-import com.mauriciotogneri.momowars.api.model.matches.Map;
-import com.mauriciotogneri.momowars.api.model.matches.Match;
+import com.mauriciotogneri.momowars.api.model.Map;
+import com.mauriciotogneri.momowars.api.model.Match;
 import com.mauriciotogneri.momowars.test.suites.BaseTest;
 
 import org.junit.FixMethodOrder;

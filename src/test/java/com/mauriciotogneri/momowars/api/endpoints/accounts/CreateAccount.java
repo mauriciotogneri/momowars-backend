@@ -3,7 +3,7 @@ package com.mauriciotogneri.momowars.api.endpoints.accounts;
 import com.mauriciotogneri.jsonschema.annotations.Format;
 import com.mauriciotogneri.jsonschema.annotations.MaxLength;
 import com.mauriciotogneri.momowars.api.endpoints.accounts.CreateAccount.DataParameter;
-import com.mauriciotogneri.momowars.api.model.accounts.Account;
+import com.mauriciotogneri.momowars.api.model.Account;
 import com.mauriciotogneri.stewie.annotations.EndPoint;
 import com.mauriciotogneri.stewie.annotations.Parameters;
 import com.mauriciotogneri.stewie.annotations.Response;

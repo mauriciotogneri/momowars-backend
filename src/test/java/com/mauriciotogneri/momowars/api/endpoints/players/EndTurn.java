@@ -1,7 +1,7 @@
 package com.mauriciotogneri.momowars.api.endpoints.players;
 
 import com.mauriciotogneri.momowars.api.endpoints.players.EndTurn.PathParameter;
-import com.mauriciotogneri.momowars.api.model.headers.SessionToken;
+import com.mauriciotogneri.momowars.api.model.SessionToken;
 import com.mauriciotogneri.stewie.annotations.EndPoint;
 import com.mauriciotogneri.stewie.annotations.Parameters;
 import com.mauriciotogneri.stewie.annotations.Response;

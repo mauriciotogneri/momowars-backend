@@ -1,9 +1,9 @@
 package com.mauriciotogneri.momowars.test.services;
 
 import com.mauriciotogneri.apivalidator.api.ApiResult;
-import com.mauriciotogneri.momowars.api.model.matches.Map;
-import com.mauriciotogneri.momowars.test.endpoints.maps.GetMapEndPoint;
-import com.mauriciotogneri.momowars.test.endpoints.maps.GetMapsEndPoint;
+import com.mauriciotogneri.momowars.api.model.Map;
+import com.mauriciotogneri.momowars.test.endpoints.map.GetMapEndPoint;
+import com.mauriciotogneri.momowars.test.endpoints.map.GetMapsEndPoint;
 
 import static com.mauriciotogneri.stewie.types.StatusCode.OK;
 

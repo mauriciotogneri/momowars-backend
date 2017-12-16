@@ -1,4 +1,4 @@
-package com.mauriciotogneri.momowars.test.endpoints.players;
+package com.mauriciotogneri.momowars.test.endpoints.player;
 
 import com.mauriciotogneri.apivalidator.api.ApiRequest;
 import com.mauriciotogneri.apivalidator.api.ApiResult;

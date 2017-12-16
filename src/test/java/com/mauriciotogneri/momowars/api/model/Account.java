@@ -1,4 +1,4 @@
-package com.mauriciotogneri.momowars.api.model.accounts;
+package com.mauriciotogneri.momowars.api.model;
 
 public class Account
 {
