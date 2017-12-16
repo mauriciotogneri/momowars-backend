@@ -1,6 +1,6 @@
-package com.mauriciotogneri.momowars.test.suites.player;
+package com.mauriciotogneri.momowars.test.suites.match;
 
-import com.mauriciotogneri.momowars.api.endpoints.players.EndTurn;
+import com.mauriciotogneri.momowars.api.endpoints.matches.EndTurn;
 import com.mauriciotogneri.momowars.test.suites.BaseTest;
 
 import org.junit.FixMethodOrder;
@@ -16,7 +16,7 @@ public class EndTurnTests extends BaseTest implements EndTurn
     @Test
     public void test1InvalidSession() throws Exception
     {
-        playerService.endTurn(UNAUTHORIZED, INVALID_SESSION, 0L);
+        playerService.endTurn(UNAUTHORIZED, INVALID_SESSION, 0L, 0L);
     }
 
     @Test
@@ -24,7 +24,7 @@ public class EndTurnTests extends BaseTest implements EndTurn
     {
         TestAccount testAccount = testAccountLogged();
 
-        playerService.endTurn(NOT_FOUND, testAccount.session, 0L);
+        playerService.endTurn(NOT_FOUND, testAccount.session, 0L, 0L);
     }
 
     @Test

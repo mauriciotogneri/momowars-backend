@@ -5,7 +5,6 @@ import com.mauriciotogneri.momowars.app.Main;
 import com.mauriciotogneri.momowars.test.suites.account.AccountSuite;
 import com.mauriciotogneri.momowars.test.suites.map.MapSuite;
 import com.mauriciotogneri.momowars.test.suites.match.MatchSuite;
-import com.mauriciotogneri.momowars.test.suites.player.PlayerSuite;
 import com.mauriciotogneri.momowars.test.suites.session.SessionSuite;
 
 import org.eclipse.jetty.server.Server;
@@ -19,8 +18,7 @@ import org.junit.runners.Suite;
         AccountSuite.class,
         SessionSuite.class,
         MatchSuite.class,
-        MapSuite.class,
-        PlayerSuite.class
+        MapSuite.class
 })
 public class TestSuite
 {

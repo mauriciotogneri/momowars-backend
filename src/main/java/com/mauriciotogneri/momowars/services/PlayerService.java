@@ -22,19 +22,21 @@ public class PlayerService
         playerDao.create(accountId, matchId);
     }
 
-    public void endTurn(Long playerId,
+    public void endTurn(Long matchId,
+                        Long playerId,
                         Long accountId) throws DatabaseException, ApiException
     {
         PlayerDao playerDao = new PlayerDao(connection);
 
-        playerDao.endTurn(playerId, accountId);
+        playerDao.endTurn(matchId, playerId, accountId);
     }
 
-    public void leaveMatch(Long playerId,
+    public void leaveMatch(Long matchId,
+                           Long playerId,
                            Long accountId) throws DatabaseException, ApiException
     {
         PlayerDao playerDao = new PlayerDao(connection);
 
-        playerDao.leaveMatch(playerId, accountId);
+        playerDao.leaveMatch(matchId, playerId, accountId);
     }
 }

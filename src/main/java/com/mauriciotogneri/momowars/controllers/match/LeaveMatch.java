@@ -1,4 +1,4 @@
-package com.mauriciotogneri.momowars.controllers.player;
+package com.mauriciotogneri.momowars.controllers.match;
 
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.server.BaseController;
@@ -14,25 +14,27 @@ import javax.ws.rs.core.Response;
 import static javax.ws.rs.core.Response.Status.NO_CONTENT;
 
 @Path("api")
-public class EndTurn extends BaseController
+public class LeaveMatch extends BaseController
 {
     @DELETE
-    @Path("v1/players/{playerId}/turn")
+    @Path("v1/matches/{matchId}/players/{playerId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response controller(@CookieParam(COOKIE_SESSION) String session,
+                               @PathParam(PARAM_MATCH_ID) Long matchId,
                                @PathParam(PARAM_PLAYER_ID) Long playerId) throws Exception
     {
-        return process(() -> response(session, playerId));
+        return process(() -> response(session, matchId, playerId));
     }
 
-    private Response response(String session, Long playerId) throws Exception
+    private Response response(String session, Long matchId, Long playerId) throws Exception
     {
         checkIfNotEmpty(session);
         checkIfNotEmpty(playerId);
+        checkIfNotEmpty(matchId);
 
         Account account = validateSession(session);
 
-        playerService.endTurn(playerId, account.id());
+        playerService.leaveMatch(matchId, playerId, account.id());
 
         return response(NO_CONTENT);
     }

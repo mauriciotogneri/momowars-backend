@@ -94,8 +94,9 @@ public class PlayerDao
         }
     }
 
-    public void endTurn(Long playerId, Long accountId) throws DatabaseException, ApiException
+    public void endTurn(Long matchId, Long playerId, Long accountId) throws DatabaseException, ApiException
     {
+        // TODO: check if player has given matchId
         PlayerRow row = getPlayer(playerId, accountId);
         updateStatus(playerId, PlayerStatus.WAITING);
 
@@ -108,8 +109,9 @@ public class PlayerDao
         }
     }
 
-    public void leaveMatch(Long playerId, Long accountId) throws DatabaseException, ApiException
+    public void leaveMatch(Long matchId, Long playerId, Long accountId) throws DatabaseException, ApiException
     {
+        // TODO: check if player has given matchId
         PlayerRow row = getPlayer(playerId, accountId);
 
         if ((row.status == PlayerStatus.VICTORIOUS) || (row.status == PlayerStatus.DEFEATED) || (row.status == PlayerStatus.SURRENDERED))

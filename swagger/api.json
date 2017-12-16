@@ -17,9 +17,6 @@
       "name": "Matches"
     },
     {
-      "name": "Players"
-    },
-    {
       "name": "Sessions"
     },
     {
@@ -169,50 +166,10 @@
         }
       }
     },
-    "/v1/players/{playerId}/turn": {
+    "/v1/matches/{matchId}/players/{playerId}": {
       "delete": {
         "tags": [
-          "Players"
-        ],
-        "summary": "EndTurn",
-        "description": "Ends the turn of the player for the given match",
-        "parameters": [
-          {
-            "name": "Cookie",
-            "in": "header",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "playerId",
-            "in": "path",
-            "required": true,
-            "type": "integer"
-          }
-        ],
-        "responses": {
-          "400": {
-            "description": "Parameters missing or invalid"
-          },
-          "422": {
-            "description": "Not allowed to end the turn on the given match"
-          },
-          "401": {
-            "description": "Session not valid"
-          },
-          "204": {
-            "description": "Successful operation"
-          },
-          "404": {
-            "description": "Player not found"
-          }
-        }
-      }
-    },
-    "/v1/players/{playerId}": {
-      "delete": {
-        "tags": [
-          "Players"
+          "Matches"
         ],
         "summary": "LeaveMatch",
         "description": "Leaves the current player's match",
@@ -222,6 +179,12 @@
             "in": "header",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "matchId",
+            "in": "path",
+            "required": true,
+            "type": "integer"
           },
           {
             "name": "playerId",
@@ -282,6 +245,52 @@
           },
           "404": {
             "description": "Invalid map id"
+          }
+        }
+      }
+    },
+    "/v1/matches/{matchId}/players/{playerId}/turn": {
+      "delete": {
+        "tags": [
+          "Matches"
+        ],
+        "summary": "EndTurn",
+        "description": "Ends the turn of the player for the given match",
+        "parameters": [
+          {
+            "name": "Cookie",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "matchId",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "playerId",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Parameters missing or invalid"
+          },
+          "422": {
+            "description": "Not allowed to end the turn on the given match"
+          },
+          "401": {
+            "description": "Session not valid"
+          },
+          "204": {
+            "description": "Successful operation"
+          },
+          "404": {
+            "description": "Player not found"
           }
         }
       }

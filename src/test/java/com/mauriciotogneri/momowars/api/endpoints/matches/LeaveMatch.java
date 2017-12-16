@@ -1,6 +1,6 @@
-package com.mauriciotogneri.momowars.api.endpoints.players;
+package com.mauriciotogneri.momowars.api.endpoints.matches;
 
-import com.mauriciotogneri.momowars.api.endpoints.players.LeaveMatch.PathParameter;
+import com.mauriciotogneri.momowars.api.endpoints.matches.LeaveMatch.PathParameter;
 import com.mauriciotogneri.momowars.api.model.SessionCookie;
 import com.mauriciotogneri.stewie.annotations.EndPoint;
 import com.mauriciotogneri.stewie.annotations.Parameters;
@@ -14,7 +14,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNPROCESSABLE_ENTITY;
 
 @EndPoint(
-        path = "/v1/players/{playerId}",
+        path = "/v1/matches/{matchId}/players/{playerId}",
         method = DELETE,
         description = "Leaves the current player's match"
 )
@@ -44,6 +44,8 @@ public interface LeaveMatch
 {
     class PathParameter
     {
+        public Long matchId;
+
         public Long playerId;
     }
 }

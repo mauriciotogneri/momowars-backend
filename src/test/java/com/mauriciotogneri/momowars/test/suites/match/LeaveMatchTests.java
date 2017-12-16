@@ -1,6 +1,6 @@
-package com.mauriciotogneri.momowars.test.suites.player;
+package com.mauriciotogneri.momowars.test.suites.match;
 
-import com.mauriciotogneri.momowars.api.endpoints.players.LeaveMatch;
+import com.mauriciotogneri.momowars.api.endpoints.matches.LeaveMatch;
 import com.mauriciotogneri.momowars.test.suites.BaseTest;
 
 import org.junit.FixMethodOrder;
@@ -16,7 +16,7 @@ public class LeaveMatchTests extends BaseTest implements LeaveMatch
     @Test
     public void test1InvalidSession() throws Exception
     {
-        playerService.leaveMatch(UNAUTHORIZED, INVALID_SESSION, 0L);
+        playerService.leaveMatch(UNAUTHORIZED, INVALID_SESSION, 0L, 0L);
     }
 
     @Test
@@ -24,7 +24,7 @@ public class LeaveMatchTests extends BaseTest implements LeaveMatch
     {
         TestAccount testAccount = testAccountLogged();
 
-        playerService.leaveMatch(NOT_FOUND, testAccount.session, 0L);
+        playerService.leaveMatch(NOT_FOUND, testAccount.session, 0L, 0L);
     }
 
     @Test

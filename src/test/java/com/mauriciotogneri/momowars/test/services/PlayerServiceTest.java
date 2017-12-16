@@ -1,9 +1,9 @@
 package com.mauriciotogneri.momowars.test.services;
 
 import com.mauriciotogneri.apivalidator.api.ApiResult;
+import com.mauriciotogneri.momowars.test.endpoints.match.EndTurnEndPoint;
 import com.mauriciotogneri.momowars.test.endpoints.match.JoinMatchEndPoint;
-import com.mauriciotogneri.momowars.test.endpoints.player.EndTurnEndPoint;
-import com.mauriciotogneri.momowars.test.endpoints.player.LeaveMatchEndPoint;
+import com.mauriciotogneri.momowars.test.endpoints.match.LeaveMatchEndPoint;
 
 public class PlayerServiceTest extends BaseService
 {
@@ -17,15 +17,15 @@ public class PlayerServiceTest extends BaseService
         checkHttpStatus(statusCode, result);
     }
 
-    public void endTurn(int statusCode, String session, Long playerId) throws Exception
+    public void endTurn(int statusCode, String session, Long matchId, Long playerId) throws Exception
     {
-        ApiResult result = endTurnEndPoint.execute(session, playerId);
+        ApiResult result = endTurnEndPoint.execute(session, matchId, playerId);
         checkHttpStatus(statusCode, result);
     }
 
-    public void leaveMatch(int statusCode, String session, Long playerId) throws Exception
+    public void leaveMatch(int statusCode, String session, Long matchId, Long playerId) throws Exception
     {
-        ApiResult result = leaveMatchEndPoint.execute(session, playerId);
+        ApiResult result = leaveMatchEndPoint.execute(session, matchId, playerId);
         checkHttpStatus(statusCode, result);
     }
 }

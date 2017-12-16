@@ -7,7 +7,10 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
         CreateMatchTests.class,
         GetMatchTests.class,
-        GetOpenMatchesTests.class
+        GetOpenMatchesTests.class,
+        JoinMatchTests.class,
+        EndTurnTests.class,
+        LeaveMatchTests.class
 })
 public class MatchSuite
 {

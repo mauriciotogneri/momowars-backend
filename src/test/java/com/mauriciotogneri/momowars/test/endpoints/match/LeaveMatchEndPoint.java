@@ -1,9 +1,9 @@
-package com.mauriciotogneri.momowars.test.endpoints.player;
+package com.mauriciotogneri.momowars.test.endpoints.match;
 
 import com.mauriciotogneri.apivalidator.api.ApiRequest;
 import com.mauriciotogneri.apivalidator.api.ApiResult;
 import com.mauriciotogneri.apivalidator.parameters.path.PathParameters;
-import com.mauriciotogneri.momowars.api.endpoints.players.LeaveMatch;
+import com.mauriciotogneri.momowars.api.endpoints.matches.LeaveMatch;
 import com.mauriciotogneri.momowars.test.endpoints.BaseEndPoint;
 import com.mauriciotogneri.momowars.test.endpoints.EndPointDefinition;
 
@@ -14,9 +14,10 @@ public class LeaveMatchEndPoint extends BaseEndPoint implements LeaveMatch
         super(new EndPointDefinition(LeaveMatch.class));
     }
 
-    public ApiResult execute(String session, Long playerId) throws Exception
+    public ApiResult execute(String session, Long matchId, Long playerId) throws Exception
     {
         PathParameter path = new PathParameter();
+        path.matchId = matchId;
         path.playerId = playerId;
 
         ApiRequest.Builder builder = request();
