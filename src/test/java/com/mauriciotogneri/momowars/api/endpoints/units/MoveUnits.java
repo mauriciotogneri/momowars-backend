@@ -2,7 +2,7 @@ package com.mauriciotogneri.momowars.api.endpoints.units;
 
 import com.mauriciotogneri.momowars.api.endpoints.units.MoveUnits.DataParameter;
 import com.mauriciotogneri.momowars.api.endpoints.units.MoveUnits.PathParameter;
-import com.mauriciotogneri.momowars.api.model.SessionToken;
+import com.mauriciotogneri.momowars.api.model.SessionCookie;
 import com.mauriciotogneri.momowars.types.MovementType;
 import com.mauriciotogneri.stewie.annotations.EndPoint;
 import com.mauriciotogneri.stewie.annotations.Parameters;
@@ -21,7 +21,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNPROCESSABLE_ENTITY;
         description = "Enqueues the command to move the units"
 )
 @Parameters(
-        header = SessionToken.class,
+        header = SessionCookie.class,
         path = PathParameter.class,
         data = DataParameter.class
 )
@@ -32,7 +32,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNPROCESSABLE_ENTITY;
         ),
         @Response(
                 code = UNAUTHORIZED,
-                description = "Session token not valid"
+                description = "Session not valid"
         ),
         @Response(
                 code = BAD_REQUEST,

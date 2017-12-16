@@ -23,17 +23,17 @@ public class AccountServiceTest extends BaseService
         return (statusCode == CREATED) ? json(result, Account.class) : null;
     }
 
-    public Account getAccount(int statusCode, String sessionToken) throws Exception
+    public Account getAccount(int statusCode, String session) throws Exception
     {
-        ApiResult result = getAccountEndPoint.execute(sessionToken);
+        ApiResult result = getAccountEndPoint.execute(session);
         checkHttpStatus(statusCode, result);
 
         return (statusCode == OK) ? json(result, Account.class) : null;
     }
 
-    public Account updateAccount(int statusCode, String sessionToken, String password, String nickname) throws Exception
+    public Account updateAccount(int statusCode, String session, String password, String nickname) throws Exception
     {
-        ApiResult result = updateAccountEndPoint.execute(sessionToken, password, nickname);
+        ApiResult result = updateAccountEndPoint.execute(session, password, nickname);
         checkHttpStatus(statusCode, result);
 
         return (statusCode == OK) ? json(result, Account.class) : null;

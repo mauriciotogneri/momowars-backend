@@ -16,7 +16,7 @@ public class LeaveMatchTests extends BaseTest implements LeaveMatch
     @Test
     public void test1InvalidSession() throws Exception
     {
-        playerService.leaveMatch(UNAUTHORIZED, INVALID_SESSION_TOKEN, 0L);
+        playerService.leaveMatch(UNAUTHORIZED, INVALID_SESSION, 0L);
     }
 
     @Test
@@ -24,7 +24,7 @@ public class LeaveMatchTests extends BaseTest implements LeaveMatch
     {
         TestAccount testAccount = testAccountLogged();
 
-        playerService.leaveMatch(NOT_FOUND, testAccount.sessionToken, 0L);
+        playerService.leaveMatch(NOT_FOUND, testAccount.session, 0L);
     }
 
     @Test
@@ -33,7 +33,7 @@ public class LeaveMatchTests extends BaseTest implements LeaveMatch
         // TODO
         /*TestAccount testAccount = testAccountLogged();
 
-        playerService.leaveMatch(UNPROCESSABLE_ENTITY, testAccount.sessionToken, 3L);*/
+        playerService.leaveMatch(UNPROCESSABLE_ENTITY, testAccount.session, 3L);*/
     }
 
     @Test
@@ -42,6 +42,6 @@ public class LeaveMatchTests extends BaseTest implements LeaveMatch
         // TODO
         /*TestAccount testAccount = testAccountLogged();
 
-        playerService.leaveMatch(NO_CONTENT, testAccount.sessionToken, 1L);*/
+        playerService.leaveMatch(NO_CONTENT, testAccount.session, 1L);*/
     }
 }

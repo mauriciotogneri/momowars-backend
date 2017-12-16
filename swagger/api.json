@@ -42,7 +42,7 @@
         ],
         "parameters": [
           {
-            "name": "Session-Token",
+            "name": "Cookie",
             "in": "header",
             "required": true,
             "type": "string"
@@ -59,7 +59,7 @@
             "description": "Successful operation"
           },
           "401": {
-            "description": "Session token not valid"
+            "description": "Session not valid"
           }
         }
       }
@@ -76,7 +76,7 @@
         ],
         "parameters": [
           {
-            "name": "Session-Token",
+            "name": "Cookie",
             "in": "header",
             "required": true,
             "type": "string"
@@ -101,7 +101,7 @@
             "description": "Parameters missing or invalid"
           },
           "401": {
-            "description": "Session token not valid"
+            "description": "Session not valid"
           }
         }
       },
@@ -150,7 +150,7 @@
         ],
         "parameters": [
           {
-            "name": "Session-Token",
+            "name": "Cookie",
             "in": "header",
             "required": true,
             "type": "string"
@@ -164,7 +164,7 @@
             "description": "Successful operation"
           },
           "401": {
-            "description": "Session token not valid"
+            "description": "Session not valid"
           }
         }
       }
@@ -178,7 +178,7 @@
         "description": "Ends the turn of the player for the given match",
         "parameters": [
           {
-            "name": "Session-Token",
+            "name": "Cookie",
             "in": "header",
             "required": true,
             "type": "string"
@@ -198,7 +198,7 @@
             "description": "Not allowed to end the turn on the given match"
           },
           "401": {
-            "description": "Session token not valid"
+            "description": "Session not valid"
           },
           "204": {
             "description": "Successful operation"
@@ -218,7 +218,7 @@
         "description": "Leaves the current player's match",
         "parameters": [
           {
-            "name": "Session-Token",
+            "name": "Cookie",
             "in": "header",
             "required": true,
             "type": "string"
@@ -238,7 +238,7 @@
             "description": "Player already left the match or the match is finished"
           },
           "401": {
-            "description": "Session token not valid"
+            "description": "Session not valid"
           },
           "204": {
             "description": "Successful operation"
@@ -258,7 +258,7 @@
         ],
         "parameters": [
           {
-            "name": "Session-Token",
+            "name": "Cookie",
             "in": "header",
             "required": true,
             "type": "string"
@@ -278,7 +278,7 @@
             "description": "Successful operation"
           },
           "401": {
-            "description": "Session token not valid"
+            "description": "Session not valid"
           },
           "404": {
             "description": "Invalid map id"
@@ -325,7 +325,7 @@
         "description": "Enqueues the command to move the units",
         "parameters": [
           {
-            "name": "Session-Token",
+            "name": "Cookie",
             "in": "header",
             "required": true,
             "type": "string"
@@ -371,7 +371,7 @@
             "description": "Invalid matchId, cellId or unitId"
           },
           "401": {
-            "description": "Session token not valid"
+            "description": "Session not valid"
           },
           "204": {
             "description": "Successful operation"
@@ -391,7 +391,7 @@
         ],
         "parameters": [
           {
-            "name": "Session-Token",
+            "name": "Cookie",
             "in": "header",
             "required": true,
             "type": "string"
@@ -419,7 +419,7 @@
             "description": "The map id doesn't correspond to a valid map"
           },
           "401": {
-            "description": "Session token not valid"
+            "description": "Session not valid"
           }
         }
       },
@@ -434,7 +434,7 @@
         ],
         "parameters": [
           {
-            "name": "Session-Token",
+            "name": "Cookie",
             "in": "header",
             "required": true,
             "type": "string"
@@ -451,7 +451,7 @@
             "description": "Successful operation"
           },
           "401": {
-            "description": "Session token not valid"
+            "description": "Session not valid"
           }
         }
       }
@@ -468,7 +468,7 @@
         ],
         "parameters": [
           {
-            "name": "Session-Token",
+            "name": "Cookie",
             "in": "header",
             "required": true,
             "type": "string"
@@ -491,7 +491,7 @@
             "description": "Either: the player is already in the match or the match is playing or the match is finished."
           },
           "401": {
-            "description": "Session token not valid"
+            "description": "Session not valid"
           },
           "404": {
             "description": "Invalid match id"
@@ -508,7 +508,7 @@
         "description": "Enqueues the command to recruit of the units",
         "parameters": [
           {
-            "name": "Session-Token",
+            "name": "Cookie",
             "in": "header",
             "required": true,
             "type": "string"
@@ -548,7 +548,7 @@
             "description": "Invalid matchId or cellId"
           },
           "401": {
-            "description": "Session token not valid"
+            "description": "Session not valid"
           },
           "204": {
             "description": "Successful operation"
@@ -598,7 +598,7 @@
         ],
         "parameters": [
           {
-            "name": "Session-Token",
+            "name": "Cookie",
             "in": "header",
             "required": true,
             "type": "string"
@@ -618,7 +618,7 @@
             "description": "Successful operation"
           },
           "401": {
-            "description": "Session token not valid"
+            "description": "Session not valid"
           },
           "403": {
             "description": "Not allowed to retrieve the match"

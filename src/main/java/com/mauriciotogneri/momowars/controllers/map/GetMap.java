@@ -3,8 +3,8 @@ package com.mauriciotogneri.momowars.controllers.map;
 import com.mauriciotogneri.momowars.model.Map;
 import com.mauriciotogneri.momowars.server.BaseController;
 
+import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -19,17 +19,17 @@ public class GetMap extends BaseController
     @GET
     @Path("v1/maps/{mapId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response controller(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken,
+    public Response controller(@CookieParam(COOKIE_SESSION) String session,
                                @PathParam(PARAM_MAP_ID) Long mapId) throws Exception
     {
-        return process(() -> response(sessionToken, mapId));
+        return process(() -> response(session, mapId));
     }
 
-    private Response response(String sessionToken, Long mapId) throws Exception
+    private Response response(String session, Long mapId) throws Exception
     {
-        checkIfNotEmpty(sessionToken);
+        checkIfNotEmpty(session);
         checkIfNotEmpty(mapId);
-        validateSessionToken(sessionToken);
+        validateSession(session);
 
         Map map = mapService.getMap(mapId);
 

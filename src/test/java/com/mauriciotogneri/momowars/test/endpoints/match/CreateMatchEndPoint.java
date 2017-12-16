@@ -14,14 +14,14 @@ public class CreateMatchEndPoint extends BaseEndPoint implements CreateMatch
         super(new EndPointDefinition(CreateMatch.class));
     }
 
-    public ApiResult execute(String sessionToken, Long mapId, Integer maxPlayers) throws Exception
+    public ApiResult execute(String session, Long mapId, Integer maxPlayers) throws Exception
     {
         DataParameter data = new DataParameter();
         data.mapId = mapId;
         data.maxPlayers = maxPlayers;
 
         ApiRequest.Builder builder = request();
-        builder.header(HEADER_SESSION_TOKEN, sessionToken);
+        builder.header(sessionCookie(session));
         builder.body(new JsonBodyParameter(data));
         builder.response(jsonResponse());
 

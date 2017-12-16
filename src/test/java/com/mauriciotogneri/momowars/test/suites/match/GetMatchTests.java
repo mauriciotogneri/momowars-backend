@@ -20,7 +20,7 @@ public class GetMatchTests extends BaseTest implements GetMatch
     @Test
     public void test1InvalidSession() throws Exception
     {
-        matchService.getMatch(UNAUTHORIZED, 0L, INVALID_SESSION_TOKEN);
+        matchService.getMatch(UNAUTHORIZED, 0L, INVALID_SESSION);
     }
 
     @Test
@@ -28,7 +28,7 @@ public class GetMatchTests extends BaseTest implements GetMatch
     {
         TestAccount testAccount = testAccountLogged();
 
-        matchService.getMatch(FORBIDDEN, 0L, testAccount.sessionToken);
+        matchService.getMatch(FORBIDDEN, 0L, testAccount.session);
     }
 
     @Test
@@ -36,10 +36,10 @@ public class GetMatchTests extends BaseTest implements GetMatch
     {
         TestAccount testAccount = testAccountLogged();
 
-        Map[] maps = mapService.getMaps(OK, testAccount.sessionToken);
+        Map[] maps = mapService.getMaps(OK, testAccount.session);
 
-        Match match = matchService.createMatch(CREATED, maps[0].id, 6, testAccount.sessionToken);
+        Match match = matchService.createMatch(CREATED, maps[0].id, 6, testAccount.session);
 
-        matchService.getMatch(OK, match.id, testAccount.sessionToken);
+        matchService.getMatch(OK, match.id, testAccount.session);
     }
 }

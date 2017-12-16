@@ -11,7 +11,7 @@ import com.mauriciotogneri.momowars.server.BaseController;
 import java.util.Objects;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.HeaderParam;
+import javax.ws.rs.CookieParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -27,18 +27,18 @@ public class CreateMatch extends BaseController
     @POST
     @Path("v1/matches")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response controller(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken,
+    public Response controller(@CookieParam(COOKIE_SESSION) String session,
                                Entity entity) throws Exception
     {
-        return process(() -> response(sessionToken, entity));
+        return process(() -> response(session, entity));
     }
 
-    private Response response(String sessionToken, Entity entity) throws Exception
+    private Response response(String session, Entity entity) throws Exception
     {
-        checkIfNotEmpty(sessionToken);
+        checkIfNotEmpty(session);
         checkIfNotEmpty(entity);
 
-        Account account = validateSessionToken(sessionToken);
+        Account account = validateSession(session);
 
         try
         {

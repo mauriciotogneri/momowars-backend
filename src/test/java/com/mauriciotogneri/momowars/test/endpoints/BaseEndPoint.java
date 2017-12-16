@@ -19,8 +19,6 @@ public class BaseEndPoint extends EndPoint
     private static Logger logger;
 
     protected static final Header CONTENT_TYPE_JSON = new Header("Content-Type", "application/json");
-    public static final String HEADER_SESSION_TOKEN = "Session-Token";
-
     protected static final String PATH_FORMAT = "{%s}";
 
     public BaseEndPoint(EndPointDefinition endPoint)
@@ -28,6 +26,11 @@ public class BaseEndPoint extends EndPoint
         super(httpClient(), logger(), endPoint.path(), endPoint.method());
 
         this.endPoint = endPoint;
+    }
+
+    protected Header sessionCookie(String value)
+    {
+        return new Header("Cookie", String.format("session=%s", value));
     }
 
     protected ExpectedResponse emptyResponse()

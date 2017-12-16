@@ -11,21 +11,21 @@ public class PlayerServiceTest extends BaseService
     private static final EndTurnEndPoint endTurnEndPoint = new EndTurnEndPoint();
     private static final LeaveMatchEndPoint leaveMatchEndPoint = new LeaveMatchEndPoint();
 
-    public void joinMatch(int statusCode, String sessionToken, Long matchId) throws Exception
+    public void joinMatch(int statusCode, String session, Long matchId) throws Exception
     {
-        ApiResult result = joinMatchEndPoint.execute(sessionToken, matchId);
+        ApiResult result = joinMatchEndPoint.execute(session, matchId);
         checkHttpStatus(statusCode, result);
     }
 
-    public void endTurn(int statusCode, String sessionToken, Long playerId) throws Exception
+    public void endTurn(int statusCode, String session, Long playerId) throws Exception
     {
-        ApiResult result = endTurnEndPoint.execute(sessionToken, playerId);
+        ApiResult result = endTurnEndPoint.execute(session, playerId);
         checkHttpStatus(statusCode, result);
     }
 
-    public void leaveMatch(int statusCode, String sessionToken, Long playerId) throws Exception
+    public void leaveMatch(int statusCode, String session, Long playerId) throws Exception
     {
-        ApiResult result = leaveMatchEndPoint.execute(sessionToken, playerId);
+        ApiResult result = leaveMatchEndPoint.execute(session, playerId);
         checkHttpStatus(statusCode, result);
     }
 }

@@ -14,7 +14,7 @@ import com.mauriciotogneri.momowars.exceptions.BadParametersException;
 import com.mauriciotogneri.momowars.exceptions.InvalidCredentialsException;
 import com.mauriciotogneri.momowars.exceptions.InvalidMatchException;
 import com.mauriciotogneri.momowars.exceptions.InvalidParametersException;
-import com.mauriciotogneri.momowars.exceptions.InvalidTokenException;
+import com.mauriciotogneri.momowars.exceptions.InvalidSessionException;
 import com.mauriciotogneri.momowars.exceptions.MapNotFoundException;
 import com.mauriciotogneri.momowars.exceptions.MatchFinishedException;
 import com.mauriciotogneri.momowars.exceptions.MatchNotFoundException;
@@ -38,7 +38,7 @@ import javax.ws.rs.core.Response.Status;
 
 public class BaseController extends Controller
 {
-    protected static final String HEADER_SESSION_TOKEN = "Session-Token";
+    protected static final String COOKIE_SESSION = "session";
 
     protected static final String PARAM_MATCH_ID = "matchId";
     protected static final String PARAM_MAP_ID = "mapId";
@@ -105,7 +105,7 @@ public class BaseController extends Controller
         {
             return new NotFoundException(e);
         }
-        catch (InvalidCredentialsException | InvalidTokenException e)
+        catch (InvalidCredentialsException | InvalidSessionException e)
         {
             return new UnauthorizedException(e);
         }
@@ -133,9 +133,9 @@ public class BaseController extends Controller
         }
     }
 
-    protected Account validateSessionToken(String sessionToken) throws DatabaseException, ApiException
+    protected Account validateSession(String session) throws DatabaseException, ApiException
     {
-        return accountService.getAccount(sessionToken);
+        return accountService.getAccount(session);
     }
 
     protected Response htmlResponse(BaseTemplate template) throws Exception

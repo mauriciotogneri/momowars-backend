@@ -14,13 +14,13 @@ public class EndTurnEndPoint extends BaseEndPoint implements EndTurn
         super(new EndPointDefinition(EndTurn.class));
     }
 
-    public ApiResult execute(String sessionToken, Long playerId) throws Exception
+    public ApiResult execute(String session, Long playerId) throws Exception
     {
         PathParameter path = new PathParameter();
         path.playerId = playerId;
 
         ApiRequest.Builder builder = request();
-        builder.header(HEADER_SESSION_TOKEN, sessionToken);
+        builder.header(sessionCookie(session));
         builder.path(new PathParameters(path), PATH_FORMAT);
         builder.response(jsonResponse());
 

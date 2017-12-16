@@ -5,8 +5,8 @@ import com.mauriciotogneri.momowars.server.BaseController;
 
 import java.util.List;
 
+import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -20,15 +20,15 @@ public class GetMaps extends BaseController
     @GET
     @Path("v1/maps")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response controller(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken) throws Exception
+    public Response controller(@CookieParam(COOKIE_SESSION) String session) throws Exception
     {
-        return process(() -> response(sessionToken));
+        return process(() -> response(session));
     }
 
-    private Response response(String sessionToken) throws Exception
+    private Response response(String session) throws Exception
     {
-        checkIfNotEmpty(sessionToken);
-        validateSessionToken(sessionToken);
+        checkIfNotEmpty(session);
+        validateSession(session);
 
         List<Map> maps = mapService.getMaps();
 

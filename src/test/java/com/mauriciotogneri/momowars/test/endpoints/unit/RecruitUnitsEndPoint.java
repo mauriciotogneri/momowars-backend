@@ -16,7 +16,7 @@ public class RecruitUnitsEndPoint extends BaseEndPoint implements RecruitUnits
         super(new EndPointDefinition(RecruitUnits.class));
     }
 
-    public ApiResult execute(String sessionToken, Long matchId, Long playerId, Long cellId, UnitType type, Integer quantity) throws Exception
+    public ApiResult execute(String session, Long matchId, Long playerId, Long cellId, UnitType type, Integer quantity) throws Exception
     {
         PathParameter path = new PathParameter();
         path.matchId = matchId;
@@ -28,7 +28,7 @@ public class RecruitUnitsEndPoint extends BaseEndPoint implements RecruitUnits
         data.quantity = quantity;
 
         ApiRequest.Builder builder = request();
-        builder.header(HEADER_SESSION_TOKEN, sessionToken);
+        builder.header(sessionCookie(session));
         builder.path(new PathParameters(path), PATH_FORMAT);
         builder.body(new JsonBodyParameter(data));
         builder.response(jsonResponse());

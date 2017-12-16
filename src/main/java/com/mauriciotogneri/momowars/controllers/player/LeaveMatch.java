@@ -3,8 +3,8 @@ package com.mauriciotogneri.momowars.controllers.player;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.server.BaseController;
 
+import javax.ws.rs.CookieParam;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -19,18 +19,18 @@ public class LeaveMatch extends BaseController
     @DELETE
     @Path("v1/players/{playerId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response controller(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken,
+    public Response controller(@CookieParam(COOKIE_SESSION) String session,
                                @PathParam(PARAM_PLAYER_ID) Long playerId) throws Exception
     {
-        return process(() -> response(sessionToken, playerId));
+        return process(() -> response(session, playerId));
     }
 
-    private Response response(String sessionToken, Long playerId) throws Exception
+    private Response response(String session, Long playerId) throws Exception
     {
-        checkIfNotEmpty(sessionToken);
+        checkIfNotEmpty(session);
         checkIfNotEmpty(playerId);
 
-        Account account = validateSessionToken(sessionToken);
+        Account account = validateSession(session);
 
         playerService.leaveMatch(playerId, account.id());
 

@@ -12,7 +12,7 @@ import com.mauriciotogneri.momowars.exceptions.AccountAlreadyExistsException;
 import com.mauriciotogneri.momowars.exceptions.AccountNotFoundException;
 import com.mauriciotogneri.momowars.exceptions.ApiException;
 import com.mauriciotogneri.momowars.exceptions.InvalidCredentialsException;
-import com.mauriciotogneri.momowars.exceptions.InvalidTokenException;
+import com.mauriciotogneri.momowars.exceptions.InvalidSessionException;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.AccountMatches;
 import com.mauriciotogneri.momowars.repository.match.MatchRow;
@@ -30,10 +30,10 @@ public class AccountDao
         this.connection = connection;
     }
 
-    public Account bySessionToken(String sessionToken) throws DatabaseException, ApiException
+    public Account bySession(String session) throws DatabaseException, ApiException
     {
-        SelectQuery<AccountRow> query = connection.selectQuery(AccountQueries.SELECT_BY_SESSION_TOKEN, AccountRow.class);
-        QueryResult<AccountRow> result = query.execute(sessionToken);
+        SelectQuery<AccountRow> query = connection.selectQuery(AccountQueries.SELECT_BY_SESSION, AccountRow.class);
+        QueryResult<AccountRow> result = query.execute(session);
 
         if (result.hasElements())
         {
@@ -43,7 +43,7 @@ public class AccountDao
         }
         else
         {
-            throw new InvalidTokenException();
+            throw new InvalidSessionException();
         }
     }
 
@@ -107,11 +107,11 @@ public class AccountDao
         return accounts;
     }
 
-    public void updateSessionToken(Long accountId, String sessionToken) throws DatabaseException
+    public void updateSession(Long accountId, String session) throws DatabaseException
     {
-        UpdateQuery query = connection.updateQuery(AccountQueries.UPDATE_SESSION_TOKEN);
+        UpdateQuery query = connection.updateQuery(AccountQueries.UPDATE_SESSION);
 
-        int rowsAffected = query.execute(sessionToken, accountId);
+        int rowsAffected = query.execute(session, accountId);
 
         if (rowsAffected != 1)
         {
@@ -172,7 +172,7 @@ public class AccountDao
         }
     }
 
-    public Account create(String email, String nickname, String sessionToken) throws ApiException
+    public Account create(String email, String nickname, String session) throws ApiException
     {
         InsertQuery query = connection.insertQuery(AccountQueries.CREATE);
 
@@ -181,7 +181,7 @@ public class AccountDao
             long accountId = query.execute(
                     email,
                     nickname,
-                    sessionToken
+                    session
             );
 
             return getAccount(accountId);

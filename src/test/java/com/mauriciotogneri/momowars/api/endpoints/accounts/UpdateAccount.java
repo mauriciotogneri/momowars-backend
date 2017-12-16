@@ -3,7 +3,7 @@ package com.mauriciotogneri.momowars.api.endpoints.accounts;
 import com.mauriciotogneri.jsonschema.annotations.MaxLength;
 import com.mauriciotogneri.momowars.api.endpoints.accounts.UpdateAccount.DataParameter;
 import com.mauriciotogneri.momowars.api.model.Account;
-import com.mauriciotogneri.momowars.api.model.SessionToken;
+import com.mauriciotogneri.momowars.api.model.SessionCookie;
 import com.mauriciotogneri.stewie.annotations.EndPoint;
 import com.mauriciotogneri.stewie.annotations.Parameters;
 import com.mauriciotogneri.stewie.annotations.Response;
@@ -21,7 +21,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
         description = "Updates a user's account"
 )
 @Parameters(
-        header = SessionToken.class,
+        header = SessionCookie.class,
         data = DataParameter.class
 )
 @Responses({
@@ -37,7 +37,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
         ),
         @Response(
                 code = UNAUTHORIZED,
-                description = "Session token not valid"
+                description = "Session not valid"
         )
 })
 public interface UpdateAccount

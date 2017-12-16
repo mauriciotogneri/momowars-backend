@@ -3,7 +3,7 @@ package com.mauriciotogneri.momowars.api.endpoints.units;
 import com.mauriciotogneri.jsonschema.annotations.Minimum;
 import com.mauriciotogneri.momowars.api.endpoints.units.RecruitUnits.DataParameter;
 import com.mauriciotogneri.momowars.api.endpoints.units.RecruitUnits.PathParameter;
-import com.mauriciotogneri.momowars.api.model.SessionToken;
+import com.mauriciotogneri.momowars.api.model.SessionCookie;
 import com.mauriciotogneri.momowars.types.UnitType;
 import com.mauriciotogneri.stewie.annotations.EndPoint;
 import com.mauriciotogneri.stewie.annotations.Parameters;
@@ -22,7 +22,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNPROCESSABLE_ENTITY;
         description = "Enqueues the command to recruit of the units"
 )
 @Parameters(
-        header = SessionToken.class,
+        header = SessionCookie.class,
         path = PathParameter.class,
         data = DataParameter.class
 )
@@ -33,7 +33,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNPROCESSABLE_ENTITY;
         ),
         @Response(
                 code = UNAUTHORIZED,
-                description = "Session token not valid"
+                description = "Session not valid"
         ),
         @Response(
                 code = BAD_REQUEST,

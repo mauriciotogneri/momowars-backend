@@ -2,7 +2,7 @@ package com.mauriciotogneri.momowars.api.endpoints.matches;
 
 import com.mauriciotogneri.momowars.api.endpoints.matches.GetMatch.PathParameter;
 import com.mauriciotogneri.momowars.api.model.Match;
-import com.mauriciotogneri.momowars.api.model.SessionToken;
+import com.mauriciotogneri.momowars.api.model.SessionCookie;
 import com.mauriciotogneri.stewie.annotations.EndPoint;
 import com.mauriciotogneri.stewie.annotations.Parameters;
 import com.mauriciotogneri.stewie.annotations.Response;
@@ -20,7 +20,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
         description = "Returns a match by its id"
 )
 @Parameters(
-        header = SessionToken.class,
+        header = SessionCookie.class,
         path = PathParameter.class
 )
 @Responses({
@@ -32,7 +32,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
         ),
         @Response(
                 code = UNAUTHORIZED,
-                description = "Session token not valid"
+                description = "Session not valid"
         ),
         @Response(
                 code = FORBIDDEN,

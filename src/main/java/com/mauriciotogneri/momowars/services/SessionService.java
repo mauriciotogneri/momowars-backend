@@ -4,7 +4,7 @@ import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.exceptions.AccountNotFoundException;
 import com.mauriciotogneri.momowars.exceptions.ApiException;
-import com.mauriciotogneri.momowars.exceptions.InvalidTokenException;
+import com.mauriciotogneri.momowars.exceptions.InvalidSessionException;
 import com.mauriciotogneri.momowars.federation.FederationIdentity;
 import com.mauriciotogneri.momowars.federation.GoogleIdentity;
 import com.mauriciotogneri.momowars.model.Account;
@@ -29,11 +29,11 @@ public class SessionService
         AccountDao accountDao = new AccountDao(connection);
         Account account = accountDao.byCredentials(email, password);
 
-        String sessionToken = newSessionToken();
+        String session = newSession();
 
-        accountDao.updateSessionToken(account.id(), sessionToken);
+        accountDao.updateSession(account.id(), session);
 
-        return sessionToken;
+        return session;
     }
 
     public String createSessionGoogle(String token) throws DatabaseException, ApiException
@@ -47,7 +47,7 @@ public class SessionService
 
             AccountDao accountDao = new AccountDao(connection);
 
-            String sessionToken = newSessionToken();
+            String session = newSession();
 
             try
             {
@@ -55,23 +55,23 @@ public class SessionService
 
                 accountDao.updateNickname(account.id(), identity.name());
                 accountDao.updatePicture(account.id(), identity.picture());
-                accountDao.updateSessionToken(account.id(), sessionToken);
+                accountDao.updateSession(account.id(), session);
             }
             catch (AccountNotFoundException e)
             {
-                Account account = accountDao.create(identity.email(), identity.name(), sessionToken);
+                Account account = accountDao.create(identity.email(), identity.name(), session);
                 accountDao.updatePicture(account.id(), identity.picture());
             }
 
-            return sessionToken;
+            return session;
         }
         else
         {
-            throw new InvalidTokenException();
+            throw new InvalidSessionException();
         }
     }
 
-    public static String newSessionToken()
+    public static String newSession()
     {
         return Hash.of(UUID.randomUUID().toString());
     }

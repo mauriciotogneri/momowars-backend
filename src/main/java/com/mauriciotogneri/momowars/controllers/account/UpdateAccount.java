@@ -7,7 +7,7 @@ import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.server.BaseController;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.HeaderParam;
+import javax.ws.rs.CookieParam;
 import javax.ws.rs.PATCH;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -24,16 +24,17 @@ public class UpdateAccount extends BaseController
     @Path("v1/account")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response controller(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken, Entity accountRequest) throws Exception
+    public Response controller(@CookieParam(COOKIE_SESSION) String session,
+                               Entity accountRequest) throws Exception
     {
-        return process(() -> response(sessionToken, accountRequest));
+        return process(() -> response(session, accountRequest));
     }
 
-    private Response response(String sessionToken, Entity entity) throws Exception
+    private Response response(String session, Entity entity) throws Exception
     {
         checkIfNotEmpty(entity);
 
-        Account account = accountService.updateAccount(sessionToken, entity.password, entity.nickname);
+        Account account = accountService.updateAccount(session, entity.password, entity.nickname);
 
         return response(OK, account);
     }

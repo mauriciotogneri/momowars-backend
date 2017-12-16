@@ -19,7 +19,7 @@ public class BaseTest
     protected final PlayerServiceTest playerService = new PlayerServiceTest();
     protected final MapServiceTest mapService = new MapServiceTest();
 
-    protected static final String INVALID_SESSION_TOKEN = "invalid.session.token";
+    protected static final String INVALID_SESSION = "invalid.session";
 
     public static String randomEmail()
     {
@@ -55,9 +55,9 @@ public class BaseTest
 
         Account account = accountService.createAccount(CREATED, email, password, nickname);
 
-        String sessionToken = sessionService.createSessionEmail(CREATED, email, password);
+        String session = sessionService.createSessionEmail(CREATED, email, password);
 
-        return new TestAccount(account, password, sessionToken);
+        return new TestAccount(account, password, session);
     }
 
     public static class TestAccount
@@ -66,15 +66,15 @@ public class BaseTest
         public final String email;
         public final String password;
         public final String nickname;
-        public final String sessionToken;
+        public final String session;
 
-        public TestAccount(Account account, String password, String sessionToken)
+        public TestAccount(Account account, String password, String session)
         {
             this.account = account;
             this.email = account.email;
             this.password = password;
             this.nickname = account.nickname;
-            this.sessionToken = sessionToken;
+            this.session = session;
         }
 
         public TestAccount(Account account, String password)

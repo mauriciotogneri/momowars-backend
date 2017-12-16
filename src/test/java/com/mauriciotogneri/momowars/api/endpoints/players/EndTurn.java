@@ -1,7 +1,7 @@
 package com.mauriciotogneri.momowars.api.endpoints.players;
 
 import com.mauriciotogneri.momowars.api.endpoints.players.EndTurn.PathParameter;
-import com.mauriciotogneri.momowars.api.model.SessionToken;
+import com.mauriciotogneri.momowars.api.model.SessionCookie;
 import com.mauriciotogneri.stewie.annotations.EndPoint;
 import com.mauriciotogneri.stewie.annotations.Parameters;
 import com.mauriciotogneri.stewie.annotations.Response;
@@ -20,7 +20,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNPROCESSABLE_ENTITY;
         description = "Ends the turn of the player for the given match"
 )
 @Parameters(
-        header = SessionToken.class,
+        header = SessionCookie.class,
         path = PathParameter.class
 )
 @Responses({
@@ -30,7 +30,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNPROCESSABLE_ENTITY;
         ),
         @Response(
                 code = UNAUTHORIZED,
-                description = "Session token not valid"
+                description = "Session not valid"
         ),
         @Response(
                 code = BAD_REQUEST,

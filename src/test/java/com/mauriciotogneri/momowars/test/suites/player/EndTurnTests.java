@@ -16,7 +16,7 @@ public class EndTurnTests extends BaseTest implements EndTurn
     @Test
     public void test1InvalidSession() throws Exception
     {
-        playerService.endTurn(UNAUTHORIZED, INVALID_SESSION_TOKEN, 0L);
+        playerService.endTurn(UNAUTHORIZED, INVALID_SESSION, 0L);
     }
 
     @Test
@@ -24,7 +24,7 @@ public class EndTurnTests extends BaseTest implements EndTurn
     {
         TestAccount testAccount = testAccountLogged();
 
-        playerService.endTurn(NOT_FOUND, testAccount.sessionToken, 0L);
+        playerService.endTurn(NOT_FOUND, testAccount.session, 0L);
     }
 
     @Test

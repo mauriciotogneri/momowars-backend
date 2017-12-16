@@ -18,7 +18,7 @@ public class GetAccountTests extends BaseTest implements GetAccount
     @Test
     public void test1InvalidSession() throws Exception
     {
-        accountService.getAccount(UNAUTHORIZED, INVALID_SESSION_TOKEN);
+        accountService.getAccount(UNAUTHORIZED, INVALID_SESSION);
     }
 
     @Test
@@ -26,7 +26,7 @@ public class GetAccountTests extends BaseTest implements GetAccount
     {
         TestAccount testAccount = testAccountLogged();
 
-        Account account = accountService.getAccount(OK, testAccount.sessionToken);
+        Account account = accountService.getAccount(OK, testAccount.session);
         Assert.assertEquals(testAccount.email, account.email);
         Assert.assertEquals(testAccount.nickname, account.nickname);
     }

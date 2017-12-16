@@ -14,13 +14,13 @@ public class GetMapEndPoint extends BaseEndPoint implements GetMap
         super(new EndPointDefinition(GetMap.class));
     }
 
-    public ApiResult execute(String sessionToken, Long mapId) throws Exception
+    public ApiResult execute(String session, Long mapId) throws Exception
     {
         PathParameter path = new PathParameter();
         path.mapId = mapId;
 
         ApiRequest.Builder builder = request();
-        builder.header(HEADER_SESSION_TOKEN, sessionToken);
+        builder.header(sessionCookie(session));
         builder.path(new PathParameters(path), PATH_FORMAT);
         builder.response(jsonResponse());
 

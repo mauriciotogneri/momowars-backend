@@ -9,6 +9,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
@@ -29,11 +30,11 @@ public class CreateSessionGoogle extends BaseController
     {
         checkIfNotEmpty(entity);
 
-        String sessionToken = sessionService.createSessionGoogle(entity.token);
+        String session = sessionService.createSessionGoogle(entity.token);
 
         return Response
                 .status(CREATED)
-                .header(HEADER_SESSION_TOKEN, sessionToken)
+                .cookie(new NewCookie(COOKIE_SESSION, session))
                 .build();
     }
 

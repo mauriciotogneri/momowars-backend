@@ -18,7 +18,7 @@ public class GetOpenMatchesTests extends BaseTest implements GetOpenMatches
     @Test
     public void test1InvalidSession() throws Exception
     {
-        matchService.getOpenMatches(UNAUTHORIZED, INVALID_SESSION_TOKEN);
+        matchService.getOpenMatches(UNAUTHORIZED, INVALID_SESSION);
     }
 
     @Test
@@ -26,7 +26,7 @@ public class GetOpenMatchesTests extends BaseTest implements GetOpenMatches
     {
         TestAccount testAccount = testAccountLogged();
 
-        Match[] matches = matchService.getOpenMatches(OK, testAccount.sessionToken);
+        Match[] matches = matchService.getOpenMatches(OK, testAccount.session);
         Assert.assertNotEquals(0, matches.length);
     }
 }

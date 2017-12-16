@@ -30,27 +30,27 @@ public class AccountService
 
         Account account = accountDao.create(email,
                                             nickname,
-                                            SessionService.newSessionToken());
+                                            SessionService.newSession());
 
         accountDao.updatePassword(account.id(), password);
 
         return account;
     }
 
-    public Account getAccount(String sessionToken) throws DatabaseException, ApiException
+    public Account getAccount(String session) throws DatabaseException, ApiException
     {
         AccountDao accountDao = new AccountDao(connection);
 
-        return accountDao.bySessionToken(sessionToken);
+        return accountDao.bySession(session);
     }
 
-    public Account updateAccount(String sessionToken,
+    public Account updateAccount(String session,
                                  String newPassword,
                                  String newNickname) throws DatabaseException, ApiException
     {
         AccountDao accountDao = new AccountDao(connection);
 
-        Account account = getAccount(sessionToken);
+        Account account = getAccount(session);
 
         if (newPassword != null)
         {

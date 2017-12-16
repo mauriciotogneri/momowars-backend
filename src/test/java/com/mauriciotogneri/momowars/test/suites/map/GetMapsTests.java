@@ -16,7 +16,7 @@ public class GetMapsTests extends BaseTest implements GetMaps
     @Test
     public void test1InvalidSession() throws Exception
     {
-        mapService.getMaps(UNAUTHORIZED, INVALID_SESSION_TOKEN);
+        mapService.getMaps(UNAUTHORIZED, INVALID_SESSION);
     }
 
     @Test
@@ -24,6 +24,6 @@ public class GetMapsTests extends BaseTest implements GetMaps
     {
         TestAccount testAccount = testAccountLogged();
 
-        mapService.getMaps(OK, testAccount.sessionToken);
+        mapService.getMaps(OK, testAccount.session);
     }
 }

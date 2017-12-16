@@ -1,7 +1,6 @@
 package com.mauriciotogneri.momowars.test.services;
 
 import com.mauriciotogneri.apivalidator.api.ApiResult;
-import com.mauriciotogneri.momowars.test.endpoints.BaseEndPoint;
 import com.mauriciotogneri.momowars.test.endpoints.session.CreateSessionEmailEndPoint;
 import com.mauriciotogneri.momowars.test.endpoints.session.CreateSessionGoogleEndPoint;
 
@@ -15,7 +14,7 @@ public class SessionServiceTest extends BaseService
         ApiResult result = createSessionEndPoint.execute(email, password);
         checkHttpStatus(statusCode, result);
 
-        return result.response().header(BaseEndPoint.HEADER_SESSION_TOKEN);
+        return sessionCookie(result);
     }
 
     public String createSessionGoogle(int statusCode, String token) throws Exception
@@ -23,6 +22,6 @@ public class SessionServiceTest extends BaseService
         ApiResult result = createGoogleEndPoint.execute(token);
         checkHttpStatus(statusCode, result);
 
-        return result.response().header(BaseEndPoint.HEADER_SESSION_TOKEN);
+        return sessionCookie(result);
     }
 }

@@ -20,14 +20,14 @@ public class UpdateAccountTests extends BaseTest implements UpdateAccount
     public void test1InvalidSession() throws Exception
     {
         TestAccount account = testAccountLogged();
-        accountService.updateAccount(UNAUTHORIZED, INVALID_SESSION_TOKEN, account.password, account.nickname);
+        accountService.updateAccount(UNAUTHORIZED, INVALID_SESSION, account.password, account.nickname);
     }
 
     @Test
     public void test2InvalidParameters() throws Exception
     {
         TestAccount account = testAccountLogged();
-        accountService.updateAccount(BAD_REQUEST, account.sessionToken, null, null);
+        accountService.updateAccount(BAD_REQUEST, account.session, null, null);
     }
 
     @Test
@@ -35,7 +35,7 @@ public class UpdateAccountTests extends BaseTest implements UpdateAccount
     {
         TestAccount testAccount = testAccountLogged();
 
-        Account account = accountService.updateAccount(OK, testAccount.sessionToken, testAccount.password, testAccount.nickname);
+        Account account = accountService.updateAccount(OK, testAccount.session, testAccount.password, testAccount.nickname);
         Assert.assertNotEquals(null, account);
     }
 }

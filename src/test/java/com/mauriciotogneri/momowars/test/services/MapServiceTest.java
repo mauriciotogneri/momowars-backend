@@ -12,17 +12,17 @@ public class MapServiceTest extends BaseService
     private static final GetMapsEndPoint getMapsEndPoint = new GetMapsEndPoint();
     private static final GetMapEndPoint getMapEndPoint = new GetMapEndPoint();
 
-    public Map[] getMaps(int statusCode, String sessionToken) throws Exception
+    public Map[] getMaps(int statusCode, String session) throws Exception
     {
-        ApiResult result = getMapsEndPoint.execute(sessionToken);
+        ApiResult result = getMapsEndPoint.execute(session);
         checkHttpStatus(statusCode, result);
 
         return (statusCode == OK) ? json(result, Map[].class) : new Map[0];
     }
 
-    public Map getMap(int statusCode, String sessionToken, Long mapId) throws Exception
+    public Map getMap(int statusCode, String session, Long mapId) throws Exception
     {
-        ApiResult result = getMapEndPoint.execute(sessionToken, mapId);
+        ApiResult result = getMapEndPoint.execute(session, mapId);
         checkHttpStatus(statusCode, result);
 
         return (statusCode == OK) ? json(result, Map.class) : null;

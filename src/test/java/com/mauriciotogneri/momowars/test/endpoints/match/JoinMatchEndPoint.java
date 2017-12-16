@@ -16,13 +16,13 @@ public class JoinMatchEndPoint extends BaseEndPoint implements JoinMatch
         super(new EndPointDefinition(JoinMatch.class));
     }
 
-    public ApiResult execute(String sessionToken, Long matchId) throws Exception
+    public ApiResult execute(String session, Long matchId) throws Exception
     {
         PathParameter path = new PathParameter();
         path.matchId = matchId;
 
         ApiRequest.Builder builder = request();
-        builder.header(HEADER_SESSION_TOKEN, sessionToken);
+        builder.header(sessionCookie(session));
         builder.path(new PathParameters(path), PATH_FORMAT);
         builder.body(RequestBody.create(null, new byte[] {}));
         builder.response(jsonResponse());

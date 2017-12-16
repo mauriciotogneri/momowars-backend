@@ -54,7 +54,7 @@ public class CreateSessionEmailTests extends BaseTest implements CreateSessionEm
     {
         TestAccount account = testAccount();
 
-        String sessionToken = sessionService.createSessionEmail(CREATED, account.email, account.password);
-        Assert.assertNotNull(sessionToken);
+        String session = sessionService.createSessionEmail(CREATED, account.email, account.password);
+        Assert.assertNotNull(session);
     }
 }

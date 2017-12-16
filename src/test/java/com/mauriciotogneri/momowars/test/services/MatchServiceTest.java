@@ -15,25 +15,25 @@ public class MatchServiceTest extends BaseService
     private static final GetOpenMatchesEndPoint getOpenMatchesEndPoint = new GetOpenMatchesEndPoint();
     private static final GetMatchEndPoint getMatchEndPoint = new GetMatchEndPoint();
 
-    public Match createMatch(int statusCode, Long mapId, Integer maxPlayers, String sessionToken) throws Exception
+    public Match createMatch(int statusCode, Long mapId, Integer maxPlayers, String session) throws Exception
     {
-        ApiResult result = createMatchEndPoint.execute(sessionToken, mapId, maxPlayers);
+        ApiResult result = createMatchEndPoint.execute(session, mapId, maxPlayers);
         checkHttpStatus(statusCode, result);
 
         return (statusCode == CREATED) ? json(result, Match.class) : null;
     }
 
-    public Match[] getOpenMatches(int statusCode, String sessionToken) throws Exception
+    public Match[] getOpenMatches(int statusCode, String session) throws Exception
     {
-        ApiResult result = getOpenMatchesEndPoint.execute(sessionToken);
+        ApiResult result = getOpenMatchesEndPoint.execute(session);
         checkHttpStatus(statusCode, result);
 
         return (statusCode == OK) ? json(result, Match[].class) : new Match[0];
     }
 
-    public Match getMatch(int statusCode, Long matchId, String sessionToken) throws Exception
+    public Match getMatch(int statusCode, Long matchId, String session) throws Exception
     {
-        ApiResult result = getMatchEndPoint.execute(sessionToken, matchId);
+        ApiResult result = getMatchEndPoint.execute(session, matchId);
         checkHttpStatus(statusCode, result);
 
         return (statusCode == OK) ? json(result, Match.class) : null;

@@ -13,10 +13,10 @@ public class GetOpenMatchesEndPoint extends BaseEndPoint implements GetOpenMatch
         super(new EndPointDefinition(GetOpenMatches.class));
     }
 
-    public ApiResult execute(String sessionToken) throws Exception
+    public ApiResult execute(String session) throws Exception
     {
         ApiRequest.Builder builder = request();
-        builder.header(HEADER_SESSION_TOKEN, sessionToken);
+        builder.header(sessionCookie(session));
         builder.response(jsonResponse());
 
         return process(builder);

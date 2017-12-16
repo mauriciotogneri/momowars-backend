@@ -3,8 +3,8 @@ package com.mauriciotogneri.momowars.controllers.account;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.server.BaseController;
 
+import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -18,16 +18,16 @@ public class GetAccount extends BaseController
     @GET
     @Path("v1/account")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response controller(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken) throws Exception
+    public Response controller(@CookieParam(COOKIE_SESSION) String session) throws Exception
     {
-        return process(() -> response(sessionToken));
+        return process(() -> response(session));
     }
 
-    private Response response(String sessionToken) throws Exception
+    private Response response(String session) throws Exception
     {
-        checkIfNotEmpty(sessionToken);
+        checkIfNotEmpty(session);
 
-        Account account = accountService.getAccount(sessionToken);
+        Account account = accountService.getAccount(session);
 
         return response(OK, account);
     }

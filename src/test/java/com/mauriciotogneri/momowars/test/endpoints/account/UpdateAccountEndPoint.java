@@ -14,14 +14,14 @@ public class UpdateAccountEndPoint extends BaseEndPoint implements UpdateAccount
         super(new EndPointDefinition(UpdateAccount.class));
     }
 
-    public ApiResult execute(String sessionToken, String password, String nickname) throws Exception
+    public ApiResult execute(String session, String password, String nickname) throws Exception
     {
         DataParameter data = new DataParameter();
         data.password = password;
         data.nickname = nickname;
 
         ApiRequest.Builder builder = request();
-        builder.header(HEADER_SESSION_TOKEN, sessionToken);
+        builder.header(sessionCookie(session));
         builder.body(new JsonBodyParameter(data));
         builder.response(jsonResponse());
 

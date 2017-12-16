@@ -20,7 +20,7 @@ public class CreateMatchTests extends BaseTest implements CreateMatch
     @Test
     public void test1InvalidSession() throws Exception
     {
-        matchService.createMatch(UNAUTHORIZED, 0L, 2, INVALID_SESSION_TOKEN);
+        matchService.createMatch(UNAUTHORIZED, 0L, 2, INVALID_SESSION);
     }
 
     @Test
@@ -28,7 +28,7 @@ public class CreateMatchTests extends BaseTest implements CreateMatch
     {
         TestAccount testAccount = testAccountLogged();
 
-        matchService.createMatch(BAD_REQUEST, null, 6, testAccount.sessionToken);
+        matchService.createMatch(BAD_REQUEST, null, 6, testAccount.session);
     }
 
     @Test
@@ -36,7 +36,7 @@ public class CreateMatchTests extends BaseTest implements CreateMatch
     {
         TestAccount testAccount = testAccountLogged();
 
-        matchService.createMatch(UNPROCESSABLE_ENTITY, 0L, 6, testAccount.sessionToken);
+        matchService.createMatch(UNPROCESSABLE_ENTITY, 0L, 6, testAccount.session);
     }
 
     @Test
@@ -44,9 +44,9 @@ public class CreateMatchTests extends BaseTest implements CreateMatch
     {
         TestAccount testAccount = testAccountLogged();
 
-        Map[] maps = mapService.getMaps(OK, testAccount.sessionToken);
+        Map[] maps = mapService.getMaps(OK, testAccount.session);
 
-        matchService.createMatch(BAD_REQUEST, maps[0].id, null, testAccount.sessionToken);
+        matchService.createMatch(BAD_REQUEST, maps[0].id, null, testAccount.session);
     }
 
     @Test
@@ -54,9 +54,9 @@ public class CreateMatchTests extends BaseTest implements CreateMatch
     {
         TestAccount testAccount = testAccountLogged();
 
-        Map[] maps = mapService.getMaps(OK, testAccount.sessionToken);
+        Map[] maps = mapService.getMaps(OK, testAccount.session);
 
-        matchService.createMatch(BAD_REQUEST, maps[0].id, 1, testAccount.sessionToken);
+        matchService.createMatch(BAD_REQUEST, maps[0].id, 1, testAccount.session);
     }
 
     @Test
@@ -64,8 +64,8 @@ public class CreateMatchTests extends BaseTest implements CreateMatch
     {
         TestAccount testAccount = testAccountLogged();
 
-        Map[] maps = mapService.getMaps(OK, testAccount.sessionToken);
+        Map[] maps = mapService.getMaps(OK, testAccount.session);
 
-        matchService.createMatch(CREATED, maps[0].id, 6, testAccount.sessionToken);
+        matchService.createMatch(CREATED, maps[0].id, 6, testAccount.session);
     }
 }

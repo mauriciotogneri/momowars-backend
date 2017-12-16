@@ -5,8 +5,8 @@ import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.Match;
 import com.mauriciotogneri.momowars.server.BaseController;
 
+import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -21,18 +21,18 @@ public class GetMatch extends BaseController
     @GET
     @Path("v1/matches/{matchId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response controller(@HeaderParam(HEADER_SESSION_TOKEN) String sessionToken,
+    public Response controller(@CookieParam(COOKIE_SESSION) String session,
                                @PathParam(PARAM_MATCH_ID) Long matchId) throws Exception
     {
-        return process(() -> response(sessionToken, matchId));
+        return process(() -> response(session, matchId));
     }
 
-    private Response response(String sessionToken, Long matchId) throws Exception
+    private Response response(String session, Long matchId) throws Exception
     {
-        checkIfNotEmpty(sessionToken);
+        checkIfNotEmpty(session);
         checkIfNotEmpty(matchId);
 
-        Account account = validateSessionToken(sessionToken);
+        Account account = validateSession(session);
 
         if (!account.hasMatch(matchId))
         {

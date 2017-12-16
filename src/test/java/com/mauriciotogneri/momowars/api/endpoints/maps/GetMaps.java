@@ -1,7 +1,7 @@
 package com.mauriciotogneri.momowars.api.endpoints.maps;
 
 import com.mauriciotogneri.momowars.api.model.Map;
-import com.mauriciotogneri.momowars.api.model.SessionToken;
+import com.mauriciotogneri.momowars.api.model.SessionCookie;
 import com.mauriciotogneri.stewie.annotations.EndPoint;
 import com.mauriciotogneri.stewie.annotations.Parameters;
 import com.mauriciotogneri.stewie.annotations.Response;
@@ -18,7 +18,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
         description = "Returns the list of available maps"
 )
 @Parameters(
-        header = SessionToken.class
+        header = SessionCookie.class
 )
 @Responses({
         @Response(
@@ -29,7 +29,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
         ),
         @Response(
                 code = UNAUTHORIZED,
-                description = "Session token not valid"
+                description = "Session not valid"
         )
 })
 public interface GetMaps
