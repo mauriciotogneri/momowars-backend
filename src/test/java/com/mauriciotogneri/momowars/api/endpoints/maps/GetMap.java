@@ -1,8 +1,8 @@
 package com.mauriciotogneri.momowars.api.endpoints.maps;
 
 import com.mauriciotogneri.momowars.api.endpoints.maps.GetMap.PathParameter;
-import com.mauriciotogneri.momowars.api.model.games.Map;
 import com.mauriciotogneri.momowars.api.model.headers.SessionToken;
+import com.mauriciotogneri.momowars.api.model.matches.Map;
 import com.mauriciotogneri.stewie.annotations.EndPoint;
 import com.mauriciotogneri.stewie.annotations.Parameters;
 import com.mauriciotogneri.stewie.annotations.Response;

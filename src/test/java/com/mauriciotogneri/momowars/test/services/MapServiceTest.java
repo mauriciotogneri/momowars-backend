@@ -1,7 +1,7 @@
 package com.mauriciotogneri.momowars.test.services;
 
 import com.mauriciotogneri.apivalidator.api.ApiResult;
-import com.mauriciotogneri.momowars.api.model.games.Map;
+import com.mauriciotogneri.momowars.api.model.matches.Map;
 import com.mauriciotogneri.momowars.test.endpoints.maps.GetMapEndPoint;
 import com.mauriciotogneri.momowars.test.endpoints.maps.GetMapsEndPoint;
 

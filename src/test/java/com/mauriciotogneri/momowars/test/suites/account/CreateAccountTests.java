@@ -50,7 +50,7 @@ public class CreateAccountTests extends BaseTest implements CreateAccount
         Account account = accountService.createAccount(CREATED, TEST_EMAIL, TEST_PASSWORD, TEST_NICKNAME);
         Assert.assertEquals(TEST_EMAIL, account.email);
         Assert.assertEquals(TEST_NICKNAME, account.nickname);
-        Assert.assertNotEquals(null, account.games);
+        Assert.assertNotEquals(null, account.matches);
     }
 
     @Test

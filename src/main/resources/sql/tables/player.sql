@@ -1,6 +1,6 @@
 CREATE TABLE player (
 	id SERIAL PRIMARY KEY,
-	game INTEGER NOT NULL REFERENCES game(id),
+	match INTEGER NOT NULL REFERENCES match(id),
 	account INTEGER NOT NULL REFERENCES account(id),
 	resources INTEGER NOT NULL CHECK (resources >= 0),
 	status PLAYER_STATUS NOT NULL);

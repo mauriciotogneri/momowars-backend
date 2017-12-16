@@ -16,10 +16,10 @@ public class RecruitUnitsEndPoint extends BaseEndPoint implements RecruitUnits
         super(new EndPointDefinition(RecruitUnits.class));
     }
 
-    public ApiResult execute(String sessionToken, Long gameId, Long playerId, Long cellId, UnitType type, Integer quantity) throws Exception
+    public ApiResult execute(String sessionToken, Long matchId, Long playerId, Long cellId, UnitType type, Integer quantity) throws Exception
     {
         PathParameter path = new PathParameter();
-        path.gameId = gameId;
+        path.matchId = matchId;
         path.playerId = playerId;
         path.cellId = cellId;
 

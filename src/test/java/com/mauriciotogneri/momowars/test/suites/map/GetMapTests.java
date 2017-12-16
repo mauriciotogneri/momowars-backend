@@ -1,7 +1,7 @@
 package com.mauriciotogneri.momowars.test.suites.map;
 
 import com.mauriciotogneri.momowars.api.endpoints.maps.GetMap;
-import com.mauriciotogneri.momowars.api.model.games.Map;
+import com.mauriciotogneri.momowars.api.model.matches.Map;
 import com.mauriciotogneri.momowars.test.suites.BaseTest;
 
 import org.junit.FixMethodOrder;

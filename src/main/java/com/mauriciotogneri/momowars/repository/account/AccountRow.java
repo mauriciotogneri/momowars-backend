@@ -1,7 +1,7 @@
 package com.mauriciotogneri.momowars.repository.account;
 
 import com.mauriciotogneri.momowars.model.Account;
-import com.mauriciotogneri.momowars.model.AccountGames;
+import com.mauriciotogneri.momowars.model.AccountMatches;
 
 public class AccountRow
 {
@@ -11,8 +11,8 @@ public class AccountRow
     public String password;
     public String session;
 
-    public Account account(AccountGames games)
+    public Account account(AccountMatches matches)
     {
-        return new Account(id, email, nickname, games);
+        return new Account(id, email, nickname, matches);
     }
 }

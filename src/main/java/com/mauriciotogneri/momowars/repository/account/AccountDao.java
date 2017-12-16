@@ -14,8 +14,8 @@ import com.mauriciotogneri.momowars.exceptions.ApiException;
 import com.mauriciotogneri.momowars.exceptions.InvalidCredentialsException;
 import com.mauriciotogneri.momowars.exceptions.InvalidTokenException;
 import com.mauriciotogneri.momowars.model.Account;
-import com.mauriciotogneri.momowars.model.AccountGames;
-import com.mauriciotogneri.momowars.repository.game.GameRow;
+import com.mauriciotogneri.momowars.model.AccountMatches;
+import com.mauriciotogneri.momowars.repository.match.MatchRow;
 import com.mauriciotogneri.momowars.util.Hash;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class AccountDao
         {
             AccountRow row = result.first();
 
-            return row.account(accountGames(row.id));
+            return row.account(accountMatches(row.id));
         }
         else
         {
@@ -58,7 +58,7 @@ public class AccountDao
 
             if (Strings.equals(row.password, Hash.of(password)))
             {
-                return row.account(accountGames(row.id));
+                return row.account(accountMatches(row.id));
             }
             else
             {
@@ -80,7 +80,7 @@ public class AccountDao
         {
             AccountRow row = result.first();
 
-            return row.account(accountGames(row.id));
+            return row.account(accountMatches(row.id));
         }
         else
         {
@@ -88,16 +88,16 @@ public class AccountDao
         }
     }
 
-    public List<Account> byGame(Long gameId) throws DatabaseException
+    public List<Account> byMatch(Long matchId) throws DatabaseException
     {
-        SelectQuery<AccountRow> query = connection.selectQuery(AccountQueries.SELECT_BY_GAME, AccountRow.class);
-        QueryResult<AccountRow> result = query.execute(gameId);
+        SelectQuery<AccountRow> query = connection.selectQuery(AccountQueries.SELECT_BY_MATCH, AccountRow.class);
+        QueryResult<AccountRow> result = query.execute(matchId);
 
         List<Account> accounts = new ArrayList<>();
 
         for (AccountRow account : result)
         {
-            accounts.add(account.account(new AccountGames(
+            accounts.add(account.account(new AccountMatches(
                     new ArrayList<>(),
                     new ArrayList<>(),
                     new ArrayList<>()
@@ -164,7 +164,7 @@ public class AccountDao
         {
             AccountRow row = result.first();
 
-            return row.account(accountGames(row.id));
+            return row.account(accountMatches(row.id));
         }
         else
         {
@@ -192,16 +192,16 @@ public class AccountDao
         }
     }
 
-    private AccountGames accountGames(Long accountId) throws DatabaseException
+    private AccountMatches accountMatches(Long accountId) throws DatabaseException
     {
         List<Long> open = new ArrayList<>();
         List<Long> playing = new ArrayList<>();
         List<Long> finished = new ArrayList<>();
 
-        SelectQuery<GameRow> query = connection.selectQuery(AccountQueries.SELECT_GAMES, GameRow.class);
-        QueryResult<GameRow> result = query.execute(accountId);
+        SelectQuery<MatchRow> query = connection.selectQuery(AccountQueries.SELECT_MATCHES, MatchRow.class);
+        QueryResult<MatchRow> result = query.execute(accountId);
 
-        for (GameRow row : result)
+        for (MatchRow row : result)
         {
             if (row.isOpen())
             {
@@ -217,6 +217,6 @@ public class AccountDao
             }
         }
 
-        return new AccountGames(open, playing, finished);
+        return new AccountMatches(open, playing, finished);
     }
 }

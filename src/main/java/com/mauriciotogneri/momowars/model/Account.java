@@ -5,14 +5,14 @@ public class Account
     private final Long id;
     private final String email;
     private final String nickname;
-    private final AccountGames games;
+    private final AccountMatches matches;
 
-    public Account(Long id, String email, String nickname, AccountGames games)
+    public Account(Long id, String email, String nickname, AccountMatches matches)
     {
         this.id = id;
         this.email = email;
         this.nickname = nickname;
-        this.games = games;
+        this.matches = matches;
     }
 
     public Long id()
@@ -30,8 +30,8 @@ public class Account
         return nickname;
     }
 
-    public boolean hasGame(Long gameId)
+    public boolean hasMatch(Long matchId)
     {
-        return games.hasGame(gameId);
+        return matches.hasMatch(matchId);
     }
 }

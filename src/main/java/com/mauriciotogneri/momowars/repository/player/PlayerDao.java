@@ -9,16 +9,16 @@ import com.mauriciotogneri.inquiry.queries.UpdateQuery;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.PlayerQueries;
 import com.mauriciotogneri.momowars.exceptions.ApiException;
-import com.mauriciotogneri.momowars.exceptions.GameFinishedException;
+import com.mauriciotogneri.momowars.exceptions.MatchFinishedException;
 import com.mauriciotogneri.momowars.exceptions.PlayerAlreadyLeftException;
 import com.mauriciotogneri.momowars.exceptions.PlayerNotFoundException;
 import com.mauriciotogneri.momowars.model.Constants;
-import com.mauriciotogneri.momowars.model.Game;
+import com.mauriciotogneri.momowars.model.Match;
 import com.mauriciotogneri.momowars.model.Player;
-import com.mauriciotogneri.momowars.repository.game.GameDao;
+import com.mauriciotogneri.momowars.repository.match.MatchDao;
 import com.mauriciotogneri.momowars.repository.queue.QueueDao;
 import com.mauriciotogneri.momowars.repository.unit.UnitDao;
-import com.mauriciotogneri.momowars.tasks.GameUpdaterTask;
+import com.mauriciotogneri.momowars.tasks.MatchUpdaterTask;
 import com.mauriciotogneri.momowars.tasks.Task;
 import com.mauriciotogneri.momowars.types.PlayerStatus;
 
@@ -34,21 +34,21 @@ public class PlayerDao
         this.connection = connection;
     }
 
-    public void create(Long accountId, Long gameId) throws DatabaseException
+    public void create(Long accountId, Long matchId) throws DatabaseException
     {
         InsertQuery createPlayerQuery = connection.insertQuery(PlayerQueries.CREATE);
 
         createPlayerQuery.execute(
-                gameId,
+                matchId,
                 accountId,
                 Constants.INITIAL_RESOURCES
         );
     }
 
-    public List<Player> getPlayers(Long gameId, Long forAccountId) throws DatabaseException
+    public List<Player> getPlayers(Long matchId, Long forAccountId) throws DatabaseException
     {
-        SelectQuery<PlayerRow> query = connection.selectQuery(PlayerQueries.SELECT_BY_GAME, PlayerRow.class);
-        QueryResult<PlayerRow> result = query.execute(gameId);
+        SelectQuery<PlayerRow> query = connection.selectQuery(PlayerQueries.SELECT_BY_MATCH, PlayerRow.class);
+        QueryResult<PlayerRow> result = query.execute(matchId);
 
         List<Player> players = new ArrayList<>();
 
@@ -99,16 +99,16 @@ public class PlayerDao
         PlayerRow row = getPlayer(playerId, accountId);
         updateStatus(playerId, PlayerStatus.WAITING);
 
-        GameDao gameDao = new GameDao(connection);
+        MatchDao matchDao = new MatchDao(connection);
 
-        if (gameDao.isUpdatable(row.gameId))
+        if (matchDao.isUpdatable(row.matchId))
         {
-            Task task = new GameUpdaterTask(row.gameId);
+            Task task = new MatchUpdaterTask(row.matchId);
             task.submit();
         }
     }
 
-    public void leaveGame(Long playerId, Long accountId) throws DatabaseException, ApiException
+    public void leaveMatch(Long playerId, Long accountId) throws DatabaseException, ApiException
     {
         PlayerRow row = getPlayer(playerId, accountId);
 
@@ -117,14 +117,14 @@ public class PlayerDao
             throw new PlayerAlreadyLeftException();
         }
 
-        GameDao gameDao = new GameDao(connection);
-        Game game = gameDao.getGame(row.gameId, accountId);
+        MatchDao matchDao = new MatchDao(connection);
+        Match match = matchDao.getMatch(row.matchId, accountId);
 
-        if (game.isFinished())
+        if (match.isFinished())
         {
-            throw new GameFinishedException();
+            throw new MatchFinishedException();
         }
-        else if (game.isPlaying())
+        else if (match.isPlaying())
         {
             updateStatus(playerId, PlayerStatus.SURRENDERED);
 
@@ -134,19 +134,19 @@ public class PlayerDao
             QueueDao queueDao = new QueueDao(connection);
             queueDao.delete(playerId);
 
-            if (gameDao.isUpdatable(row.gameId))
+            if (matchDao.isUpdatable(row.matchId))
             {
-                Task task = new GameUpdaterTask(row.gameId);
+                Task task = new MatchUpdaterTask(row.matchId);
                 task.submit();
             }
         }
-        else if (game.isOpen())
+        else if (match.isOpen())
         {
             delete(playerId);
 
-            if (game.playesJoined() == 1)
+            if (match.playesJoined() == 1)
             {
-                gameDao.delete(game.id());
+                matchDao.delete(match.id());
             }
         }
     }

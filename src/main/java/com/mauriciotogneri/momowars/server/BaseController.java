@@ -11,22 +11,22 @@ import com.mauriciotogneri.momowars.exceptions.AccountAlreadyExistsException;
 import com.mauriciotogneri.momowars.exceptions.AccountNotFoundException;
 import com.mauriciotogneri.momowars.exceptions.ApiException;
 import com.mauriciotogneri.momowars.exceptions.BadParametersException;
-import com.mauriciotogneri.momowars.exceptions.GameFinishedException;
-import com.mauriciotogneri.momowars.exceptions.GameNotFoundException;
-import com.mauriciotogneri.momowars.exceptions.GamePlayingException;
 import com.mauriciotogneri.momowars.exceptions.InvalidCredentialsException;
-import com.mauriciotogneri.momowars.exceptions.InvalidGameException;
+import com.mauriciotogneri.momowars.exceptions.InvalidMatchException;
 import com.mauriciotogneri.momowars.exceptions.InvalidParametersException;
 import com.mauriciotogneri.momowars.exceptions.InvalidTokenException;
 import com.mauriciotogneri.momowars.exceptions.MapNotFoundException;
+import com.mauriciotogneri.momowars.exceptions.MatchFinishedException;
+import com.mauriciotogneri.momowars.exceptions.MatchNotFoundException;
+import com.mauriciotogneri.momowars.exceptions.MatchPlayingException;
 import com.mauriciotogneri.momowars.exceptions.PlayerAlreadyJoinedException;
 import com.mauriciotogneri.momowars.exceptions.PlayerAlreadyLeftException;
 import com.mauriciotogneri.momowars.exceptions.PlayerNotFoundException;
 import com.mauriciotogneri.momowars.logger.ErrorLogger;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.services.AccountService;
-import com.mauriciotogneri.momowars.services.GameService;
 import com.mauriciotogneri.momowars.services.MapService;
+import com.mauriciotogneri.momowars.services.MatchService;
 import com.mauriciotogneri.momowars.services.PlayerService;
 import com.mauriciotogneri.momowars.services.SessionService;
 import com.mauriciotogneri.momowars.templates.BaseTemplate;
@@ -40,12 +40,12 @@ public class BaseController extends Controller
 {
     protected static final String HEADER_SESSION_TOKEN = "Session-Token";
 
-    protected static final String PARAM_GAME_ID = "gameId";
+    protected static final String PARAM_MATCH_ID = "matchId";
     protected static final String PARAM_MAP_ID = "mapId";
     protected static final String PARAM_PLAYER_ID = "playerId";
 
     protected AccountService accountService;
-    protected GameService gameService;
+    protected MatchService matchService;
     protected MapService mapService;
     protected PlayerService playerService;
     protected SessionService sessionService;
@@ -59,7 +59,7 @@ public class BaseController extends Controller
             try
             {
                 accountService = new AccountService(connection);
-                gameService = new GameService(connection);
+                matchService = new MatchService(connection);
                 mapService = new MapService(connection);
                 playerService = new PlayerService(connection);
                 sessionService = new SessionService(connection);
@@ -101,7 +101,7 @@ public class BaseController extends Controller
         {
             return new ConflictException(e);
         }
-        catch (AccountNotFoundException | MapNotFoundException | GameNotFoundException | PlayerNotFoundException e)
+        catch (AccountNotFoundException | MapNotFoundException | MatchNotFoundException | PlayerNotFoundException e)
         {
             return new NotFoundException(e);
         }
@@ -109,11 +109,11 @@ public class BaseController extends Controller
         {
             return new UnauthorizedException(e);
         }
-        catch (InvalidGameException e)
+        catch (InvalidMatchException e)
         {
             return new ForbiddenException(e);
         }
-        catch (InvalidParametersException | PlayerAlreadyJoinedException | PlayerAlreadyLeftException | GamePlayingException | GameFinishedException e)
+        catch (InvalidParametersException | PlayerAlreadyJoinedException | PlayerAlreadyLeftException | MatchPlayingException | MatchFinishedException e)
         {
             return new WebApplicationException(Response.status(422).build());
         }

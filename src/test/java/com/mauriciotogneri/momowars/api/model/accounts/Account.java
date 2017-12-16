@@ -6,5 +6,5 @@ public class Account
 
     public String nickname;
 
-    public AccountGames games;
+    public AccountMatches matches;
 }

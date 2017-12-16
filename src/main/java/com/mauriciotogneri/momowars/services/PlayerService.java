@@ -15,11 +15,11 @@ public class PlayerService
     }
 
     public void create(Long accountId,
-                       Long gameId) throws DatabaseException
+                       Long matchId) throws DatabaseException
     {
         PlayerDao playerDao = new PlayerDao(connection);
 
-        playerDao.create(accountId, gameId);
+        playerDao.create(accountId, matchId);
     }
 
     public void endTurn(Long playerId,
@@ -30,11 +30,11 @@ public class PlayerService
         playerDao.endTurn(playerId, accountId);
     }
 
-    public void leaveGame(Long playerId,
-                          Long accountId) throws DatabaseException, ApiException
+    public void leaveMatch(Long playerId,
+                           Long accountId) throws DatabaseException, ApiException
     {
         PlayerDao playerDao = new PlayerDao(connection);
 
-        playerDao.leaveGame(playerId, accountId);
+        playerDao.leaveMatch(playerId, accountId);
     }
 }

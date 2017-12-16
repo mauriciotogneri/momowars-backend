@@ -16,7 +16,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNPROCESSABLE_ENTITY;
 
 @EndPoint(
-        path = "/v1/games/{gameId}/players/{playerId}/units/{unitId}/move",
+        path = "/v1/matches/{matchId}/players/{playerId}/units/{unitId}/move",
         method = PUT,
         description = "Enqueues the command to move the units"
 )
@@ -40,14 +40,14 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNPROCESSABLE_ENTITY;
         ),
         @Response(
                 code = UNPROCESSABLE_ENTITY,
-                description = "Invalid gameId, cellId or unitId"
+                description = "Invalid matchId, cellId or unitId"
         )
 })
 public interface MoveUnits
 {
     class PathParameter
     {
-        public Long gameId;
+        public Long matchId;
 
         public Long playerId;
 

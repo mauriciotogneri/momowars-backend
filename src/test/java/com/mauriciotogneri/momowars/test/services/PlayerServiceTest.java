@@ -2,18 +2,18 @@ package com.mauriciotogneri.momowars.test.services;
 
 import com.mauriciotogneri.apivalidator.api.ApiResult;
 import com.mauriciotogneri.momowars.test.endpoints.players.EndTurnEndPoint;
-import com.mauriciotogneri.momowars.test.endpoints.players.JoinGameEndPoint;
-import com.mauriciotogneri.momowars.test.endpoints.players.LeaveGameEndPoint;
+import com.mauriciotogneri.momowars.test.endpoints.players.JoinMatchEndPoint;
+import com.mauriciotogneri.momowars.test.endpoints.players.LeaveMatchEndPoint;
 
 public class PlayerServiceTest extends BaseService
 {
-    private static final JoinGameEndPoint joinGameEndPoint = new JoinGameEndPoint();
+    private static final JoinMatchEndPoint joinMatchEndPoint = new JoinMatchEndPoint();
     private static final EndTurnEndPoint endTurnEndPoint = new EndTurnEndPoint();
-    private static final LeaveGameEndPoint leaveGameEndPoint = new LeaveGameEndPoint();
+    private static final LeaveMatchEndPoint leaveMatchEndPoint = new LeaveMatchEndPoint();
 
-    public void joinGame(int statusCode, String sessionToken, Long gameId) throws Exception
+    public void joinMatch(int statusCode, String sessionToken, Long matchId) throws Exception
     {
-        ApiResult result = joinGameEndPoint.execute(sessionToken, gameId);
+        ApiResult result = joinMatchEndPoint.execute(sessionToken, matchId);
         checkHttpStatus(statusCode, result);
     }
 
@@ -23,9 +23,9 @@ public class PlayerServiceTest extends BaseService
         checkHttpStatus(statusCode, result);
     }
 
-    public void leaveGame(int statusCode, String sessionToken, Long playerId) throws Exception
+    public void leaveMatch(int statusCode, String sessionToken, Long playerId) throws Exception
     {
-        ApiResult result = leaveGameEndPoint.execute(sessionToken, playerId);
+        ApiResult result = leaveMatchEndPoint.execute(sessionToken, playerId);
         checkHttpStatus(statusCode, result);
     }
 }

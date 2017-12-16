@@ -6,7 +6,7 @@ import com.mauriciotogneri.momowars.types.PlayerStatus;
 public class PlayerRow
 {
     public Long id;
-    public Long gameId;
+    public Long matchId;
     public Long accountId;
     public String nickname;
     public Integer resources;

@@ -2,8 +2,8 @@ package com.mauriciotogneri.momowars.test.suites;
 
 import com.mauriciotogneri.momowars.api.model.accounts.Account;
 import com.mauriciotogneri.momowars.test.services.AccountServiceTest;
-import com.mauriciotogneri.momowars.test.services.GameServiceTest;
 import com.mauriciotogneri.momowars.test.services.MapServiceTest;
+import com.mauriciotogneri.momowars.test.services.MatchServiceTest;
 import com.mauriciotogneri.momowars.test.services.PlayerServiceTest;
 import com.mauriciotogneri.momowars.test.services.SessionServiceTest;
 
@@ -15,7 +15,7 @@ public class BaseTest
 {
     protected final SessionServiceTest sessionService = new SessionServiceTest();
     protected final AccountServiceTest accountService = new AccountServiceTest();
-    protected final GameServiceTest gameService = new GameServiceTest();
+    protected final MatchServiceTest matchService = new MatchServiceTest();
     protected final PlayerServiceTest playerService = new PlayerServiceTest();
     protected final MapServiceTest mapService = new MapServiceTest();
 

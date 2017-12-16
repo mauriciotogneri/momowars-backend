@@ -13,7 +13,7 @@ public class V1_2__CreateDatabase implements JdbcMigration
         DatabaseConnection databaseConnection = new DatabaseConnection(connection);
 
         databaseConnection.executeQuery("sql/types/cell_type.sql");
-        databaseConnection.executeQuery("sql/types/game_status.sql");
+        databaseConnection.executeQuery("sql/types/match_status.sql");
         databaseConnection.executeQuery("sql/types/movement_type.sql");
         databaseConnection.executeQuery("sql/types/player_status.sql");
         databaseConnection.executeQuery("sql/types/unit_type.sql");
@@ -21,7 +21,7 @@ public class V1_2__CreateDatabase implements JdbcMigration
         databaseConnection.executeQuery("sql/tables/map.sql");
         databaseConnection.executeQuery("sql/tables/cell.sql");
         databaseConnection.executeQuery("sql/tables/account.sql");
-        databaseConnection.executeQuery("sql/tables/game.sql");
+        databaseConnection.executeQuery("sql/tables/match.sql");
         databaseConnection.executeQuery("sql/tables/player.sql");
         databaseConnection.executeQuery("sql/tables/unit.sql");
         databaseConnection.executeQuery("sql/tables/queue.sql");

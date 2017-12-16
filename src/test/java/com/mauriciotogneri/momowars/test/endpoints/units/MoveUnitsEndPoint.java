@@ -16,10 +16,10 @@ public class MoveUnitsEndPoint extends BaseEndPoint implements MoveUnits
         super(new EndPointDefinition(MoveUnits.class));
     }
 
-    public ApiResult execute(String sessionToken, Long gameId, Long playerId, Long cellId, Long unitId, MovementType movement) throws Exception
+    public ApiResult execute(String sessionToken, Long matchId, Long playerId, Long cellId, Long unitId, MovementType movement) throws Exception
     {
         PathParameter path = new PathParameter();
-        path.gameId = gameId;
+        path.matchId = matchId;
         path.playerId = playerId;
         path.cellId = cellId;
         path.unitId = unitId;

@@ -3,8 +3,8 @@ package com.mauriciotogneri.momowars.test.suites;
 import com.mauriciotogneri.momowars.app.AppParameters;
 import com.mauriciotogneri.momowars.app.Main;
 import com.mauriciotogneri.momowars.test.suites.account.AccountSuite;
-import com.mauriciotogneri.momowars.test.suites.game.GameSuite;
 import com.mauriciotogneri.momowars.test.suites.map.MapSuite;
+import com.mauriciotogneri.momowars.test.suites.match.MatchSuite;
 import com.mauriciotogneri.momowars.test.suites.player.PlayerSuite;
 import com.mauriciotogneri.momowars.test.suites.session.SessionSuite;
 
@@ -18,7 +18,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
         AccountSuite.class,
         SessionSuite.class,
-        GameSuite.class,
+        MatchSuite.class,
         MapSuite.class,
         PlayerSuite.class
 })

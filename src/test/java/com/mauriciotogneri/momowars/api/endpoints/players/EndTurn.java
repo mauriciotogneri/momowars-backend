@@ -17,7 +17,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNPROCESSABLE_ENTITY;
 @EndPoint(
         path = "/v1/players/{playerId}/turn",
         method = DELETE,
-        description = "Ends the turn of the player for the given game"
+        description = "Ends the turn of the player for the given match"
 )
 @Parameters(
         header = SessionToken.class,
@@ -42,7 +42,7 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNPROCESSABLE_ENTITY;
         ),
         @Response(
                 code = UNPROCESSABLE_ENTITY,
-                description = "Not allowed to end the turn on the given game"
+                description = "Not allowed to end the turn on the given match"
         )
 })
 public interface EndTurn
