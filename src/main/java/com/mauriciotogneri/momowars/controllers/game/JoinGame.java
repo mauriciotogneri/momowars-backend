@@ -1,8 +1,5 @@
-package com.mauriciotogneri.momowars.controllers.player;
+package com.mauriciotogneri.momowars.controllers.game;
 
-import com.mauriciotogneri.momowars.exceptions.GameFinishedException;
-import com.mauriciotogneri.momowars.exceptions.GamePlayingException;
-import com.mauriciotogneri.momowars.exceptions.PlayerAlreadyJoinedException;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.Game;
 import com.mauriciotogneri.momowars.server.BaseController;
@@ -34,31 +31,7 @@ public class JoinGame extends BaseController
         checkIfNotEmpty(sessionToken);
 
         Account account = validateSessionToken(sessionToken);
-
-        if (account.hasGame(gameId))
-        {
-            throw new PlayerAlreadyJoinedException();
-        }
-
-        Game loadedGame = gameService.getGame(gameId, account.id());
-
-        if (loadedGame.isPlaying())
-        {
-            throw new GamePlayingException();
-        }
-        else if (loadedGame.isFinished())
-        {
-            throw new GameFinishedException();
-        }
-
-        playerService.create(account.id(), loadedGame.id());
-
-        if (loadedGame.playersMissing() == 1)
-        {
-            gameService.startGame(loadedGame.id());
-        }
-
-        Game game = gameService.getGame(loadedGame.id(), account.id());
+        Game game = gameService.joinGame(account, gameId);
 
         return response(CREATED, game);
     }

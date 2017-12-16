@@ -3,7 +3,7 @@ package com.mauriciotogneri.momowars.test.endpoints.players;
 import com.mauriciotogneri.apivalidator.api.ApiRequest;
 import com.mauriciotogneri.apivalidator.api.ApiResult;
 import com.mauriciotogneri.apivalidator.parameters.path.PathParameters;
-import com.mauriciotogneri.momowars.api.endpoints.players.JoinGame;
+import com.mauriciotogneri.momowars.api.endpoints.games.JoinGame;
 import com.mauriciotogneri.momowars.test.endpoints.BaseEndPoint;
 import com.mauriciotogneri.momowars.test.endpoints.EndPointDefinition;
 

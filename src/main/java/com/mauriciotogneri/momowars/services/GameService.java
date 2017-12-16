@@ -3,6 +3,10 @@ package com.mauriciotogneri.momowars.services;
 import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.exceptions.ApiException;
+import com.mauriciotogneri.momowars.exceptions.GameFinishedException;
+import com.mauriciotogneri.momowars.exceptions.GamePlayingException;
+import com.mauriciotogneri.momowars.exceptions.PlayerAlreadyJoinedException;
+import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.Game;
 import com.mauriciotogneri.momowars.model.Map;
 import com.mauriciotogneri.momowars.repository.game.GameDao;
@@ -47,6 +51,36 @@ public class GameService
         GameDao gameDao = new GameDao(connection);
 
         return gameDao.getGame(gameId, forAccountId);
+    }
+
+    public Game joinGame(Account account,
+                         Long gameId) throws DatabaseException, ApiException
+    {
+        if (account.hasGame(gameId))
+        {
+            throw new PlayerAlreadyJoinedException();
+        }
+
+        Game loadedGame = getGame(gameId, account.id());
+
+        if (loadedGame.isPlaying())
+        {
+            throw new GamePlayingException();
+        }
+        else if (loadedGame.isFinished())
+        {
+            throw new GameFinishedException();
+        }
+
+        PlayerService playerService = new PlayerService(connection);
+        playerService.create(account.id(), loadedGame.id());
+
+        if (loadedGame.playersMissing() == 1)
+        {
+            startGame(loadedGame.id());
+        }
+
+        return getGame(loadedGame.id(), account.id());
     }
 
     public void startGame(Long gameId) throws DatabaseException

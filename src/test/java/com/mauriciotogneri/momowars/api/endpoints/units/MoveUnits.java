@@ -2,6 +2,7 @@ package com.mauriciotogneri.momowars.api.endpoints.units;
 
 import com.mauriciotogneri.momowars.api.endpoints.units.MoveUnits.DataParameter;
 import com.mauriciotogneri.momowars.api.endpoints.units.MoveUnits.PathParameter;
+import com.mauriciotogneri.momowars.api.model.headers.SessionToken;
 import com.mauriciotogneri.momowars.types.MovementType;
 import com.mauriciotogneri.stewie.annotations.EndPoint;
 import com.mauriciotogneri.stewie.annotations.Parameters;
@@ -15,11 +16,12 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNAUTHORIZED;
 import static com.mauriciotogneri.stewie.types.StatusCode.UNPROCESSABLE_ENTITY;
 
 @EndPoint(
-        path = "/v1/games/{gameId}/players/{playerId}/cells/{cellId}/units/{unitId}/move",
+        path = "/v1/games/{gameId}/players/{playerId}/units/{unitId}/move",
         method = PUT,
         description = "Enqueues the command to move the units"
 )
 @Parameters(
+        header = SessionToken.class,
         path = PathParameter.class,
         data = DataParameter.class
 )
@@ -29,12 +31,12 @@ import static com.mauriciotogneri.stewie.types.StatusCode.UNPROCESSABLE_ENTITY;
                 description = "Successful operation"
         ),
         @Response(
-                code = BAD_REQUEST,
-                description = "Parameters missing or invalid"
-        ),
-        @Response(
                 code = UNAUTHORIZED,
                 description = "Session token not valid"
+        ),
+        @Response(
+                code = BAD_REQUEST,
+                description = "Parameters missing or invalid"
         ),
         @Response(
                 code = UNPROCESSABLE_ENTITY,

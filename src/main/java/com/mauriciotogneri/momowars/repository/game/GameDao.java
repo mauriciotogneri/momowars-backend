@@ -116,9 +116,9 @@ public class GameDao
 
     public void delete(Long playerId) throws DatabaseException
     {
-        DeleteQuery deleteQuery = connection.deleteQuery(GameQueries.DELETE);
+        DeleteQuery query = connection.deleteQuery(GameQueries.DELETE);
 
-        int rowsAffected = deleteQuery.execute(playerId);
+        int rowsAffected = query.execute(playerId);
 
         if (rowsAffected != 1)
         {

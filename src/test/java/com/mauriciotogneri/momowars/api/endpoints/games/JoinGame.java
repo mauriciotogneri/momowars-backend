@@ -1,6 +1,6 @@
-package com.mauriciotogneri.momowars.api.endpoints.players;
+package com.mauriciotogneri.momowars.api.endpoints.games;
 
-import com.mauriciotogneri.momowars.api.endpoints.players.JoinGame.PathParameter;
+import com.mauriciotogneri.momowars.api.endpoints.games.JoinGame.PathParameter;
 import com.mauriciotogneri.momowars.api.model.games.Game;
 import com.mauriciotogneri.momowars.api.model.headers.SessionToken;
 import com.mauriciotogneri.stewie.annotations.EndPoint;

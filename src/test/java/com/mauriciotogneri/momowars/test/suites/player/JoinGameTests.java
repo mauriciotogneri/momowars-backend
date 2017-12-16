@@ -1,6 +1,6 @@
 package com.mauriciotogneri.momowars.test.suites.player;
 
-import com.mauriciotogneri.momowars.api.endpoints.players.JoinGame;
+import com.mauriciotogneri.momowars.api.endpoints.games.JoinGame;
 import com.mauriciotogneri.momowars.api.model.games.Game;
 import com.mauriciotogneri.momowars.api.model.games.Map;
 import com.mauriciotogneri.momowars.test.suites.BaseTest;

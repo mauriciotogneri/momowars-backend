@@ -25,9 +25,9 @@ public class QueueDao
 
     public void delete(Long playerId) throws DatabaseException
     {
-        DeleteQuery deleteQuery = connection.deleteQuery(QueueQueries.DELETE);
+        DeleteQuery query = connection.deleteQuery(QueueQueries.DELETE);
 
-        int rowsAffected = deleteQuery.execute(playerId);
+        int rowsAffected = query.execute(playerId);
 
         if (rowsAffected != 1)
         {

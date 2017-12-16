@@ -116,12 +116,6 @@
         ],
         "parameters": [
           {
-            "name": "Session-Token",
-            "in": "header",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "data",
             "in": "body",
             "schema": {
@@ -171,6 +165,69 @@
           },
           "401": {
             "description": "Session token not valid"
+          }
+        }
+      }
+    },
+    "/v1/games/{gameId}/players/{playerId}/units/{unitId}/move": {
+      "put": {
+        "tags": [
+          "Units"
+        ],
+        "summary": "MoveUnits",
+        "description": "Enqueues the command to move the units",
+        "parameters": [
+          {
+            "name": "Session-Token",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "gameId",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "playerId",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "cellId",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "unitId",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/com.mauriciotogneri.momowars.api.endpoints.units.MoveUnits.DataParameter"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Parameters missing or invalid"
+          },
+          "422": {
+            "description": "Invalid gameId, cellId or unitId"
+          },
+          "401": {
+            "description": "Session token not valid"
+          },
+          "204": {
+            "description": "Successful operation"
           }
         }
       }
@@ -378,6 +435,12 @@
         "description": "Enqueues the command to recruit of the units",
         "parameters": [
           {
+            "name": "Session-Token",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "gameId",
             "in": "path",
             "required": true,
@@ -559,63 +622,6 @@
           },
           "401": {
             "description": "Invalid token"
-          }
-        }
-      }
-    },
-    "/v1/games/{gameId}/players/{playerId}/cells/{cellId}/units/{unitId}/move": {
-      "put": {
-        "tags": [
-          "Units"
-        ],
-        "summary": "MoveUnits",
-        "description": "Enqueues the command to move the units",
-        "parameters": [
-          {
-            "name": "gameId",
-            "in": "path",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "playerId",
-            "in": "path",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "cellId",
-            "in": "path",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "unitId",
-            "in": "path",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "data",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/com.mauriciotogneri.momowars.api.endpoints.units.MoveUnits.DataParameter"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "400": {
-            "description": "Parameters missing or invalid"
-          },
-          "422": {
-            "description": "Invalid gameId, cellId or unitId"
-          },
-          "401": {
-            "description": "Session token not valid"
-          },
-          "204": {
-            "description": "Successful operation"
           }
         }
       }
