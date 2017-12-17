@@ -1,3 +1,3 @@
 SELECT *
 	FROM account
-	WHERE (email = ?)
+	WHERE email = ?

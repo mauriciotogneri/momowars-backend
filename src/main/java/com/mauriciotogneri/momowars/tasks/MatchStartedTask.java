@@ -27,7 +27,7 @@ public class MatchStartedTask extends Task
             String content = String.format("The match <b>%s</b> has started.", matchId);
             Email email = new Email(Email.DEFAULT_ADDRESS,
                                     Email.DEFAULT_ALIAS,
-                                    account.email(),
+                                    account.email,
                                     "A match has started!",
                                     content);
 

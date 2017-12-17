@@ -1,24 +1,54 @@
 package com.mauriciotogneri.momowars.model;
 
+import com.mauriciotogneri.momowars.json.AccountMatchesJson;
+import com.mauriciotogneri.momowars.types.MatchStatus;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AccountMatches
 {
-    private final List<Long> open;
-    private final List<Long> playing;
-    private final List<Long> finished;
+    public Integer[] ids = new Integer[0];
+    public MatchStatus[] statuses = new MatchStatus[0];
 
-    public AccountMatches(List<Long> open, List<Long> playing, List<Long> finished)
+    private List<Long> filter(Integer[] matches, MatchStatus[] statuses, MatchStatus matchStatus)
     {
-        this.open = open;
-        this.playing = playing;
-        this.finished = finished;
+        List<Long> result = new ArrayList<>();
+
+        for (int i = 0; i < matches.length; i++)
+        {
+            Integer matchId = matches[i];
+            MatchStatus status = statuses[i];
+
+            if (matchStatus.equals(status))
+            {
+                result.add(new Long(matchId));
+            }
+        }
+
+        return result;
     }
 
     public boolean hasMatch(Long matchId)
     {
-        return open.stream().anyMatch(matchId::equals) ||
-                playing.stream().anyMatch(matchId::equals) ||
-                finished.stream().anyMatch(matchId::equals);
+        Integer intValue = matchId.intValue();
+
+        return Arrays.stream(ids).anyMatch(intValue::equals);
+    }
+
+    public AccountMatchesJson json()
+    {
+        List<Long> open = filter(ids, statuses, MatchStatus.OPEN);
+
+        List<Long> playing = new ArrayList<>();
+        playing.addAll(filter(ids, statuses, MatchStatus.PLAYING));
+        playing.addAll(filter(ids, statuses, MatchStatus.CALCULATING));
+
+        List<Long> finished = filter(ids, statuses, MatchStatus.FINISHED);
+
+        return new AccountMatchesJson(open,
+                                      playing,
+                                      finished);
     }
 }

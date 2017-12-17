@@ -5,6 +5,7 @@ import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.exceptions.ApiException;
 import com.mauriciotogneri.momowars.exceptions.BadParametersException;
 import com.mauriciotogneri.momowars.model.Account;
+import com.mauriciotogneri.momowars.model.AccountMatches;
 import com.mauriciotogneri.momowars.repository.account.AccountDao;
 import com.mauriciotogneri.momowars.validators.EmailValidator;
 
@@ -32,7 +33,7 @@ public class AccountService
                                             nickname,
                                             SessionService.newSession());
 
-        accountDao.updatePassword(account.id(), password);
+        accountDao.updatePassword(account.id, password);
 
         return account;
     }
@@ -54,14 +55,21 @@ public class AccountService
 
         if (newPassword != null)
         {
-            accountDao.updatePassword(account.id(), newPassword);
+            accountDao.updatePassword(account.id, newPassword);
         }
 
         if (newNickname != null)
         {
-            accountDao.updateNickname(account.id(), newNickname);
+            accountDao.updateNickname(account.id, newNickname);
         }
 
-        return accountDao.getAccount(account.id());
+        return accountDao.getAccount(account.id);
+    }
+
+    public AccountMatches matches(Long accountId) throws DatabaseException
+    {
+        AccountDao accountDao = new AccountDao(connection);
+
+        return accountDao.accountMatches(accountId);
     }
 }

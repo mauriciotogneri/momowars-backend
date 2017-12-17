@@ -1,37 +1,21 @@
 package com.mauriciotogneri.momowars.model;
 
+import com.mauriciotogneri.momowars.json.AccountJson;
+
 public class Account
 {
-    private final Long id;
-    private final String email;
-    private final String nickname;
-    private final AccountMatches matches;
+    public Long id;
+    public String email;
+    public String nickname;
+    public String password;
+    public String picture;
+    public String session;
 
-    public Account(Long id, String email, String nickname, AccountMatches matches)
+    public AccountJson json(AccountMatches accountMatches)
     {
-        this.id = id;
-        this.email = email;
-        this.nickname = nickname;
-        this.matches = matches;
-    }
-
-    public Long id()
-    {
-        return id;
-    }
-
-    public String email()
-    {
-        return email;
-    }
-
-    public String nickname()
-    {
-        return nickname;
-    }
-
-    public boolean hasMatch(Long matchId)
-    {
-        return matches.hasMatch(matchId);
+        return new AccountJson(id,
+                               email,
+                               nickname,
+                               accountMatches.json());
     }
 }

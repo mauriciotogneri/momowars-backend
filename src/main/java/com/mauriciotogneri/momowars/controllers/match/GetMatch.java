@@ -1,6 +1,5 @@
 package com.mauriciotogneri.momowars.controllers.match;
 
-import com.mauriciotogneri.momowars.exceptions.InvalidMatchException;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.Match;
 import com.mauriciotogneri.momowars.server.BaseController;
@@ -34,12 +33,7 @@ public class GetMatch extends BaseController
 
         Account account = validateSession(session);
 
-        if (!account.hasMatch(matchId))
-        {
-            throw new InvalidMatchException();
-        }
-
-        Match match = matchService.getMatch(matchId, account.id());
+        Match match = matchService.getMatch(matchId, account.id);
 
         return response(OK, match);
     }

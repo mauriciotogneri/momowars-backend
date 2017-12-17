@@ -31,7 +31,7 @@ public class SessionService
 
         String session = newSession();
 
-        accountDao.updateSession(account.id(), session);
+        accountDao.updateSession(account.id, session);
 
         return session;
     }
@@ -53,14 +53,14 @@ public class SessionService
             {
                 Account account = accountDao.byEmail(identity.email());
 
-                accountDao.updateNickname(account.id(), identity.name());
-                accountDao.updatePicture(account.id(), identity.picture());
-                accountDao.updateSession(account.id(), session);
+                accountDao.updateNickname(account.id, identity.name());
+                accountDao.updatePicture(account.id, identity.picture());
+                accountDao.updateSession(account.id, session);
             }
             catch (AccountNotFoundException e)
             {
                 Account account = accountDao.create(identity.email(), identity.name(), session);
-                accountDao.updatePicture(account.id(), identity.picture());
+                accountDao.updatePicture(account.id, identity.picture());
             }
 
             return session;

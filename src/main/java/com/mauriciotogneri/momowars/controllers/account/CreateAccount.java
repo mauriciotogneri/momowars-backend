@@ -4,6 +4,7 @@ import com.mauriciotogneri.javautils.Strings;
 import com.mauriciotogneri.jerry.controller.EntityProvider;
 import com.mauriciotogneri.jerry.controller.EntityProvider.EntityObject;
 import com.mauriciotogneri.momowars.model.Account;
+import com.mauriciotogneri.momowars.model.AccountMatches;
 import com.mauriciotogneri.momowars.server.BaseController;
 
 import javax.ws.rs.Consumes;
@@ -33,8 +34,9 @@ public class CreateAccount extends BaseController
         checkIfNotEmpty(entity);
 
         Account account = accountService.createAccount(entity.email, entity.nickname, entity.password);
+        AccountMatches accountMatches = accountService.matches(account.id);
 
-        return response(CREATED, account);
+        return response(CREATED, account.json(accountMatches));
     }
 
     @Provider

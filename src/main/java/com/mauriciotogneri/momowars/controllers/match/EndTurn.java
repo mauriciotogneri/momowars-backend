@@ -34,7 +34,7 @@ public class EndTurn extends BaseController
 
         Account account = validateSession(session);
 
-        playerService.endTurn(matchId, playerId, account.id());
+        playerService.endTurn(matchId, playerId, account.id);
 
         return response(NO_CONTENT);
     }

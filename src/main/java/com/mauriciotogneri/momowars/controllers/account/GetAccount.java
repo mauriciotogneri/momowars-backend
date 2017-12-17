@@ -1,6 +1,7 @@
 package com.mauriciotogneri.momowars.controllers.account;
 
 import com.mauriciotogneri.momowars.model.Account;
+import com.mauriciotogneri.momowars.model.AccountMatches;
 import com.mauriciotogneri.momowars.server.BaseController;
 
 import javax.ws.rs.CookieParam;
@@ -28,7 +29,8 @@ public class GetAccount extends BaseController
         checkIfNotEmpty(session);
 
         Account account = accountService.getAccount(session);
+        AccountMatches accountMatches = accountService.matches(account.id);
 
-        return response(OK, account);
+        return response(OK, account.json(accountMatches));
     }
 }
