@@ -17,18 +17,16 @@ import com.mauriciotogneri.momowars.types.MatchStatus;
 
 import java.util.List;
 
-public class MatchDao
+public class MatchDao extends BaseDao
 {
-    private final DatabaseConnection connection;
-
     public MatchDao(DatabaseConnection connection)
     {
-        this.connection = connection;
+        super(connection);
     }
 
     public Match create(Integer maxPlayers, Map map) throws DatabaseException, ApiException
     {
-        InsertQuery query = connection.insertQuery(MatchQueries.CREATE);
+        InsertQuery query = insert(MatchQueries.CREATE);
 
         long matchId = query.execute(
                 maxPlayers,
@@ -40,14 +38,14 @@ public class MatchDao
 
     public List<Match> getOpenMatches() throws DatabaseException
     {
-        SelectQuery<Match> query = connection.selectQuery(MatchQueries.SELECT_OPEN, Match.class);
+        SelectQuery<Match> query = select(MatchQueries.SELECT_OPEN, Match.class);
 
         return query.execute();
     }
 
     public Match getMatch(Long matchId) throws DatabaseException, ApiException
     {
-        SelectQuery<Match> query = connection.selectQuery(MatchQueries.SELECT_BY_ID, Match.class);
+        SelectQuery<Match> query = select(MatchQueries.SELECT_BY_ID, Match.class);
         QueryResult<Match> result = query.execute(matchId);
 
         if (result.hasElements())
@@ -62,7 +60,7 @@ public class MatchDao
 
     public void updateStatus(Long matchId, MatchStatus status) throws DatabaseException
     {
-        UpdateQuery query = connection.updateQuery(MatchQueries.UPDATE_STATUS);
+        UpdateQuery query = update(MatchQueries.UPDATE_STATUS);
 
         int rowsAffected = query.execute(status, matchId);
 
@@ -91,7 +89,7 @@ public class MatchDao
 
     public void delete(Long playerId) throws DatabaseException
     {
-        DeleteQuery query = connection.deleteQuery(MatchQueries.DELETE);
+        DeleteQuery query = delete(MatchQueries.DELETE);
 
         int rowsAffected = query.execute(playerId);
 

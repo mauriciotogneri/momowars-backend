@@ -11,18 +11,16 @@ import com.mauriciotogneri.momowars.model.Map;
 
 import java.util.List;
 
-public class MapDao
+public class MapDao extends BaseDao
 {
-    private final DatabaseConnection connection;
-
     public MapDao(DatabaseConnection connection)
     {
-        this.connection = connection;
+        super(connection);
     }
 
     public List<Map> maps() throws DatabaseException
     {
-        SelectQuery<Map> query = connection.selectQuery(MapQueries.SELECT_ALL, Map.class);
+        SelectQuery<Map> query = select(MapQueries.SELECT_ALL, Map.class);
 
         List<Map> maps = query.execute();
 
@@ -37,7 +35,7 @@ public class MapDao
 
     public Map byId(Long mapId) throws DatabaseException, ApiException
     {
-        SelectQuery<Map> query = connection.selectQuery(MapQueries.SELECT_BY_ID, Map.class);
+        SelectQuery<Map> query = select(MapQueries.SELECT_BY_ID, Map.class);
         QueryResult<Map> result = query.execute(mapId);
 
         if (result.hasElements())

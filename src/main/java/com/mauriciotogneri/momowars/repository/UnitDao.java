@@ -9,13 +9,11 @@ import com.mauriciotogneri.momowars.model.Unit;
 import java.util.Arrays;
 import java.util.List;
 
-public class UnitDao
+public class UnitDao extends BaseDao
 {
-    private final DatabaseConnection connection;
-
     public UnitDao(DatabaseConnection connection)
     {
-        this.connection = connection;
+        super(connection);
     }
 
     public List<Unit> byCell(Long cellId) throws DatabaseException
@@ -25,7 +23,7 @@ public class UnitDao
 
     public void delete(Long playerId) throws DatabaseException
     {
-        DeleteQuery query = connection.deleteQuery(UnitQueries.DELETE);
+        DeleteQuery query = delete(UnitQueries.DELETE);
 
         int rowsAffected = query.execute(playerId);
 

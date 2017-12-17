@@ -17,18 +17,16 @@ import com.mauriciotogneri.momowars.util.Hash;
 
 import java.util.List;
 
-public class AccountDao
+public class AccountDao extends BaseDao
 {
-    private final DatabaseConnection connection;
-
     public AccountDao(DatabaseConnection connection)
     {
-        this.connection = connection;
+        super(connection);
     }
 
     public Account byId(Long accountId) throws DatabaseException, ApiException
     {
-        SelectQuery<Account> query = connection.selectQuery(AccountQueries.SELECT_BY_ID, Account.class);
+        SelectQuery<Account> query = select(AccountQueries.SELECT_BY_ID, Account.class);
         QueryResult<Account> result = query.execute(accountId);
 
         if (result.hasElements())
@@ -43,7 +41,7 @@ public class AccountDao
 
     public Account bySession(String session) throws DatabaseException, ApiException
     {
-        SelectQuery<Account> query = connection.selectQuery(AccountQueries.SELECT_BY_SESSION, Account.class);
+        SelectQuery<Account> query = select(AccountQueries.SELECT_BY_SESSION, Account.class);
         QueryResult<Account> result = query.execute(session);
 
         if (result.hasElements())
@@ -58,7 +56,7 @@ public class AccountDao
 
     public Account byEmail(String email) throws DatabaseException, ApiException
     {
-        SelectQuery<Account> query = connection.selectQuery(AccountQueries.SELECT_BY_EMAIL, Account.class);
+        SelectQuery<Account> query = select(AccountQueries.SELECT_BY_EMAIL, Account.class);
         QueryResult<Account> result = query.execute(email);
 
         if (result.hasElements())
@@ -73,14 +71,14 @@ public class AccountDao
 
     public List<Account> byMatch(Long matchId) throws DatabaseException
     {
-        SelectQuery<Account> query = connection.selectQuery(AccountQueries.SELECT_BY_MATCH, Account.class);
+        SelectQuery<Account> query = select(AccountQueries.SELECT_BY_MATCH, Account.class);
 
         return query.execute(matchId);
     }
 
     public void updateSession(Long accountId, String session) throws DatabaseException
     {
-        UpdateQuery query = connection.updateQuery(AccountQueries.UPDATE_SESSION);
+        UpdateQuery query = update(AccountQueries.UPDATE_SESSION);
 
         int rowsAffected = query.execute(session, accountId);
 
@@ -92,7 +90,7 @@ public class AccountDao
 
     public void updatePassword(Long accountId, String password) throws DatabaseException
     {
-        UpdateQuery query = connection.updateQuery(AccountQueries.UPDATE_PASSWORD);
+        UpdateQuery query = update(AccountQueries.UPDATE_PASSWORD);
 
         int rowsAffected = query.execute(Hash.of(password), accountId);
 
@@ -104,7 +102,7 @@ public class AccountDao
 
     public void updateNickname(Long accountId, String nickname) throws DatabaseException
     {
-        UpdateQuery query = connection.updateQuery(AccountQueries.UPDATE_NICKNAME);
+        UpdateQuery query = update(AccountQueries.UPDATE_NICKNAME);
 
         int rowsAffected = query.execute(nickname, accountId);
 
@@ -116,7 +114,7 @@ public class AccountDao
 
     public void updatePicture(Long accountId, String picture) throws DatabaseException
     {
-        UpdateQuery query = connection.updateQuery(AccountQueries.UPDATE_PICTURE);
+        UpdateQuery query = update(AccountQueries.UPDATE_PICTURE);
 
         int rowsAffected = query.execute(picture, accountId);
 
@@ -128,7 +126,7 @@ public class AccountDao
 
     public AccountMatches accountMatches(Long accountId) throws DatabaseException
     {
-        SelectQuery<AccountMatches> query = connection.selectQuery(AccountQueries.SELECT_MATCHES, AccountMatches.class);
+        SelectQuery<AccountMatches> query = select(AccountQueries.SELECT_MATCHES, AccountMatches.class);
         QueryResult<AccountMatches> result = query.execute(accountId);
 
         if (result.hasElements())
@@ -143,15 +141,13 @@ public class AccountDao
 
     public Account create(String email, String nickname, String session) throws ApiException
     {
-        InsertQuery query = connection.insertQuery(AccountQueries.CREATE);
+        InsertQuery query = insert(AccountQueries.CREATE);
 
         try
         {
-            long accountId = query.execute(
-                    email,
-                    nickname,
-                    session
-            );
+            long accountId = query.execute(email,
+                                           nickname,
+                                           session);
 
             return byId(accountId);
         }

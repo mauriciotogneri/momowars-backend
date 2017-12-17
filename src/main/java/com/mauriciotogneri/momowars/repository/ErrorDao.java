@@ -6,18 +6,16 @@ import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.ErrorQueries;
 import com.mauriciotogneri.momowars.util.Now;
 
-public class ErrorDao
+public class ErrorDao extends BaseDao
 {
-    private final DatabaseConnection connection;
-
     public ErrorDao(DatabaseConnection connection)
     {
-        this.connection = connection;
+        super(connection);
     }
 
     public void create(String stacktrace) throws DatabaseException
     {
-        InsertQuery query = connection.insertQuery(ErrorQueries.CREATE);
+        InsertQuery query = insert(ErrorQueries.CREATE);
 
         query.execute(
                 Now.timestamp(),

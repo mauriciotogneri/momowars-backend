@@ -9,13 +9,11 @@ import com.mauriciotogneri.momowars.model.Queue;
 import java.util.Arrays;
 import java.util.List;
 
-public class QueueDao
+public class QueueDao extends BaseDao
 {
-    private final DatabaseConnection connection;
-
     public QueueDao(DatabaseConnection connection)
     {
-        this.connection = connection;
+        super(connection);
     }
 
     public List<Queue> byCell(Long cellId) throws DatabaseException
@@ -25,7 +23,7 @@ public class QueueDao
 
     public void delete(Long playerId) throws DatabaseException
     {
-        DeleteQuery query = connection.deleteQuery(QueueQueries.DELETE);
+        DeleteQuery query = delete(QueueQueries.DELETE);
 
         int rowsAffected = query.execute(playerId);
 

@@ -21,18 +21,16 @@ import com.mauriciotogneri.momowars.types.PlayerStatus;
 
 import java.util.List;
 
-public class PlayerDao
+public class PlayerDao extends BaseDao
 {
-    private final DatabaseConnection connection;
-
     public PlayerDao(DatabaseConnection connection)
     {
-        this.connection = connection;
+        super(connection);
     }
 
     public void create(Long accountId, Long matchId) throws DatabaseException
     {
-        InsertQuery createPlayerQuery = connection.insertQuery(PlayerQueries.CREATE);
+        InsertQuery createPlayerQuery = insert(PlayerQueries.CREATE);
 
         createPlayerQuery.execute(
                 matchId,
@@ -43,14 +41,14 @@ public class PlayerDao
 
     public List<Player> getPlayers(Long matchId) throws DatabaseException
     {
-        SelectQuery<Player> query = connection.selectQuery(PlayerQueries.SELECT_BY_MATCH, Player.class);
+        SelectQuery<Player> query = select(PlayerQueries.SELECT_BY_MATCH, Player.class);
 
         return query.execute(matchId);
     }
 
     public Player getPlayer(Long playerId) throws DatabaseException, ApiException
     {
-        SelectQuery<Player> query = connection.selectQuery(PlayerQueries.SELECT_BY_ID, Player.class);
+        SelectQuery<Player> query = select(PlayerQueries.SELECT_BY_ID, Player.class);
         QueryResult<Player> result = query.execute(playerId);
 
         if (result.hasElements())
@@ -65,7 +63,7 @@ public class PlayerDao
 
     public void updateStatus(Long playerId, PlayerStatus status) throws DatabaseException
     {
-        UpdateQuery updateQuery = connection.updateQuery(PlayerQueries.END_TURN);
+        UpdateQuery updateQuery = update(PlayerQueries.END_TURN);
 
         int rowsAffected = updateQuery.execute(status, playerId);
 
@@ -136,7 +134,7 @@ public class PlayerDao
 
     public void delete(Long playerId) throws DatabaseException
     {
-        DeleteQuery query = connection.deleteQuery(PlayerQueries.DELETE);
+        DeleteQuery query = delete(PlayerQueries.DELETE);
 
         int rowsAffected = query.execute(playerId);
 

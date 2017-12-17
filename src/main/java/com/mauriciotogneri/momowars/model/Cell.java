@@ -24,6 +24,11 @@ public class Cell
         List<UnitJson> unitJson = units.stream().map(Unit::json).collect(Collectors.toList());
         List<QueueJson> queueJson = queues.stream().map(Queue::json).collect(Collectors.toList());
 
-        return new CellJson(id, type, x, y, unitJson, queueJson);
+        return new CellJson(id,
+                            type,
+                            x,
+                            y,
+                            unitJson,
+                            queueJson);
     }
 }

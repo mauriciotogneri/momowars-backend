@@ -8,18 +8,16 @@ import com.mauriciotogneri.momowars.model.Cell;
 
 import java.util.List;
 
-public class CellDao
+public class CellDao extends BaseDao
 {
-    private final DatabaseConnection connection;
-
     public CellDao(DatabaseConnection connection)
     {
-        this.connection = connection;
+        super(connection);
     }
 
     public List<Cell> byMap(Long mapId) throws DatabaseException
     {
-        SelectQuery<Cell> query = connection.selectQuery(CellQueries.SELECT_BY_MAP, Cell.class);
+        SelectQuery<Cell> query = select(CellQueries.SELECT_BY_MAP, Cell.class);
 
         List<Cell> cells = query.execute(mapId);
 

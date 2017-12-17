@@ -9,18 +9,16 @@ import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.LogQueries;
 import com.mauriciotogneri.momowars.util.Now;
 
-public class LogDao
+public class LogDao extends BaseDao
 {
-    private final DatabaseConnection connection;
-
     public LogDao(DatabaseConnection connection)
     {
-        this.connection = connection;
+        super(connection);
     }
 
     public long create(String ip, HttpRequest request) throws DatabaseException
     {
-        InsertQuery query = connection.insertQuery(LogQueries.CREATE);
+        InsertQuery query = insert(LogQueries.CREATE);
 
         return query.execute(
                 Now.timestamp(),
@@ -33,7 +31,7 @@ public class LogDao
 
     public void addResponse(Long logId, HttpResponse response, int duration) throws DatabaseException
     {
-        UpdateQuery query = connection.updateQuery(LogQueries.UPDATE);
+        UpdateQuery query = update(LogQueries.UPDATE);
 
         query.execute(
                 response.status(),

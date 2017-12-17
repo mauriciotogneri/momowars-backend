@@ -19,6 +19,10 @@ public class Map
     {
         List<CellJson> cellJson = cells.stream().map(Cell::json).collect(Collectors.toList());
 
-        return new MapJson(id, name, width, height, cellJson);
+        return new MapJson(id,
+                           name,
+                           width,
+                           height,
+                           cellJson);
     }
 }
