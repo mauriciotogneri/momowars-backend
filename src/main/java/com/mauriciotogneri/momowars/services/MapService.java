@@ -4,7 +4,7 @@ import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.exceptions.ApiException;
 import com.mauriciotogneri.momowars.model.Map;
-import com.mauriciotogneri.momowars.repository.map.MapDao;
+import com.mauriciotogneri.momowars.repository.MapDao;
 
 import java.util.List;
 
@@ -17,17 +17,17 @@ public class MapService
         this.connection = connection;
     }
 
-    public List<Map> getMaps() throws DatabaseException
+    public List<Map> maps() throws DatabaseException
     {
         MapDao mapDao = new MapDao(connection);
 
-        return mapDao.getMaps();
+        return mapDao.maps();
     }
 
-    public Map getMap(Long mapId) throws DatabaseException, ApiException
+    public Map byId(Long mapId) throws DatabaseException, ApiException
     {
         MapDao mapDao = new MapDao(connection);
 
-        return mapDao.getMap(mapId);
+        return mapDao.byId(mapId);
     }
 }

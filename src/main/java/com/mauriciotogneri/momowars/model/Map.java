@@ -1,26 +1,24 @@
 package com.mauriciotogneri.momowars.model;
 
+import com.mauriciotogneri.momowars.json.CellJson;
+import com.mauriciotogneri.momowars.json.MapJson;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Map
 {
-    private final Long id;
-    private final String name;
-    private final Integer width;
-    private final Integer height;
-    private final List<Cell> cells;
+    public Long id;
+    public String name;
+    public Integer width;
+    public Integer height;
+    public List<Cell> cells = new ArrayList<>();
 
-    public Map(Long id, String name, Integer width, Integer height, List<Cell> cells)
+    public MapJson json()
     {
-        this.id = id;
-        this.name = name;
-        this.width = width;
-        this.height = height;
-        this.cells = cells;
-    }
+        List<CellJson> cellJson = cells.stream().map(Cell::json).collect(Collectors.toList());
 
-    public Long id()
-    {
-        return id;
+        return new MapJson(id, name, width, height, cellJson);
     }
 }

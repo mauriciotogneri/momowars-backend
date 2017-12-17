@@ -31,8 +31,8 @@ public class GetMap extends BaseController
         checkIfNotEmpty(mapId);
         validateSession(session);
 
-        Map map = mapService.getMap(mapId);
+        Map map = mapService.byId(mapId);
 
-        return response(OK, map);
+        return response(OK, map.json());
     }
 }

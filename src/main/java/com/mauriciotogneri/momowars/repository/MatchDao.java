@@ -1,4 +1,4 @@
-package com.mauriciotogneri.momowars.repository.match;
+package com.mauriciotogneri.momowars.repository;
 
 import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.inquiry.QueryResult;
@@ -13,11 +13,8 @@ import com.mauriciotogneri.momowars.exceptions.MatchNotFoundException;
 import com.mauriciotogneri.momowars.model.Map;
 import com.mauriciotogneri.momowars.model.Match;
 import com.mauriciotogneri.momowars.model.Player;
-import com.mauriciotogneri.momowars.repository.map.MapDao;
-import com.mauriciotogneri.momowars.repository.player.PlayerDao;
 import com.mauriciotogneri.momowars.types.MatchStatus;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MatchDao
@@ -29,55 +26,33 @@ public class MatchDao
         this.connection = connection;
     }
 
-    public Match create(Integer maxPlayers, Map map, Long forAccountId) throws DatabaseException, ApiException
+    public Match create(Integer maxPlayers, Map map) throws DatabaseException, ApiException
     {
         InsertQuery query = connection.insertQuery(MatchQueries.CREATE);
 
         long matchId = query.execute(
                 maxPlayers,
-                map.id()
+                map.id
         );
 
-        return getMatch(matchId, forAccountId);
+        return getMatch(matchId);
     }
 
-    public List<Match> getOpenMatches() throws DatabaseException, ApiException
+    public List<Match> getOpenMatches() throws DatabaseException
     {
-        MapDao mapDao = new MapDao(connection);
-        PlayerDao playerDao = new PlayerDao(connection);
+        SelectQuery<Match> query = connection.selectQuery(MatchQueries.SELECT_OPEN, Match.class);
 
-        SelectQuery<MatchRow> query = connection.selectQuery(MatchQueries.SELECT_OPEN, MatchRow.class);
-        QueryResult<MatchRow> result = query.execute();
-
-        List<Match> matches = new ArrayList<>();
-
-        for (MatchRow match : result)
-        {
-            matches.add(match.match(
-                    mapDao.getMap(match.mapId),
-                    playerDao.getPlayers(match.id, 0L)
-            ));
-        }
-
-        return matches;
+        return query.execute();
     }
 
-    public Match getMatch(Long matchId, Long forAccountId) throws DatabaseException, ApiException
+    public Match getMatch(Long matchId) throws DatabaseException, ApiException
     {
-        MapDao mapDao = new MapDao(connection);
-        PlayerDao playerDao = new PlayerDao(connection);
-
-        SelectQuery<MatchRow> query = connection.selectQuery(MatchQueries.SELECT_BY_ID, MatchRow.class);
-        QueryResult<MatchRow> result = query.execute(matchId);
+        SelectQuery<Match> query = connection.selectQuery(MatchQueries.SELECT_BY_ID, Match.class);
+        QueryResult<Match> result = query.execute(matchId);
 
         if (result.hasElements())
         {
-            MatchRow row = result.first();
-
-            return row.match(
-                    mapDao.getMapFull(row.mapId),
-                    playerDao.getPlayers(row.id, forAccountId)
-            );
+            return result.first();
         }
         else
         {
@@ -101,7 +76,7 @@ public class MatchDao
     {
         PlayerDao playerDao = new PlayerDao(connection);
 
-        List<Player> players = playerDao.getPlayers(matchId, null);
+        List<Player> players = playerDao.getPlayers(matchId);
 
         for (Player player : players)
         {

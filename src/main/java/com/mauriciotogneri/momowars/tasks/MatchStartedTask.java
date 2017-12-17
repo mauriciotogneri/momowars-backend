@@ -3,7 +3,7 @@ package com.mauriciotogneri.momowars.tasks;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.email.Email;
 import com.mauriciotogneri.momowars.model.Account;
-import com.mauriciotogneri.momowars.repository.account.AccountDao;
+import com.mauriciotogneri.momowars.repository.AccountDao;
 
 import java.util.List;
 

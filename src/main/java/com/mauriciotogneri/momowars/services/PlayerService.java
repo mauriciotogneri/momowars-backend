@@ -3,7 +3,7 @@ package com.mauriciotogneri.momowars.services;
 import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.exceptions.ApiException;
-import com.mauriciotogneri.momowars.repository.player.PlayerDao;
+import com.mauriciotogneri.momowars.repository.PlayerDao;
 
 public class PlayerService
 {
@@ -23,20 +23,18 @@ public class PlayerService
     }
 
     public void endTurn(Long matchId,
-                        Long playerId,
-                        Long accountId) throws DatabaseException, ApiException
+                        Long playerId) throws DatabaseException, ApiException
     {
         PlayerDao playerDao = new PlayerDao(connection);
 
-        playerDao.endTurn(matchId, playerId, accountId);
+        playerDao.endTurn(matchId, playerId);
     }
 
     public void leaveMatch(Long matchId,
-                           Long playerId,
-                           Long accountId) throws DatabaseException, ApiException
+                           Long playerId) throws DatabaseException, ApiException
     {
         PlayerDao playerDao = new PlayerDao(connection);
 
-        playerDao.leaveMatch(matchId, playerId, accountId);
+        playerDao.leaveMatch(matchId, playerId);
     }
 }

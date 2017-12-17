@@ -42,7 +42,7 @@ public class CreateMatch extends BaseController
 
         try
         {
-            Match newMatch = matchService.createMatch(entity.maxPlayers, entity.mapId, account.id);
+            Match newMatch = matchService.createMatch(entity.maxPlayers, entity.mapId);
 
             playerService.create(account.id, newMatch.id());
 

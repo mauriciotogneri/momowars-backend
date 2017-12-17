@@ -3,7 +3,7 @@ package com.mauriciotogneri.momowars.logger;
 import com.mauriciotogneri.jerry.http.HttpRequest;
 import com.mauriciotogneri.jerry.http.HttpResponse;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
-import com.mauriciotogneri.momowars.repository.log.LogDao;
+import com.mauriciotogneri.momowars.repository.LogDao;
 
 public class DatabaseLogger
 {

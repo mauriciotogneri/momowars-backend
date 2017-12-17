@@ -1,31 +1,31 @@
-package com.mauriciotogneri.momowars.repository.unit;
+package com.mauriciotogneri.momowars.repository;
 
 import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.inquiry.queries.DeleteQuery;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
-import com.mauriciotogneri.momowars.database.SQL.UnitQueries;
-import com.mauriciotogneri.momowars.model.Unit;
+import com.mauriciotogneri.momowars.database.SQL.QueueQueries;
+import com.mauriciotogneri.momowars.model.Queue;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class UnitDao
+public class QueueDao
 {
     private final DatabaseConnection connection;
 
-    public UnitDao(DatabaseConnection connection)
+    public QueueDao(DatabaseConnection connection)
     {
         this.connection = connection;
     }
 
-    public List<Unit> byCell(Long cellId) throws DatabaseException
+    public List<Queue> byCell(Long cellId) throws DatabaseException
     {
         return Arrays.asList();
     }
 
     public void delete(Long playerId) throws DatabaseException
     {
-        DeleteQuery query = connection.deleteQuery(UnitQueries.DELETE);
+        DeleteQuery query = connection.deleteQuery(QueueQueries.DELETE);
 
         int rowsAffected = query.execute(playerId);
 

@@ -1,4 +1,4 @@
-package com.mauriciotogneri.momowars.repository.log;
+package com.mauriciotogneri.momowars.repository;
 
 import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.inquiry.queries.InsertQuery;

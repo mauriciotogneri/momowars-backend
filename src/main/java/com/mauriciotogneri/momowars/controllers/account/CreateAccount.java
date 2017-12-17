@@ -33,10 +33,10 @@ public class CreateAccount extends BaseController
     {
         checkIfNotEmpty(entity);
 
-        Account account = accountService.createAccount(entity.email, entity.nickname, entity.password);
-        AccountMatches accountMatches = accountService.matches(account.id);
+        Account account = accountService.create(entity.email, entity.nickname, entity.password);
+        AccountMatches matches = accountService.matches(account.id);
 
-        return response(CREATED, account.json(accountMatches));
+        return response(CREATED, account.json(matches));
     }
 
     @Provider

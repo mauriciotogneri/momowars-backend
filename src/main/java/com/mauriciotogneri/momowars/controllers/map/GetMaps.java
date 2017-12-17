@@ -4,6 +4,7 @@ import com.mauriciotogneri.momowars.model.Map;
 import com.mauriciotogneri.momowars.server.BaseController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
@@ -30,8 +31,8 @@ public class GetMaps extends BaseController
         checkIfNotEmpty(session);
         validateSession(session);
 
-        List<Map> maps = mapService.getMaps();
+        List<Map> maps = mapService.maps();
 
-        return response(OK, maps);
+        return response(OK, maps.stream().map(Map::json).collect(Collectors.toList()));
     }
 }

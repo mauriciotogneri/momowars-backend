@@ -28,7 +28,7 @@ public class GetAccount extends BaseController
     {
         checkIfNotEmpty(session);
 
-        Account account = accountService.getAccount(session);
+        Account account = accountService.bySession(session);
         AccountMatches accountMatches = accountService.matches(account.id);
 
         return response(OK, account.json(accountMatches));

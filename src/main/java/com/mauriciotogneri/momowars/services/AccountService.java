@@ -6,7 +6,7 @@ import com.mauriciotogneri.momowars.exceptions.ApiException;
 import com.mauriciotogneri.momowars.exceptions.BadParametersException;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.AccountMatches;
-import com.mauriciotogneri.momowars.repository.account.AccountDao;
+import com.mauriciotogneri.momowars.repository.AccountDao;
 import com.mauriciotogneri.momowars.validators.EmailValidator;
 
 public class AccountService
@@ -18,9 +18,9 @@ public class AccountService
         this.connection = connection;
     }
 
-    public Account createAccount(String email,
-                                 String nickname,
-                                 String password) throws DatabaseException, ApiException
+    public Account create(String email,
+                          String nickname,
+                          String password) throws DatabaseException, ApiException
     {
         if (!EmailValidator.isValid(email))
         {
@@ -38,20 +38,20 @@ public class AccountService
         return account;
     }
 
-    public Account getAccount(String session) throws DatabaseException, ApiException
+    public Account bySession(String session) throws DatabaseException, ApiException
     {
         AccountDao accountDao = new AccountDao(connection);
 
         return accountDao.bySession(session);
     }
 
-    public Account updateAccount(String session,
-                                 String newPassword,
-                                 String newNickname) throws DatabaseException, ApiException
+    public Account update(String session,
+                          String newPassword,
+                          String newNickname) throws DatabaseException, ApiException
     {
         AccountDao accountDao = new AccountDao(connection);
 
-        Account account = getAccount(session);
+        Account account = bySession(session);
 
         if (newPassword != null)
         {
@@ -63,7 +63,7 @@ public class AccountService
             accountDao.updateNickname(account.id, newNickname);
         }
 
-        return accountDao.getAccount(account.id);
+        return accountDao.byId(account.id);
     }
 
     public AccountMatches matches(Long accountId) throws DatabaseException

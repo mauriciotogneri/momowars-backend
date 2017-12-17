@@ -11,9 +11,9 @@ import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.AccountMatches;
 import com.mauriciotogneri.momowars.model.Map;
 import com.mauriciotogneri.momowars.model.Match;
-import com.mauriciotogneri.momowars.repository.account.AccountDao;
-import com.mauriciotogneri.momowars.repository.map.MapDao;
-import com.mauriciotogneri.momowars.repository.match.MatchDao;
+import com.mauriciotogneri.momowars.repository.AccountDao;
+import com.mauriciotogneri.momowars.repository.MapDao;
+import com.mauriciotogneri.momowars.repository.MatchDao;
 import com.mauriciotogneri.momowars.tasks.MatchStartedTask;
 import com.mauriciotogneri.momowars.tasks.Task;
 import com.mauriciotogneri.momowars.types.MatchStatus;
@@ -30,18 +30,17 @@ public class MatchService
     }
 
     public Match createMatch(Integer maxPlayers,
-                             Long mapId,
-                             Long forAccountId) throws DatabaseException, ApiException
+                             Long mapId) throws DatabaseException, ApiException
     {
         MapDao mapDao = new MapDao(connection);
-        Map map = mapDao.getMap(mapId);
+        Map map = mapDao.byId(mapId);
 
         MatchDao matchDao = new MatchDao(connection);
 
-        return matchDao.create(maxPlayers, map, forAccountId);
+        return matchDao.create(maxPlayers, map);
     }
 
-    public List<Match> getOpenMatches() throws DatabaseException, ApiException
+    public List<Match> getOpenMatches() throws DatabaseException
     {
         MatchDao matchDao = new MatchDao(connection);
 
@@ -61,7 +60,7 @@ public class MatchService
 
         MatchDao matchDao = new MatchDao(connection);
 
-        return matchDao.getMatch(matchId, forAccountId);
+        return matchDao.getMatch(matchId);
     }
 
     public Match joinMatch(Account account,
@@ -77,26 +76,26 @@ public class MatchService
 
         MatchDao matchDao = new MatchDao(connection);
 
-        Match loadedMatch = matchDao.getMatch(matchId, account.id);
+        Match match = matchDao.getMatch(matchId);
 
-        if (loadedMatch.isPlaying())
+        if (match.isPlaying())
         {
             throw new MatchPlayingException();
         }
-        else if (loadedMatch.isFinished())
+        else if (match.isFinished())
         {
             throw new MatchFinishedException();
         }
 
         PlayerService playerService = new PlayerService(connection);
-        playerService.create(account.id, loadedMatch.id());
+        playerService.create(account.id, match.id());
 
-        if (loadedMatch.playersMissing() == 1)
+        if (match.playersMissing() == 1)
         {
-            startMatch(loadedMatch.id());
+            startMatch(match.id());
         }
 
-        return matchDao.getMatch(loadedMatch.id(), account.id);
+        return matchDao.getMatch(match.id());
     }
 
     public void startMatch(Long matchId) throws DatabaseException

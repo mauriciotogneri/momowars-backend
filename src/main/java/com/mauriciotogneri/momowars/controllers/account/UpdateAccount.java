@@ -35,7 +35,7 @@ public class UpdateAccount extends BaseController
     {
         checkIfNotEmpty(entity);
 
-        Account account = accountService.updateAccount(session, entity.password, entity.nickname);
+        Account account = accountService.update(session, entity.password, entity.nickname);
         AccountMatches accountMatches = accountService.matches(account.id);
 
         return response(OK, account.json(accountMatches));

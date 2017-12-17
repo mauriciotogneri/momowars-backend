@@ -2,24 +2,16 @@ package com.mauriciotogneri.momowars.model;
 
 import com.mauriciotogneri.momowars.types.MatchStatus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Match
 {
-    private final Long id;
-    private final MatchStatus status;
-    private final Integer maxPlayers;
-    private final Map map;
-    private final List<Player> players;
-
-    public Match(Long id, MatchStatus status, Integer maxPlayers, Map map, List<Player> players)
-    {
-        this.id = id;
-        this.status = status;
-        this.maxPlayers = maxPlayers;
-        this.map = map;
-        this.players = players;
-    }
+    public Long id;
+    public MatchStatus status;
+    public Integer maxPlayers;
+    public Long mapId;
+    public List<Player> players = new ArrayList<>();
 
     public Long id()
     {
@@ -31,7 +23,7 @@ public class Match
         return maxPlayers - players.size();
     }
 
-    public int playesJoined()
+    public int playersJoined()
     {
         return players.size();
     }

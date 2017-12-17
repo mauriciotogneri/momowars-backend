@@ -2,7 +2,7 @@ package com.mauriciotogneri.momowars.logger;
 
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.email.Email;
-import com.mauriciotogneri.momowars.repository.error.ErrorDao;
+import com.mauriciotogneri.momowars.repository.ErrorDao;
 import com.mauriciotogneri.momowars.tasks.SendEmailTask;
 import com.mauriciotogneri.momowars.tasks.Task;
 import com.mauriciotogneri.momowars.util.Now;

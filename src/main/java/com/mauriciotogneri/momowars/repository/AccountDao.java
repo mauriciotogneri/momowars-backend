@@ -1,17 +1,15 @@
-package com.mauriciotogneri.momowars.repository.account;
+package com.mauriciotogneri.momowars.repository;
 
 import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.inquiry.QueryResult;
 import com.mauriciotogneri.inquiry.queries.InsertQuery;
 import com.mauriciotogneri.inquiry.queries.SelectQuery;
 import com.mauriciotogneri.inquiry.queries.UpdateQuery;
-import com.mauriciotogneri.javautils.Strings;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.AccountQueries;
 import com.mauriciotogneri.momowars.exceptions.AccountAlreadyExistsException;
 import com.mauriciotogneri.momowars.exceptions.AccountNotFoundException;
 import com.mauriciotogneri.momowars.exceptions.ApiException;
-import com.mauriciotogneri.momowars.exceptions.InvalidCredentialsException;
 import com.mauriciotogneri.momowars.exceptions.InvalidSessionException;
 import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.model.AccountMatches;
@@ -28,6 +26,21 @@ public class AccountDao
         this.connection = connection;
     }
 
+    public Account byId(Long accountId) throws DatabaseException, ApiException
+    {
+        SelectQuery<Account> query = connection.selectQuery(AccountQueries.SELECT_BY_ID, Account.class);
+        QueryResult<Account> result = query.execute(accountId);
+
+        if (result.hasElements())
+        {
+            return result.first();
+        }
+        else
+        {
+            throw new AccountNotFoundException();
+        }
+    }
+
     public Account bySession(String session) throws DatabaseException, ApiException
     {
         SelectQuery<Account> query = connection.selectQuery(AccountQueries.SELECT_BY_SESSION, Account.class);
@@ -40,30 +53,6 @@ public class AccountDao
         else
         {
             throw new InvalidSessionException();
-        }
-    }
-
-    public Account byCredentials(String email, String password) throws DatabaseException, ApiException
-    {
-        SelectQuery<Account> query = connection.selectQuery(AccountQueries.SELECT_BY_EMAIL, Account.class);
-        QueryResult<Account> result = query.execute(email);
-
-        if (result.hasElements())
-        {
-            Account account = result.first();
-
-            if (Strings.equals(account.password, Hash.of(password)))
-            {
-                return account;
-            }
-            else
-            {
-                throw new InvalidCredentialsException();
-            }
-        }
-        else
-        {
-            throw new InvalidCredentialsException();
         }
     }
 
@@ -137,21 +126,6 @@ public class AccountDao
         }
     }
 
-    public Account getAccount(Long accountId) throws DatabaseException, ApiException
-    {
-        SelectQuery<Account> query = connection.selectQuery(AccountQueries.SELECT_BY_ID, Account.class);
-        QueryResult<Account> result = query.execute(accountId);
-
-        if (result.hasElements())
-        {
-            return result.first();
-        }
-        else
-        {
-            throw new AccountNotFoundException();
-        }
-    }
-
     public AccountMatches accountMatches(Long accountId) throws DatabaseException
     {
         SelectQuery<AccountMatches> query = connection.selectQuery(AccountQueries.SELECT_MATCHES, AccountMatches.class);
@@ -179,7 +153,7 @@ public class AccountDao
                     session
             );
 
-            return getAccount(accountId);
+            return byId(accountId);
         }
         catch (DatabaseException e)
         {

@@ -34,7 +34,7 @@ public class LeaveMatch extends BaseController
 
         Account account = validateSession(session);
 
-        playerService.leaveMatch(matchId, playerId, account.id);
+        playerService.leaveMatch(matchId, playerId);
 
         return response(NO_CONTENT);
     }

@@ -1,4 +1,4 @@
-package com.mauriciotogneri.momowars.repository.player;
+package com.mauriciotogneri.momowars.repository;
 
 import com.mauriciotogneri.inquiry.DatabaseException;
 import com.mauriciotogneri.inquiry.QueryResult;
@@ -15,14 +15,10 @@ import com.mauriciotogneri.momowars.exceptions.PlayerNotFoundException;
 import com.mauriciotogneri.momowars.model.Constants;
 import com.mauriciotogneri.momowars.model.Match;
 import com.mauriciotogneri.momowars.model.Player;
-import com.mauriciotogneri.momowars.repository.match.MatchDao;
-import com.mauriciotogneri.momowars.repository.queue.QueueDao;
-import com.mauriciotogneri.momowars.repository.unit.UnitDao;
 import com.mauriciotogneri.momowars.tasks.MatchUpdaterTask;
 import com.mauriciotogneri.momowars.tasks.Task;
 import com.mauriciotogneri.momowars.types.PlayerStatus;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerDao
@@ -45,36 +41,21 @@ public class PlayerDao
         );
     }
 
-    public List<Player> getPlayers(Long matchId, Long forAccountId) throws DatabaseException
+    public List<Player> getPlayers(Long matchId) throws DatabaseException
     {
-        SelectQuery<PlayerRow> query = connection.selectQuery(PlayerQueries.SELECT_BY_MATCH, PlayerRow.class);
-        QueryResult<PlayerRow> result = query.execute(matchId);
+        SelectQuery<Player> query = connection.selectQuery(PlayerQueries.SELECT_BY_MATCH, Player.class);
 
-        List<Player> players = new ArrayList<>();
-
-        for (PlayerRow player : result)
-        {
-            players.add(player.player(forAccountId));
-        }
-
-        return players;
+        return query.execute(matchId);
     }
 
-    public PlayerRow getPlayer(Long playerId, Long accountId) throws DatabaseException, ApiException
+    public Player getPlayer(Long playerId) throws DatabaseException, ApiException
     {
-        SelectQuery<PlayerRow> query = connection.selectQuery(PlayerQueries.SELECT_BY_ID, PlayerRow.class);
-        QueryResult<PlayerRow> result = query.execute(playerId);
+        SelectQuery<Player> query = connection.selectQuery(PlayerQueries.SELECT_BY_ID, Player.class);
+        QueryResult<Player> result = query.execute(playerId);
 
         if (result.hasElements())
         {
-            PlayerRow row = result.first();
-
-            if (!row.accountId.equals(accountId))
-            {
-                throw new PlayerNotFoundException();
-            }
-
-            return row;
+            return result.first();
         }
         else
         {
@@ -94,33 +75,33 @@ public class PlayerDao
         }
     }
 
-    public void endTurn(Long matchId, Long playerId, Long accountId) throws DatabaseException, ApiException
+    public void endTurn(Long matchId, Long playerId) throws DatabaseException, ApiException
     {
         // TODO: check if player has given matchId
-        PlayerRow row = getPlayer(playerId, accountId);
+        Player player = getPlayer(playerId);
         updateStatus(playerId, PlayerStatus.WAITING);
 
         MatchDao matchDao = new MatchDao(connection);
 
-        if (matchDao.isUpdatable(row.matchId))
+        if (matchDao.isUpdatable(player.matchId))
         {
-            Task task = new MatchUpdaterTask(row.matchId);
+            Task task = new MatchUpdaterTask(player.matchId);
             task.submit();
         }
     }
 
-    public void leaveMatch(Long matchId, Long playerId, Long accountId) throws DatabaseException, ApiException
+    public void leaveMatch(Long matchId, Long playerId) throws DatabaseException, ApiException
     {
         // TODO: check if player has given matchId
-        PlayerRow row = getPlayer(playerId, accountId);
+        Player player = getPlayer(playerId);
 
-        if ((row.status == PlayerStatus.VICTORIOUS) || (row.status == PlayerStatus.DEFEATED) || (row.status == PlayerStatus.SURRENDERED))
+        if ((player.status == PlayerStatus.VICTORIOUS) || (player.status == PlayerStatus.DEFEATED) || (player.status == PlayerStatus.SURRENDERED))
         {
             throw new PlayerAlreadyLeftException();
         }
 
         MatchDao matchDao = new MatchDao(connection);
-        Match match = matchDao.getMatch(row.matchId, accountId);
+        Match match = matchDao.getMatch(player.matchId);
 
         if (match.isFinished())
         {
@@ -136,9 +117,9 @@ public class PlayerDao
             QueueDao queueDao = new QueueDao(connection);
             queueDao.delete(playerId);
 
-            if (matchDao.isUpdatable(row.matchId))
+            if (matchDao.isUpdatable(player.matchId))
             {
-                Task task = new MatchUpdaterTask(row.matchId);
+                Task task = new MatchUpdaterTask(player.matchId);
                 task.submit();
             }
         }
@@ -146,7 +127,7 @@ public class PlayerDao
         {
             delete(playerId);
 
-            if (match.playesJoined() == 1)
+            if (match.playersJoined() == 1)
             {
                 matchDao.delete(match.id());
             }

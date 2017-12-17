@@ -135,7 +135,7 @@ public class BaseController extends Controller
 
     protected Account validateSession(String session) throws DatabaseException, ApiException
     {
-        return accountService.getAccount(session);
+        return accountService.bySession(session);
     }
 
     protected Response htmlResponse(BaseTemplate template) throws Exception

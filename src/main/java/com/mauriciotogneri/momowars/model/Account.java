@@ -11,11 +11,11 @@ public class Account
     public String picture;
     public String session;
 
-    public AccountJson json(AccountMatches accountMatches)
+    public AccountJson json(AccountMatches matches)
     {
         return new AccountJson(id,
                                email,
                                nickname,
-                               accountMatches.json());
+                               matches.json());
     }
 }
