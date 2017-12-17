@@ -9,6 +9,7 @@ import com.mauriciotogneri.inquiry.queries.UpdateQuery;
 import com.mauriciotogneri.momowars.database.DatabaseConnection;
 import com.mauriciotogneri.momowars.database.SQL.PlayerQueries;
 import com.mauriciotogneri.momowars.exceptions.ApiException;
+import com.mauriciotogneri.momowars.exceptions.InvalidMatchException;
 import com.mauriciotogneri.momowars.exceptions.MatchFinishedException;
 import com.mauriciotogneri.momowars.exceptions.PlayerAlreadyLeftException;
 import com.mauriciotogneri.momowars.exceptions.PlayerNotFoundException;
@@ -32,21 +33,19 @@ public class PlayerDao extends BaseDao
     {
         InsertQuery createPlayerQuery = insert(PlayerQueries.CREATE);
 
-        createPlayerQuery.execute(
-                matchId,
-                accountId,
-                Constants.INITIAL_RESOURCES
-        );
+        createPlayerQuery.execute(matchId,
+                                  accountId,
+                                  Constants.INITIAL_RESOURCES);
     }
 
-    public List<Player> getPlayers(Long matchId) throws DatabaseException
+    public List<Player> players(Long matchId) throws DatabaseException
     {
         SelectQuery<Player> query = select(PlayerQueries.SELECT_BY_MATCH, Player.class);
 
         return query.execute(matchId);
     }
 
-    public Player getPlayer(Long playerId) throws DatabaseException, ApiException
+    public Player byId(Long playerId) throws DatabaseException, ApiException
     {
         SelectQuery<Player> query = select(PlayerQueries.SELECT_BY_ID, Player.class);
         QueryResult<Player> result = query.execute(playerId);
@@ -75,8 +74,13 @@ public class PlayerDao extends BaseDao
 
     public void endTurn(Long matchId, Long playerId) throws DatabaseException, ApiException
     {
-        // TODO: check if player has given matchId
-        Player player = getPlayer(playerId);
+        Player player = byId(playerId);
+
+        if (!player.matchId.equals(matchId))
+        {
+            throw new InvalidMatchException();
+        }
+
         updateStatus(playerId, PlayerStatus.WAITING);
 
         MatchDao matchDao = new MatchDao(connection);
@@ -90,8 +94,12 @@ public class PlayerDao extends BaseDao
 
     public void leaveMatch(Long matchId, Long playerId) throws DatabaseException, ApiException
     {
-        // TODO: check if player has given matchId
-        Player player = getPlayer(playerId);
+        Player player = byId(playerId);
+
+        if (!player.matchId.equals(matchId))
+        {
+            throw new InvalidMatchException();
+        }
 
         if ((player.status == PlayerStatus.VICTORIOUS) || (player.status == PlayerStatus.DEFEATED) || (player.status == PlayerStatus.SURRENDERED))
         {
@@ -99,7 +107,7 @@ public class PlayerDao extends BaseDao
         }
 
         MatchDao matchDao = new MatchDao(connection);
-        Match match = matchDao.getMatch(player.matchId);
+        Match match = matchDao.byId(player.matchId);
 
         if (match.isFinished())
         {

@@ -20,13 +20,11 @@ public class LogDao extends BaseDao
     {
         InsertQuery query = insert(LogQueries.CREATE);
 
-        return query.execute(
-                Now.timestamp(),
-                ip,
-                request.method(),
-                request.path(),
-                request.headers().toString()
-        );
+        return query.execute(Now.timestamp(),
+                             ip,
+                             request.method(),
+                             request.path(),
+                             request.headers().toString());
     }
 
     public void addResponse(Long logId, HttpResponse response, int duration) throws DatabaseException

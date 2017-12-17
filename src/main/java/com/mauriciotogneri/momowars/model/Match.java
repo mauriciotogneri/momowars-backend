@@ -1,5 +1,6 @@
 package com.mauriciotogneri.momowars.model;
 
+import com.mauriciotogneri.momowars.json.MatchJson;
 import com.mauriciotogneri.momowars.types.MatchStatus;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ public class Match
     public MatchStatus status;
     public Integer maxPlayers;
     public Long mapId;
+    public Map map = new Map();
     public List<Player> players = new ArrayList<>();
 
     public Long id()
@@ -46,5 +48,10 @@ public class Match
     public boolean isFinished()
     {
         return (status == MatchStatus.FINISHED);
+    }
+
+    public MatchJson json()
+    {
+        return new MatchJson(id, status, maxPlayers, map, players);
     }
 }

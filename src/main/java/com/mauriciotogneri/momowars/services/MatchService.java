@@ -40,11 +40,11 @@ public class MatchService
         return matchDao.create(maxPlayers, map);
     }
 
-    public List<Match> getOpenMatches() throws DatabaseException
+    public List<Match> getOpenMatches() throws DatabaseException, ApiException
     {
         MatchDao matchDao = new MatchDao(connection);
 
-        return matchDao.getOpenMatches();
+        return matchDao.openMatches();
     }
 
     public Match getMatch(Long matchId,
@@ -60,7 +60,7 @@ public class MatchService
 
         MatchDao matchDao = new MatchDao(connection);
 
-        return matchDao.getMatch(matchId);
+        return matchDao.byId(matchId);
     }
 
     public Match joinMatch(Account account,
@@ -76,7 +76,7 @@ public class MatchService
 
         MatchDao matchDao = new MatchDao(connection);
 
-        Match match = matchDao.getMatch(matchId);
+        Match match = matchDao.byId(matchId);
 
         if (match.isPlaying())
         {
@@ -95,7 +95,7 @@ public class MatchService
             startMatch(match.id());
         }
 
-        return matchDao.getMatch(match.id());
+        return matchDao.byId(match.id());
     }
 
     public void startMatch(Long matchId) throws DatabaseException

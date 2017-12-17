@@ -29,18 +29,26 @@ public class SessionService
                                      String password) throws DatabaseException, ApiException
     {
         AccountDao accountDao = new AccountDao(connection);
-        Account account = accountDao.byEmail(email);
 
-        if (!Strings.equals(account.password, Hash.of(password)))
+        try
+        {
+            Account account = accountDao.byEmail(email);
+
+            if (!Strings.equals(account.password, Hash.of(password)))
+            {
+                throw new InvalidCredentialsException();
+            }
+
+            String session = newSession();
+
+            accountDao.updateSession(account.id, session);
+
+            return session;
+        }
+        catch (AccountNotFoundException e)
         {
             throw new InvalidCredentialsException();
         }
-
-        String session = newSession();
-
-        accountDao.updateSession(account.id, session);
-
-        return session;
     }
 
     public String createSessionGoogle(String token) throws DatabaseException, ApiException

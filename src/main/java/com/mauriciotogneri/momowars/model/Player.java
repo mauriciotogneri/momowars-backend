@@ -1,5 +1,6 @@
 package com.mauriciotogneri.momowars.model;
 
+import com.mauriciotogneri.momowars.json.PlayerJson;
 import com.mauriciotogneri.momowars.types.PlayerStatus;
 
 public class Player
@@ -34,5 +35,17 @@ public class Player
     public boolean isSurrendered()
     {
         return (status == PlayerStatus.SURRENDERED);
+    }
+
+    public PlayerJson json(Long forAccountId)
+    {
+        if (accountId.equals(forAccountId))
+        {
+            return new PlayerJson(id, nickname, resources, status);
+        }
+        else
+        {
+            return new PlayerJson(nickname, status);
+        }
     }
 }

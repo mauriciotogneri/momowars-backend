@@ -35,6 +35,6 @@ public class GetMatch extends BaseController
 
         Match match = matchService.getMatch(matchId, account.id);
 
-        return response(OK, match);
+        return response(OK, match.json());
     }
 }

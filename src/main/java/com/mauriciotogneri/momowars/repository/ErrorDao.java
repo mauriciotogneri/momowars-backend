@@ -17,9 +17,7 @@ public class ErrorDao extends BaseDao
     {
         InsertQuery query = insert(ErrorQueries.CREATE);
 
-        query.execute(
-                Now.timestamp(),
-                stacktrace
-        );
+        query.execute(Now.timestamp(),
+                      stacktrace);
     }
 }

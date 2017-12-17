@@ -33,6 +33,6 @@ public class JoinMatch extends BaseController
         Account account = validateSession(session);
         Match match = matchService.joinMatch(account, matchId);
 
-        return response(CREATED, match);
+        return response(CREATED, match.json());
     }
 }

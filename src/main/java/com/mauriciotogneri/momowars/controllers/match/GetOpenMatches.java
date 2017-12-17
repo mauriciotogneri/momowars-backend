@@ -4,6 +4,7 @@ import com.mauriciotogneri.momowars.model.Match;
 import com.mauriciotogneri.momowars.server.BaseController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
@@ -32,6 +33,6 @@ public class GetOpenMatches extends BaseController
 
         List<Match> matches = matchService.getOpenMatches();
 
-        return response(OK, matches);
+        return response(OK, matches.stream().map(Match::json).collect(Collectors.toList()));
     }
 }

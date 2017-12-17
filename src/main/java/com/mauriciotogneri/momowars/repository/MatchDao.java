@@ -28,29 +28,45 @@ public class MatchDao extends BaseDao
     {
         InsertQuery query = insert(MatchQueries.CREATE);
 
-        long matchId = query.execute(
-                maxPlayers,
-                map.id
-        );
+        long matchId = query.execute(maxPlayers,
+                                     map.id);
 
-        return getMatch(matchId);
+        return byId(matchId);
     }
 
-    public List<Match> getOpenMatches() throws DatabaseException
+    public List<Match> openMatches() throws DatabaseException, ApiException
     {
         SelectQuery<Match> query = select(MatchQueries.SELECT_OPEN, Match.class);
 
-        return query.execute();
+        List<Match> matches = query.execute();
+
+        MapDao mapDao = new MapDao(connection);
+        PlayerDao playerDao = new PlayerDao(connection);
+
+        for (Match match : matches)
+        {
+            match.map = mapDao.byId(match.mapId);
+            match.players = playerDao.players(match.id);
+        }
+
+        return matches;
     }
 
-    public Match getMatch(Long matchId) throws DatabaseException, ApiException
+    public Match byId(Long matchId) throws DatabaseException, ApiException
     {
         SelectQuery<Match> query = select(MatchQueries.SELECT_BY_ID, Match.class);
         QueryResult<Match> result = query.execute(matchId);
 
         if (result.hasElements())
         {
-            return result.first();
+            MapDao mapDao = new MapDao(connection);
+            PlayerDao playerDao = new PlayerDao(connection);
+
+            Match match = result.first();
+            match.map = mapDao.byId(match.mapId);
+            match.players = playerDao.players(match.id);
+
+            return match;
         }
         else
         {
@@ -74,7 +90,7 @@ public class MatchDao extends BaseDao
     {
         PlayerDao playerDao = new PlayerDao(connection);
 
-        List<Player> players = playerDao.getPlayers(matchId);
+        List<Player> players = playerDao.players(matchId);
 
         for (Player player : players)
         {

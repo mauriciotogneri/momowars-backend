@@ -1,6 +1,5 @@
 package com.mauriciotogneri.momowars.controllers.match;
 
-import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.server.BaseController;
 
 import javax.ws.rs.CookieParam;
@@ -31,8 +30,7 @@ public class LeaveMatch extends BaseController
         checkIfNotEmpty(session);
         checkIfNotEmpty(playerId);
         checkIfNotEmpty(matchId);
-
-        Account account = validateSession(session);
+        validateSession(session);
 
         playerService.leaveMatch(matchId, playerId);
 

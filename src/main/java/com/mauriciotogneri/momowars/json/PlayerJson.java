@@ -19,9 +19,6 @@ public class PlayerJson
 
     public PlayerJson(String nickname, PlayerStatus status)
     {
-        this.id = null;
-        this.nickname = nickname;
-        this.resources = null;
-        this.status = status;
+        this(null, nickname, null, status);
     }
 }

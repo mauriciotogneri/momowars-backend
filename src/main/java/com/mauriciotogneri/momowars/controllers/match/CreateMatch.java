@@ -48,7 +48,7 @@ public class CreateMatch extends BaseController
 
             Match match = matchService.getMatch(newMatch.id(), account.id);
 
-            return response(CREATED, match);
+            return response(CREATED, match.json());
         }
         catch (MapNotFoundException e)
         {

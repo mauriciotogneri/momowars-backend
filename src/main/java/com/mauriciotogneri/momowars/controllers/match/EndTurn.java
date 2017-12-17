@@ -1,6 +1,5 @@
 package com.mauriciotogneri.momowars.controllers.match;
 
-import com.mauriciotogneri.momowars.model.Account;
 import com.mauriciotogneri.momowars.server.BaseController;
 
 import javax.ws.rs.CookieParam;
@@ -31,8 +30,7 @@ public class EndTurn extends BaseController
         checkIfNotEmpty(session);
         checkIfNotEmpty(matchId);
         checkIfNotEmpty(playerId);
-
-        Account account = validateSession(session);
+        validateSession(session);
 
         playerService.endTurn(matchId, playerId);
 
